@@ -113,13 +113,25 @@ class Section implements ISection
     }
 
     /**
-     * @param string $fieldName
+     * @param string|IField $field
      */
-    public function removeField(string $fieldName)
+    public function removeField($field)
     {
-        $this->fields = $this->fields->filter(function (AbstractField $field) use ($fieldName) {
+        $fieldName = $field instanceof IField ? $field->getName() : $field;
+
+        $this->fields = $this->fields->filter(function (IField $field) use ($fieldName) {
             return $field->getName() !== $fieldName;
         });
+    }
+
+    /**
+     * @param \Traversable|IField[] $fields
+     */
+    public function removeFields(\Traversable $fields)
+    {
+        foreach ($fields as $field) {
+            $this->removeField($field);
+        }
     }
 
     public function toArray()

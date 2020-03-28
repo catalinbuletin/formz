@@ -13,39 +13,42 @@ use Formz\WorkflowFactory;
 
 class Form implements IForm
 {
-    /** @var string */
-    protected $name;
+    protected ?string $name;
 
-    /** @var string */
-    protected $type;
+    protected ?string $type;
 
-    /** @var array|mixed */
-    protected $layout;
+    protected array $layout;
 
     /** @var Collection|ISection[] */
     protected $sections = [];
 
     /**
      * Form constructor.
+     *
      * @param array $sections
-     * @param array $properties
+     * @param array $config
      */
-    public function __construct($sections = [], array $properties = [])
+    public function __construct(array $sections = [], array $config = [])
     {
-        if (!empty($sections)) {
-            foreach ($sections as $section) {
-                $this->addSection(Section::makeFromArray($section));
-            }
-        }
+        $this->name = array_key_exists('name', $config) ? $config['name'] : null;
 
-        $this->name = array_key_exists('name', $properties) ? $properties['name'] : null;
+        $this->type = 'dynamicForm';
 
-        $this->type = array_key_exists('type', $properties) ? $properties['type'] : 'dynamicForm';
-
-        $this->layout = array_key_exists('layout', $properties) ? $properties['layout'] : [
+        $this->layout = array_key_exists('layout', $config) ? $config['layout'] : [
             'type' => 'labelValue',
             'params' => []
         ];
+
+        $this->sections = new Collection();
+
+        foreach ($sections as $section) {
+            if ($section instanceof Section) {
+                $this->addSection($section);
+                continue;
+            }
+
+            $this->addSection(Section::makeFromArray($section));
+        }
     }
 
     /**
@@ -57,22 +60,6 @@ class Form implements IForm
     public static function make(?array $sections = [], ?array $properties = [])
     {
         return new static($sections, $properties);
-    }
-
-    /**
-     * @param array $fields
-     * @param array $properties
-     * @return Form
-     */
-    public static function makeWithFields(array $fields = [], array $properties = [])
-    {
-        $form = static::makeEmpty($properties);
-
-        foreach ($fields as $field) {
-            $form->addField($field);
-        }
-
-        return $form;
     }
 
     /**
@@ -110,14 +97,34 @@ class Form implements IForm
     public function except(array $fields)
     {
         foreach ($this->sections as $section) {
-            foreach ($fields as $fieldName) {
-                $section->removeField($fieldName);
-                unset($fields[$fieldName]);
-            }
+            $fieldsToRemove = $section->getFields()->filter(
+                fn (IField $field) => in_array($field->getName(), $fields)
+            );
+
+            $section->removeFields($fieldsToRemove);
         }
 
         return $this;
     }
+
+    /**
+     * @param array $fields
+     *
+     * @return $this|IField|null
+     */
+    public function only(array $fields)
+    {
+        foreach ($this->sections as $section) {
+            $fieldsToRemove = $section->getFields()->filter(
+                fn (IField $field) => !in_array($field->getName(), $fields)
+            );
+
+            $section->removeFields($fieldsToRemove);
+        }
+
+        return $this;
+    }
+
 
     /**
      * Returns an array of field names
@@ -265,12 +272,6 @@ class Form implements IForm
         $section = new Section(null, $fields);
 
         return $this->addSection($section);
-
-//        foreach ($fields as $field) {
-//            $this->addField($field);
-//        }
-//
-//        return $this;
     }
 
     /**
@@ -279,10 +280,6 @@ class Form implements IForm
      */
     public function addSection(ISection $section): IForm
     {
-        if (!$this->sections instanceof Collection) {
-            $this->sections = new Collection;
-        }
-
         $this->sections->push($section);
 
         return $this;

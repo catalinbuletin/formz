@@ -10,7 +10,7 @@ interface IForm extends \JsonSerializable
      * @param array $only
      * @return Collection|IField[]
      */
-    public function getFields($only = []);
+    public function getFields(array $only = []);
 
     /**
      * @param bool $assoc - if true, returns a key-value array where key is the name of the field and value is the label
@@ -37,6 +37,12 @@ interface IForm extends \JsonSerializable
      * @return IField|null
      */
     public function except(array $fields);
+
+    /**
+     * @param array $fields
+     * @return IField|null
+     */
+    public function only(array $fields);
 
     /**
      * @return Collection|ISection[]

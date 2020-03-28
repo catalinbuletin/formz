@@ -19,9 +19,14 @@ interface ISection extends \JsonSerializable
     public function addField(IField $field);
 
     /**
-     * @param string $fieldName
+     * @param string|IField $field
      */
-    public function removeField(string $fieldName);
+    public function removeField($field);
+
+    /**
+     * @param \Traversable|IField[] $field
+     */
+    public function removeFields(\Traversable $field);
 
     /**
      * @param null $name
