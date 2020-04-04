@@ -15,6 +15,16 @@ class Field extends Component
         $this->field = $field;
     }
 
+    public function attributes()
+    {
+        return $this->field->getAttributes();
+    }
+
+    public function isRequired()
+    {
+        return in_array('required', $this->field->getRules());
+    }
+
     /**
      * @inheritDoc
      */

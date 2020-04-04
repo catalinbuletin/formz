@@ -35,6 +35,27 @@ class FluentField
         return $this;
     }
 
+    public function w1in2()
+    {
+        $this->field->w1p2();
+
+        return $this;
+    }
+
+    public function placeholder($value)
+    {
+        $this->field->setAttributes(['placeholder' => $value]);
+
+        return $this;
+    }
+
+    public function required()
+    {
+        $this->field->required();
+
+        return $this;
+    }
+
     public function text(string $name, string $label = null, $value = null): FluentTextField
     {
         return $this->context->text($name, $label, $value);

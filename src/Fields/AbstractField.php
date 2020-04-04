@@ -100,6 +100,14 @@ class AbstractField implements IField
     }
 
     /**
+     * @return Data
+     */
+    public function getAttributes(): Data
+    {
+        return $this->attributes;
+    }
+
+    /**
      * @param array|IRule[] $rules
      *
      * @return AbstractField
@@ -347,7 +355,7 @@ class AbstractField implements IField
             'class' => 'form-control input-md',
             'required' => $this->isRequired(),
             'container' => [
-                'class' => 'col-xs-12 col-sm-12 col-md-12 col-lg-12'
+                'class' => 'form-group col-xs-12 col-sm-12 col-md-12 col-lg-12'
             ],
             'label' => [
                 'value' => $this->guessLabel(),
