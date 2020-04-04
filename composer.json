@@ -1,12 +1,19 @@
 {
     "name": "catalinbuletin/formz",
-    "description": "Laravel Form Builder",
+    "authors": [
+        {
+            "name": "Catalin Buletin",
+            "email": "sanateria@gmail.coom"
+        }
+    ],
+    "description": "Build forms in a fluent and easy way",
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=7.4",
         "dflydev/dot-access-data": "^2.0",
         "illuminate/support": "^7.2",
+        "illuminate/view": "^7.4",
         "symfony/finder": "^5.0",
         "webmozart/assert": "^1.7"
     },
@@ -29,6 +36,13 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Formz\\ServiceProvider"
+            ]
         }
     },
     "scripts": {

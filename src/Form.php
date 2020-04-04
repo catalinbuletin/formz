@@ -47,7 +47,7 @@ class Form implements IForm
                 continue;
             }
 
-            $this->addSection(Section::makeFromArray($section));
+            $this->addSection(Section::hydrate($section));
         }
     }
 
@@ -63,10 +63,76 @@ class Form implements IForm
     }
 
     /**
+     * Shortcut for adding an array of fields. The sections will be created automatically
+     *
+     * @param IField[]|array $fields
+     * @return IForm
+     */
+    public function addFields(array $fields): IForm
+    {
+        $section = Section::make(null, $fields);
+        $section->setContext($this);
+
+        return $this->addSection($section);
+    }
+
+    /**
+     * @param ISection $section
+     * @return IForm
+     */
+    public function addSection(ISection $section): IForm
+    {
+        $section->setContext($this);
+
+        $this->sections->push($section);
+
+        return $this;
+    }
+
+    public function addWorkflows(array $workflows): IForm
+    {
+        foreach ($workflows as $workflow) {
+            $this->addWorkflow($workflow);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @return IForm
+     */
+    public function setValues(?array $data): IForm
+    {
+        if (empty($data)) {
+            return $this;
+        }
+
+        foreach ($this->getFields() as $field) {
+            if (!isset($data[$field->getName()])) {
+                continue;
+            }
+
+            $field->setValue($data[$field->getName()]);
+        }
+
+        return $this;
+    }
+
+    public function addWorkflow(IWorkflow $workflow)
+    {
+        $workflow->setContext($this);
+
+        $this->getField($workflow->getFieldName())->workflows([
+            $workflow
+        ]);
+    }
+
+    /**
      * @param array $formData
      * @return Form
      */
-    public static function makeFromArray(array $formData)
+    public static function hydrate(array $formData)
     {
         $sections = $formData['sections'];
         unset($formData['sections']);
@@ -101,7 +167,7 @@ class Form implements IForm
                 fn (IField $field) => in_array($field->getName(), $fields)
             );
 
-            $section->removeFields($fieldsToRemove);
+            $section->removeFields($fieldsToRemove->toArray());
         }
 
         return $this;
@@ -119,7 +185,7 @@ class Form implements IForm
                 fn (IField $field) => !in_array($field->getName(), $fields)
             );
 
-            $section->removeFields($fieldsToRemove);
+            $section->removeFields($fieldsToRemove->toArray());
         }
 
         return $this;
@@ -245,83 +311,6 @@ class Form implements IForm
         }
 
         return $validationArray;
-    }
-
-
-    /**
-     * Shortcut for adding a field without a form section. The section will be created automatically
-     *
-     * @param IField $field
-     * @return IForm
-     */
-    public function addField(IField $field): IForm
-    {
-        $section = new Section(null, [$field]);
-
-        return $this->addSection($section);
-    }
-
-    /**
-     * Shortcut for adding an array of fields. The sections will be created automatically
-     *
-     * @param IField[]|array $fields
-     * @return IForm
-     */
-    public function addFields(array $fields): IForm
-    {
-        $section = new Section(null, $fields);
-
-        return $this->addSection($section);
-    }
-
-    /**
-     * @param ISection $section
-     * @return IForm
-     */
-    public function addSection(ISection $section): IForm
-    {
-        $this->sections->push($section);
-
-        return $this;
-    }
-
-    public function addWorkflows(array $workflows): IForm
-    {
-        foreach ($workflows as $workflow) {
-            $this->addWorkflow($workflow);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param array $data
-     * @return IForm
-     */
-    public function setValues(?array $data): IForm
-    {
-        if (empty($data)) {
-            return $this;
-        }
-
-        foreach ($this->getFields() as $field) {
-            if (!isset($data[$field->getName()])) {
-                continue;
-            }
-
-            $field->setValue($data[$field->getName()]);
-        }
-
-        return $this;
-    }
-
-    public function addWorkflow(IWorkflow $workflow)
-    {
-        $workflow->setContext($this);
-
-        $this->getField($workflow->getFieldName())->workflows([
-            $workflow
-        ]);
     }
 
     /**

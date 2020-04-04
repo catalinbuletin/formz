@@ -62,12 +62,6 @@ interface IForm extends \JsonSerializable
     public function getRules($fieldName = null);
 
     /**
-     * @param IField $field
-     * @return IForm
-     */
-    public function addField(IField $field): IForm;
-
-    /**
      * @param array|IField[] $fields
      * @return IForm
      */

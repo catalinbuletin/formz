@@ -7,12 +7,6 @@ use Illuminate\Support\Collection;
 interface ISection extends \JsonSerializable
 {
     /**
-     * @param array $only
-     * @return Collection|IField[]
-     */
-    public function getFields($only = []);
-
-    /**
      * @param IField $field
      * @return $this
      */
@@ -24,14 +18,28 @@ interface ISection extends \JsonSerializable
     public function removeField($field);
 
     /**
-     * @param \Traversable|IField[] $field
+     * @param array |IField[] $field
      */
-    public function removeFields(\Traversable $field);
+    public function removeFields(array $field);
 
     /**
      * @param null $name
      *
      * @return $this
      */
-    public function setName($name = null);
+    public function setLabel($name = null);
+
+    /**
+     * @param IForm $context
+     *
+     * @return $this
+     */
+    public function setContext(IForm $context);
+
+    /**
+     * @param array $only
+     * @return Collection|IField[]
+     */
+    public function getFields($only = []);
+
 }
