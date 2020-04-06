@@ -2,7 +2,6 @@
 
 namespace Formz\Fields;
 
-use Formz\DictionaryOptions;
 use Formz\Options;
 use Formz\ResourceOptions;
 

@@ -10,7 +10,7 @@ interface IForm extends \JsonSerializable
      * @param array $only
      * @return Collection|IField[]
      */
-    public function getFields($only = []);
+    public function getFields(array $only = []);
 
     /**
      * @param bool $assoc - if true, returns a key-value array where key is the name of the field and value is the label
@@ -39,6 +39,12 @@ interface IForm extends \JsonSerializable
     public function except(array $fields);
 
     /**
+     * @param array $fields
+     * @return IField|null
+     */
+    public function only(array $fields);
+
+    /**
      * @return Collection|ISection[]
      */
     public function getSections();
@@ -54,12 +60,6 @@ interface IForm extends \JsonSerializable
      * @return mixed
      */
     public function getRules($fieldName = null);
-
-    /**
-     * @param IField $field
-     * @return IForm
-     */
-    public function addField(IField $field): IForm;
 
     /**
      * @param array|IField[] $fields

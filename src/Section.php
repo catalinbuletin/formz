@@ -3,7 +3,10 @@
 namespace Formz;
 
 use Formz\Contracts\IField;
+use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
+use Formz\Fields\Hidden;
+use Formz\Fields\Number as NumberField;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Formz\Fields\Checkbox;
@@ -19,69 +22,87 @@ use Formz\Fields\Text;
 
 class Section implements ISection
 {
-    protected string $id;
+    use AddsFieldsTrait;
 
-    /** @var array|Collection|AbstractField[]  */
-    protected Collection $fields;
+    private string $uuid;
+    private string $label;
+    private Collection $fields;
 
-    /** @var string|null */
-    private ?string $name;
+    protected IForm $context;
 
     /**
      * Section constructor.
      *
-     * @param null|string $id
+     * @param null|string $uuid
+     * @param null|string $label
      * @param AbstractField[] $fields
-     * @param null|string $name
      */
-    public function __construct(?string $id = null, ?array $fields = [], ?string $name = null)
+    private function __construct(string $uuid, string $label = null, array $fields = [])
     {
-        $this->id = is_null($id) ? Str::random(10) : $id;
-        $this->fields = $fields instanceof Collection ? $fields : new Collection($fields);
-        $this->name = $name;
+        $this->uuid = $uuid;
+        $this->label = $label;
+        $this->fields = new Collection($fields);
+    }
+
+    public static function make(?string $label = null, ?array $fields = [])
+    {
+        $uuid = self::generateId($label);
+
+        return new static($uuid, $label ?: '', $fields);
+    }
+
+    public function setContext(IForm $context): ISection
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    public function setLabel($label = null): ISection
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+
+    /**
+     * @param IField $field
+     *
+     * @return ISection
+     */
+    public function addField(IField $field): ISection
+    {
+        $this->fields->push($field);
+
+        return $this;
     }
 
     /**
-     * @param array $sectionData
-     *
-     * @return Section
+     * @param string|IField $field
      */
-    public static function makeFromArray(array $sectionData)
+    public function removeField($field)
     {
-        $section = new static($sectionData['id'] ?? null);
+        $fieldName = $field instanceof IField ? $field->getName() : $field;
 
-        $section->setName($sectionData['name'] ?? null);
-
-        // @todo need a way to register available fields. as developer custom fields might be registered
-        $fieldsMapper = [
-            'text' => Text::class,
-            'password' => Password::class,
-            'number' => Number::class,
-            'textarea' => Textarea::class,
-            'select' => Choice::class,
-            'multiselect' => Choice::class,
-            'checkbox' => Checkbox::class,
-            'radio' => Radio::class,
-            'date' => Date::class,
-            'file' => File::class,
-        ];
-
-        if (!empty($sectionData['fields'])) {
-            foreach ($sectionData['fields'] as $field) {
-                $fieldClass = $fieldsMapper[$field['type']] ?? AbstractField::class;
-
-                $section->addField($fieldClass::makeFromArray($field));
-            }
-        }
-
-        return $section;
+        $this->fields = $this->fields->filter(function (IField $field) use ($fieldName) {
+            return $field->getName() !== $fieldName;
+        });
     }
 
-    public function setName($name = null)
+    /**
+     * @param array|IField[] $fields
+     */
+    public function removeFields(array $fields)
     {
-        $this->name = $name;
-
-        return $this;
+        foreach ($fields as $field) {
+            $this->removeField($field);
+        }
     }
 
     /**
@@ -100,39 +121,61 @@ class Section implements ISection
         });
     }
 
-    /**
-     * @param IField $field
-     *
-     * @return ISection
-     */
-    public function addField(IField $field)
-    {
-        $this->fields->push($field);
-
-        return $this;
-    }
-
-    /**
-     * @param string $fieldName
-     */
-    public function removeField(string $fieldName)
-    {
-        $this->fields = $this->fields->filter(function (AbstractField $field) use ($fieldName) {
-            return $field->getName() !== $fieldName;
-        });
-    }
 
     public function toArray()
     {
         return [
-            'id' => $this->id,
+            'id' => $this->uuid,
             'fields' => $this->fields,
-            'name' => $this->name,
+            'name' => $this->label,
         ];
     }
 
     public function jsonSerialize()
     {
         return $this->toArray();
+    }
+
+    private static function generateId(?string $label = '')
+    {
+        $random = Str::random(8);
+        $label = Str::snake($label);
+
+        return $label ? "{$label}_{$random}" : $random;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Section
+     */
+    public static function hydrate(array $data)
+    {
+        $section = new static($data['id'] ?? null);
+
+        $section->setLabel($data['name'] ?? null);
+
+        // @todo need a way to register available fields. as developer custom fields might be registered
+        $fieldsMapper = [
+            'text' => Text::class,
+            'password' => Password::class,
+            'number' => Number::class,
+            'textarea' => Textarea::class,
+            'select' => Choice::class,
+            'multiselect' => Choice::class,
+            'checkbox' => Checkbox::class,
+            'radio' => Radio::class,
+            'date' => Date::class,
+            'file' => File::class,
+        ];
+
+        foreach ($data['fields'] as $field) {
+            // @ todo throw exception if type does not exist
+            $fieldClass = $fieldsMapper[$field['type']];
+
+            $section->addField($fieldClass::makeFromArray($field));
+        }
+
+        return $section;
     }
 }

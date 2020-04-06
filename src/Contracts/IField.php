@@ -2,6 +2,8 @@
 
 namespace Formz\Contracts;
 
+use Dflydev\DotAccessData\Data;
+
 interface IField extends \JsonSerializable
 {
     /**
@@ -19,6 +21,13 @@ interface IField extends \JsonSerializable
      * @return static
      */
     public function setAttributes(array $attributes): IField;
+
+    /**
+     * Set Field attributes
+     *
+     * @return Data
+     */
+    public function getAttributes(): Data;
 
     /**
      * @param array|IRule[] $rules
