@@ -155,7 +155,7 @@ class Section implements ISection
 
         $section->setLabel($data['name'] ?? null);
 
-        // @todo need a way to register available fields. as developer custom fields might be registered
+        // @todo move to config file
         $fieldsMapper = [
             'text' => Text::class,
             'password' => Password::class,

@@ -73,6 +73,7 @@ class AbstractField implements IField
      */
     public function setValue($value)
     {
+        // @todo - refactor this. number should be int
         if (in_array($this->type, ['text', 'textarea', 'number', 'date'])) {
             if (is_object($value)) {
                 $value = (string) $value;
@@ -180,6 +181,19 @@ class AbstractField implements IField
     public function required(): IField
     {
         $this->rules([new Required()]);
+
+        return $this;
+    }
+
+    /**
+     * Set field 'width' when using the grid system
+     * Used to set the proper classes for our fields so that are responsive
+     *
+     * @return AbstractField
+     */
+    public function cols(int $cols): IField
+    {
+        $this->width = $cols;
 
         return $this;
     }

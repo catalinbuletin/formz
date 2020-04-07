@@ -2,16 +2,17 @@
 
 namespace Formz\Fluent\Fields;
 
+use Formz\Fields\File;
 use Formz\Fluent\FluentField;
 use Formz\Field;
 
-class FluentFileField extends FluentField
+class FluentFile extends FluentField
 {
     public static function make(string $name, string $label = null, $value = null)
     {
         $instance = new static();
 
-        $instance->field = Field::file($name, $label, $value);
+        $instance->field = new File($name, $label, $value);
 
         return $instance;
     }

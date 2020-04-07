@@ -2,16 +2,16 @@
 
 namespace Formz\Fluent\Fields;
 
+use Formz\Fields\Date;
 use Formz\Fluent\FluentField;
-use Formz\Field;
 
-class FluentDateField extends FluentField
+class FluentDate extends FluentField
 {
     public static function make(string $name, string $label = null, $value = null)
     {
         $instance = new static();
 
-        $instance->field = Field::date($name, $label, $value);
+        $instance->field = new Date($name, $label, $value);
 
         return $instance;
     }

@@ -1,6 +1,6 @@
 <form action="">
 
-    @foreach($sections as $section)
+    @foreach($form->getSections() as $section)
         <x-formz-section :section="$section"></x-formz-section>
     @endforeach
 
