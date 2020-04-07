@@ -2,16 +2,16 @@
 
 namespace Formz\Fluent\Fields;
 
+use Formz\Fields\Number;
 use Formz\Fluent\FluentField;
-use Formz\Field;
 
-class FluentNumberField extends FluentField
+class FluentNumber extends FluentField
 {
     public static function make(string $name, string $label = null, $value = null)
     {
         $instance = new static();
 
-        $instance->field = Field::number($name, $label, $value);
+        $instance->field = new Number($name, $label, $value);
 
         return $instance;
     }

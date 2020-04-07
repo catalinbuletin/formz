@@ -20,6 +20,11 @@ class Form extends Component
         return $this->form->getSections();
     }
 
+    public function count()
+    {
+        return 5;
+    }
+
     /**
      * @inheritDoc
      */

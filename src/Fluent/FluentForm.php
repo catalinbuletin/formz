@@ -3,20 +3,49 @@
 namespace Formz\Fluent;
 
 use Formz\Contracts\IForm;
+use Formz\Form;
+use Illuminate\Database\Eloquent\Model;
+
+//FormBuilder::build()
+//    ->form()
+//    ->section()->name('Personal details')
+//    ->text('firstName', 'First Name')->required()
+//    ->text('lastName', 'First Name')->required()
+//    ->section();
 
 class FluentForm
 {
     private \Formz\Contracts\IForm $form;
 
+    /**
+     * @return FluentForm
+     */
     public static function make(): FluentForm
     {
         $instance = new static();
 
-        $instance->form = \Formz\Form::make();
+        $instance->form = new Form();
 
         return $instance;
     }
 
+    /**
+     * @return FluentForm
+     */
+    public static function for(Model $model): FluentForm
+    {
+        $instance = new static();
+
+        $instance->form = new Form();
+
+        return $instance;
+    }
+
+    /**
+     * @param string|null $label
+     *
+     * @return FluentSection
+     */
     public function section(?string $label = null): FluentSection
     {
         $fluentSection = FluentSection::make($label)->setContext($this);

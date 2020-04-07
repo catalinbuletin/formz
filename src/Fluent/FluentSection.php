@@ -2,16 +2,16 @@
 
 namespace Formz\Fluent;
 
-use Formz\Fluent\Fields\FluentCheckboxField;
-use Formz\Fluent\Fields\FluentChoiceField;
-use Formz\Fluent\Fields\FluentDateField;
-use Formz\Fluent\Fields\FluentFileField;
-use Formz\Fluent\Fields\FluentHiddenField;
-use Formz\Fluent\Fields\FluentNumberField;
-use Formz\Fluent\Fields\FluentPasswordField;
-use Formz\Fluent\Fields\FluentRadioField;
-use Formz\Fluent\Fields\FluentTextareaField;
-use Formz\Fluent\Fields\FluentTextField;
+use Formz\Fluent\Fields\FluentCheckbox;
+use Formz\Fluent\Fields\FluentChoice;
+use Formz\Fluent\Fields\FluentDate;
+use Formz\Fluent\Fields\FluentFile;
+use Formz\Fluent\Fields\FluentHidden;
+use Formz\Fluent\Fields\FluentNumber;
+use Formz\Fluent\Fields\FluentPassword;
+use Formz\Fluent\Fields\FluentRadio;
+use Formz\Fluent\Fields\FluentTextarea;
+use Formz\Fluent\Fields\FluentText;
 use Formz\Options;
 
 class FluentSection
@@ -19,6 +19,11 @@ class FluentSection
     private \Formz\Contracts\ISection $section;
     private \Formz\Fluent\FluentForm $context;
 
+    /**
+     * @param string|null $label
+     *
+     * @return FluentSection
+     */
     public static function make(?string $label = null): FluentSection
     {
         $instance = new static();
@@ -28,6 +33,11 @@ class FluentSection
         return $instance;
     }
 
+    /**
+     * @param string|null $label
+     *
+     * @return FluentSection
+     */
     public function section(?string $label = null): FluentSection
     {
         return $this->context->section($label);
@@ -38,11 +48,11 @@ class FluentSection
      * @param $value
      * @param string|null $label
      *
-     * @return FluentTextField
+     * @return FluentText
      */
-    public function text(string $name, string $label = null, $value = null): FluentTextField
+    public function text(string $name, string $label = null, $value = null): FluentText
     {
-        $field = FluentTextField::make($name, $label, $value)->setContext($this);
+        $field = FluentText::make($name, $label, $value)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -54,11 +64,11 @@ class FluentSection
      * @param $value
      * @param string|null $label
      *
-     * @return FluentPasswordField
+     * @return FluentPassword
      */
-    public function password(string $name, string $label = null, $value = null): FluentPasswordField
+    public function password(string $name, string $label = null, $value = null): FluentPassword
     {
-        $field =  FluentPasswordField::make($name, $value, $label)->setContext($this);
+        $field =  FluentPassword::make($name, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -70,11 +80,11 @@ class FluentSection
      * @param $value
      * @param string|null $label
      *
-     * @return FluentTextareaField
+     * @return FluentTextarea
      */
-    public function textarea(string $name, string $label = null, $value = null): FluentTextareaField
+    public function textarea(string $name, string $label = null, $value = null): FluentTextarea
     {
-        $field =  FluentTextareaField::make($name, $value, $label)->setContext($this);
+        $field =  FluentTextarea::make($name, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -87,11 +97,11 @@ class FluentSection
      * @param $value
      * @param string|null $label
      *
-     * @return FluentHiddenField
+     * @return FluentHidden
      */
-    public function hidden(string $name, string $label = null, $value = null): FluentHiddenField
+    public function hidden(string $name, string $label = null, $value = null): FluentHidden
     {
-        $field =  FluentHiddenField::make($name, $value, $label)->setContext($this);
+        $field =  FluentHidden::make($name, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -102,11 +112,12 @@ class FluentSection
      * @param string $name
      * @param $value
      * @param string|null $label
-     * @return FluentNumberField
+     *
+     * @return FluentNumber
      */
-    public function number(string $name, string $label = null, $value = null): FluentNumberField
+    public function number(string $name, string $label = null, $value = null): FluentNumber
     {
-        $field =  FluentNumberField::make($name, $value, $label)->setContext($this);
+        $field = FluentNumber::make($name, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -119,13 +130,13 @@ class FluentSection
      * @param $value
      * @param string|null $label
      *
-     * @return FluentChoiceField
+     * @return FluentChoice
      */
-    public function select(string $name, Options $options, string $label = null, $value = null): FluentChoiceField
+    public function select(string $name, Options $options, string $label = null, $value = null): FluentChoice
     {
         $type = 'select';
 
-        $field =  FluentChoiceField::make($type, $name, $options, $value, $label)->setContext($this);
+        $field =  FluentChoice::make($type, $name, $options, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -139,13 +150,13 @@ class FluentSection
      * @param $value
      * @param string|null $label
      *
-     * @return FluentChoiceField
+     * @return FluentChoice
      */
-    public function selectMultiple(string $name, Options $options, string $label = null, $value = null): FluentChoiceField
+    public function selectMultiple(string $name, Options $options, string $label = null, $value = null): FluentChoice
     {
         $type = 'multiselect';
 
-        $field =  FluentChoiceField::make($type, $name, $options, $value, $label)->setContext($this);
+        $field =  FluentChoice::make($type, $name, $options, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -158,11 +169,11 @@ class FluentSection
      * @param $value
      * @param string|null $label
      *
-     * @return FluentRadioField
+     * @return FluentRadio
      */
-    public function radio(string $name, Options $options, string $label = null, $value = null): FluentRadioField
+    public function radio(string $name, Options $options, string $label = null, $value = null): FluentRadio
     {
-        $field =  FluentRadioField::make($name, $options, $value, $label)->setContext($this);
+        $field =  FluentRadio::make($name, $options, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -175,11 +186,11 @@ class FluentSection
      * @param $value
      * @param string|null $label
      *
-     * @return FluentCheckboxField
+     * @return FluentCheckbox
      */
-    public function checkbox(string $name, Options $options, string $label = null, $value = null): FluentCheckboxField
+    public function checkbox(string $name, Options $options, string $label = null, $value = null): FluentCheckbox
     {
-        $field =  FluentCheckboxField::make($name, $options, $value, $label)->setContext($this);
+        $field =  FluentCheckbox::make($name, $options, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -190,11 +201,12 @@ class FluentSection
      * @param string $name
      * @param $value
      * @param string|null $label
-     * @return FluentDateField
+     *
+     * @return FluentDate
      */
-    public function date(string $name, $label = null, $value = null): FluentDateField
+    public function date(string $name, $label = null, $value = null): FluentDate
     {
-        $field =  FluentDateField::make($name, $value, $label)->setContext($this);
+        $field = FluentDate::make($name, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 
@@ -205,11 +217,12 @@ class FluentSection
      * @param string $name
      * @param $value
      * @param string|null $label
-     * @return FluentFileField
+     *
+     * @return FluentFile
      */
-    public function file(string $name, $value = null, $label = null): FluentFileField
+    public function file(string $name, $value = null, $label = null): FluentFile
     {
-        $field =  FluentFileField::make($name, $value, $label)->setContext($this);
+        $field = FluentFile::make($name, $value, $label)->setContext($this);
 
         $this->section->addField($field->getField());
 

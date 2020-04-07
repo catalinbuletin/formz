@@ -2,16 +2,16 @@
 
 namespace Formz\Fluent\Fields;
 
+use Formz\Fields\Text;
 use Formz\Fluent\FluentField;
-use Formz\Field;
 
-class FluentHiddenField extends FluentField
+class FluentText extends FluentField
 {
     public static function make(string $name, string $label = null, $value = null)
     {
         $instance = new static();
 
-        $instance->field = Field::hidden($name, $label, $value);
+        $instance->field = new Text($name, $label, $value);
 
         return $instance;
     }

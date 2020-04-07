@@ -5,9 +5,11 @@
             <span class="required">*</span>
         @endif
     </label>
+
     <input
             type="text"
             id="{{ $field->getId() }}"
+            value="{{ $field->getValue() }}"
             class="{{ $attributes->get('class') }}"
             placeholder="{{ $attributes->get('placeholder') }}"
     >

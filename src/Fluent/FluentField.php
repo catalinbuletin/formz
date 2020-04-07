@@ -4,16 +4,16 @@ namespace Formz\Fluent;
 
 use Formz\Contracts\IField;
 use Formz\Contracts\IForm;
-use Formz\Fluent\Fields\FluentCheckboxField;
-use Formz\Fluent\Fields\FluentChoiceField;
-use Formz\Fluent\Fields\FluentDateField;
-use Formz\Fluent\Fields\FluentFileField;
-use Formz\Fluent\Fields\FluentHiddenField;
-use Formz\Fluent\Fields\FluentNumberField;
-use Formz\Fluent\Fields\FluentPasswordField;
-use Formz\Fluent\Fields\FluentRadioField;
-use Formz\Fluent\Fields\FluentTextareaField;
-use Formz\Fluent\Fields\FluentTextField;
+use Formz\Fluent\Fields\FluentCheckbox;
+use Formz\Fluent\Fields\FluentChoice;
+use Formz\Fluent\Fields\FluentDate;
+use Formz\Fluent\Fields\FluentFile;
+use Formz\Fluent\Fields\FluentHidden;
+use Formz\Fluent\Fields\FluentNumber;
+use Formz\Fluent\Fields\FluentPassword;
+use Formz\Fluent\Fields\FluentRadio;
+use Formz\Fluent\Fields\FluentTextarea;
+use Formz\Fluent\Fields\FluentText;
 use Formz\Options;
 
 class FluentField
@@ -56,7 +56,7 @@ class FluentField
         return $this;
     }
 
-    public function text(string $name, string $label = null, $value = null): FluentTextField
+    public function text(string $name, string $label = null, $value = null): FluentText
     {
         return $this->context->text($name, $label, $value);
     }
@@ -66,9 +66,9 @@ class FluentField
      * @param $value
      * @param string|null $label
      *
-     * @return FluentPasswordField
+     * @return FluentPassword
      */
-    public function password(string $name, string $label = null, $value = null): FluentPasswordField
+    public function password(string $name, string $label = null, $value = null): FluentPassword
     {
         return $this->context->password($name, $value, $label);
     }
@@ -78,9 +78,9 @@ class FluentField
      * @param $value
      * @param string|null $label
      *
-     * @return FluentTextareaField
+     * @return FluentTextarea
      */
-    public function textarea(string $name, string $label = null, $value = null): FluentTextareaField
+    public function textarea(string $name, string $label = null, $value = null): FluentTextarea
     {
         return $this->context->textarea($name, $value, $label);
 
@@ -91,9 +91,9 @@ class FluentField
      * @param $value
      * @param string|null $label
      *
-     * @return FluentHiddenField
+     * @return FluentHidden
      */
-    public function hidden(string $name, string $label = null, $value = null): FluentHiddenField
+    public function hidden(string $name, string $label = null, $value = null): FluentHidden
     {
         return $this->context->hidden($name, $value, $label);
     }
@@ -102,9 +102,10 @@ class FluentField
      * @param string $name
      * @param $value
      * @param string|null $label
-     * @return FluentNumberField
+     *
+     * @return FluentNumber
      */
-    public function number(string $name, string $label = null, $value = null): FluentNumberField
+    public function number(string $name, string $label = null, $value = null): FluentNumber
     {
         return $this->context->number($name, $value, $label);
     }
@@ -115,9 +116,9 @@ class FluentField
      * @param $value
      * @param string|null $label
      *
-     * @return FluentChoiceField
+     * @return FluentChoice
      */
-    public function select(string $name, Options $options, string $label = null, $value = null): FluentChoiceField
+    public function select(string $name, Options $options, string $label = null, $value = null): FluentChoice
     {
         return $this->context->select($name, $options, $value, $label);
     }
@@ -129,9 +130,9 @@ class FluentField
      * @param $value
      * @param string|null $label
      *
-     * @return FluentChoiceField
+     * @return FluentChoice
      */
-    public function selectMultiple(string $name, Options $options, string $label = null, $value = null): FluentChoiceField
+    public function selectMultiple(string $name, Options $options, string $label = null, $value = null): FluentChoice
     {
         return $this->context->selectMultiple($name, $options, $value, $label);
     }
@@ -142,9 +143,9 @@ class FluentField
      * @param $value
      * @param string|null $label
      *
-     * @return FluentRadioField
+     * @return FluentRadio
      */
-    public function radio(string $name, Options $options, string $label = null, $value = null): FluentRadioField
+    public function radio(string $name, Options $options, string $label = null, $value = null): FluentRadio
     {
         return $this->context->radio($name, $options, $value, $label);
     }
@@ -155,9 +156,9 @@ class FluentField
      * @param $value
      * @param string|null $label
      *
-     * @return FluentCheckboxField
+     * @return FluentCheckbox
      */
-    public function checkbox(string $name, Options $options, string $label = null, $value = null): FluentCheckboxField
+    public function checkbox(string $name, Options $options, string $label = null, $value = null): FluentCheckbox
     {
         return $this->context->checkbox($name, $options, $value, $label);
     }
@@ -166,9 +167,10 @@ class FluentField
      * @param string $name
      * @param $value
      * @param string|null $label
-     * @return FluentDateField
+     *
+     * @return FluentDate
      */
-    public function date(string $name, $label = null, $value = null): FluentDateField
+    public function date(string $name, $label = null, $value = null): FluentDate
     {
         return $this->context->date($name, $value, $label);
     }
@@ -177,9 +179,10 @@ class FluentField
      * @param string $name
      * @param $value
      * @param string|null $label
-     * @return FluentFileField
+     *
+     * @return FluentFile
      */
-    public function file(string $name, $value = null, $label = null): FluentFileField
+    public function file(string $name, $value = null, $label = null): FluentFile
     {
         return $this->context->file($name, $value, $label);
     }
