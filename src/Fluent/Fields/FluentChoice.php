@@ -12,6 +12,8 @@ class FluentChoice extends FluentField
     {
         $instance = new static();
 
-        return new Choice($type, $name, $options, $label, $value);
+        $instance->field = new Choice($type, $name, $options, $label, $value);
+
+        return $instance;
     }
 }

@@ -1,5 +1,6 @@
-<div class="{{ $attributes->get('container.class') }}">
-    <label for="{{ $field->getId() }}" class="control-label">
+<div class="col-md-12">
+
+    <label for="{{ $field->getId() }}">
         {{ $field->getLabel() }}
         @if($isRequired)
             <span class="required">*</span>
@@ -8,9 +9,9 @@
 
     <input
             type="text"
+            class="form-control"
+            name="{{ $field->getName() }}"
             id="{{ $field->getId() }}"
             value="{{ $field->getValue() }}"
-            class="{{ $attributes->get('class') }}"
-            placeholder="{{ $attributes->get('placeholder') }}"
-    >
+            placeholder="{{ $attributes->get('placeholder') }}">
 </div>

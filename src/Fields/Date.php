@@ -15,8 +15,6 @@ class Date extends AbstractField
     public function __construct(string $name, $value, string $label = null)
     {
         parent::__construct('date', $name, $value, $label);
-
-        return $this;
     }
 
     public static function makeFromArray(array $fieldData)

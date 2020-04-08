@@ -10,6 +10,9 @@ class Form extends Component
 {
     public IForm $form;
 
+    public string $header = '';
+    public string $footer = '';
+
     public function __construct(IForm $form)
     {
         $this->form = $form;
@@ -25,11 +28,19 @@ class Form extends Component
         return 5;
     }
 
+    public function action()
+    {
+        return $this->form->action ?? '';
+    }
+
     /**
      * @inheritDoc
      */
     public function render()
     {
-        return View::make('formz::components.form');
+        if (View::exists('formz::components.'.config('formz.style').'.form')) {
+            return View::make('formz::components.'.config('formz.style').'.form');
+        }
+        return View::make('formz::components.bootstrap4.form');
     }
 }

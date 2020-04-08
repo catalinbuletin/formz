@@ -55,8 +55,6 @@ class AbstractField implements IField
         $this->value = $value;
         $this->label = $label;
         $this->attributes = new Data($this->defaultAttributes());
-
-        return $this;
     }
 
     public function setId($id)

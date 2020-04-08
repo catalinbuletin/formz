@@ -37,6 +37,6 @@ class ServiceProvider extends LaravelServiceProvider
 
     public function register()
     {
-        # code...
+        $this->mergeConfigFrom(__DIR__.'/../config/formz.php', 'formz');
     }
 }

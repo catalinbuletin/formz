@@ -25,6 +25,9 @@ class Section extends Component
      */
     public function render()
     {
+        if (View::exists('formz::components.' . config('formz.style') . '.section')) {
+            return View::make('formz::components.' . config('formz.style') . '.section');
+        }
         return View::make('formz::components.section');
     }
 }
