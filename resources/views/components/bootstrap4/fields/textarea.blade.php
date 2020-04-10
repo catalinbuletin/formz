@@ -9,5 +9,6 @@
 
     <textarea
         class="form-control"
+        name="{{ $field->getName() }}"
         id="{{ $field->getId() }}">{{ $field->getValue() }}</textarea>
 </div>

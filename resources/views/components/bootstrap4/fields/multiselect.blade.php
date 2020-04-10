@@ -7,7 +7,10 @@
         @endif
     </label>
 
-    <select multiple class="form-control" id="{{ $field->getId() }}">
+    <select multiple
+            class="form-control"
+            name="{{ $field->getName() }}"
+            id="{{ $field->getId() }}">
         @foreach($field->getOptions() as $option)
             <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
         @endforeach

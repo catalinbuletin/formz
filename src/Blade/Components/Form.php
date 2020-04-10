@@ -10,12 +10,23 @@ class Form extends Component
 {
     public IForm $form;
 
+    public string $action = '';
+    public string $method = '';
+
     public string $header = '';
     public string $footer = '';
 
-    public function __construct(IForm $form)
+    /**
+     * Form constructor.
+     * @param IForm $form
+     * @param string|null $action
+     * @param string|null $method
+     */
+    public function __construct(IForm $form, ?string $action = null, ?string $method = null)
     {
         $this->form = $form;
+        $this->action = $action ?? '';
+        $this->method = $method ?? 'get';
     }
 
     public function sections()
@@ -26,11 +37,6 @@ class Form extends Component
     public function count()
     {
         return 5;
-    }
-
-    public function action()
-    {
-        return $this->form->action ?? '';
     }
 
     /**

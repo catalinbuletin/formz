@@ -10,6 +10,7 @@
     <input
         type="number"
         class="form-control"
+        name="{{ $field->getName() }}"
         id="{{ $field->getId() }}"
         value="{{ $field->getValue() }}"
         placeholder="{{ $attributes->get('placeholder') }}">

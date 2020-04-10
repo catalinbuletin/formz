@@ -10,6 +10,7 @@
     <input
         type="file"
         class="form-control-file"
+        name="{{ $field->getName() }}"
         id="{{ $field->getId() }}"
         value="{{ $field->getValue() }}"
         placeholder="{{ $attributes->get('placeholder') }}">

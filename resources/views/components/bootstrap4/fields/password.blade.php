@@ -10,6 +10,7 @@
     <input
         type="password"
         class="form-control"
+        name="{{ $field->getName() }}"
         id="{{ $field->getId() }}"
         value="{{ $field->getValue() }}"
         placeholder="{{ $attributes->get('placeholder') }}">
