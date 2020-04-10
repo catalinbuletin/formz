@@ -386,7 +386,7 @@ class AbstractField implements IField
 
         $transString = str_replace('_', '-', $label);
 
-        return trans("forms.fields.{$transString}");
+        return trans("fields.{$transString}");
     }
 
     /**

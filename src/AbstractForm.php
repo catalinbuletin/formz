@@ -61,7 +61,7 @@ abstract class AbstractForm implements \JsonSerializable
 
     public function validationRules(): array
     {
-        return [];
+        return $this->form->getValidationRules();
     }
 
     protected function build()

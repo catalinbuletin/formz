@@ -144,7 +144,7 @@ class Form implements IForm
     public function validate(Request $request)
     {
         return $request->validate(
-            $this->form->getFieldNames()
+            $this->getValidationRules()
         );
     }
 
@@ -305,20 +305,26 @@ class Form implements IForm
         $validationArray = [];
         $fields = $this->getRules();
 
-        foreach ($fields as $fieldName => $rules) {
-            $prefixedFieldName = $prefix ? "{$prefix}.{$fieldName}" : $fieldName;
-            $validationArray[$prefixedFieldName] = [];
-            foreach ($rules as $rule) {
-                // check if the rule is an array and if so, create a rule object out of it
-                if (!$rule instanceof IRule) {
-                    $rule = RulesLibrary::makeRule($rule['name'], $rule['params'] ?: []);
-                }
+        return $this->getRules();
 
-                $validationArray[$prefixedFieldName][] = $rule->__toString();
-            }
-        }
-
-        return $validationArray;
+        /**
+         *
+         * @todo - used with the UI Designer
+         */
+//        foreach ($fields as $fieldName => $rules) {
+//            $prefixedFieldName = $prefix ? "{$prefix}.{$fieldName}" : $fieldName;
+//            $validationArray[$prefixedFieldName] = [];
+//            foreach ($rules as $rule) {
+//                // check if the rule is an array and if so, create a rule object out of it
+//                if (!$rule instanceof IRule) {
+//                    $rule = RulesLibrary::makeRule($rule['name'], $rule['params'] ?: []);
+//                }
+//
+//                $validationArray[$prefixedFieldName][] = $rule->__toString();
+//            }
+//        }
+//
+//        return $validationArray;
     }
 
     /**
