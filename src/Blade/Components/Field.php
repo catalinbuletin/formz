@@ -30,6 +30,9 @@ class Field extends Component
      */
     public function render()
     {
+        if (View::exists("formz::components.".config('formz.style').".fields.{$this->field->getType()}")) {
+            return View::make("formz::components." . config('formz.style') . ".fields.{$this->field->getType()}");
+        }
         return View::make("formz::components.fields.{$this->field->getType()}");
     }
 }

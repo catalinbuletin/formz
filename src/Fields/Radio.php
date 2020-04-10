@@ -12,8 +12,6 @@ class Radio extends Choice
     public function __construct(string $name, Options $options, $value, string $label = null)
     {
         parent::__construct('radio', $name, $options, $value, $label);
-
-        return $this;
     }
 
     /**

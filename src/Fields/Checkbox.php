@@ -12,8 +12,6 @@ class Checkbox extends Choice
     public function __construct(string $name, Options $options, $value, string $label = null)
     {
         parent::__construct('checkbox', $name, $options, $value, $label);
-
-        return $this;
     }
 
     public static function makeFromArray(array $fieldData)

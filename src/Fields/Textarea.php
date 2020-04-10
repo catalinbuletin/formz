@@ -11,8 +11,6 @@ class Textarea extends AbstractField
     public function __construct(string $name, $value, string $label = null)
     {
         parent::__construct('textarea', $name, $value, $label);
-
-        return $this;
     }
 
     public function rows($value): Textarea

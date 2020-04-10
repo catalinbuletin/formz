@@ -7,8 +7,6 @@ class Text extends AbstractField
     public function __construct(string $name, string $value = null, string $label = null)
     {
         parent::__construct('text', $name, $value, $label);
-
-        return $this;
     }
 
     public static function makeFromArray(array $fieldData)

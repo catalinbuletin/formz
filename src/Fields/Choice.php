@@ -33,9 +33,7 @@ class Choice extends AbstractField
     {
         parent::__construct($type, $name, $value, $label);
 
-        $this->setOptions($options);
-
-        return $this;
+            $this->setOptions($options);
     }
 
     public static function makeFromArray(array $fieldData)
@@ -95,5 +93,13 @@ class Choice extends AbstractField
         }
 
         $this->options = $options->getOptions();
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 }

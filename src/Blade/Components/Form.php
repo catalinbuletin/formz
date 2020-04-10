@@ -10,9 +10,23 @@ class Form extends Component
 {
     public IForm $form;
 
-    public function __construct(IForm $form)
+    public string $action = '';
+    public string $method = '';
+
+    public string $header = '';
+    public string $footer = '';
+
+    /**
+     * Form constructor.
+     * @param IForm $form
+     * @param string|null $action
+     * @param string|null $method
+     */
+    public function __construct(IForm $form, ?string $action = null, ?string $method = null)
     {
         $this->form = $form;
+        $this->action = $action ?? '';
+        $this->method = $method ?? 'get';
     }
 
     public function sections()
@@ -30,6 +44,9 @@ class Form extends Component
      */
     public function render()
     {
-        return View::make('formz::components.form');
+        if (View::exists('formz::components.'.config('formz.style').'.form')) {
+            return View::make('formz::components.'.config('formz.style').'.form');
+        }
+        return View::make('formz::components.bootstrap4.form');
     }
 }

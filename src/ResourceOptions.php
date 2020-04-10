@@ -21,8 +21,6 @@ class ResourceOptions
         $this->name = $name;
         $this->label = $label;
         $this->availableConditionFields = $availableConditionFields;
-
-        return $this;
     }
 
     /**
