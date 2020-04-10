@@ -4,7 +4,7 @@ namespace Formz\Fields;
 
 class Text extends AbstractField
 {
-    public function __construct(string $name, $value, string $label = null)
+    public function __construct(string $name, string $value = null, string $label = null)
     {
         parent::__construct('text', $name, $value, $label);
 

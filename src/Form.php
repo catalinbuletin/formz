@@ -7,6 +7,7 @@ use Formz\Contracts\IRule;
 use Formz\Contracts\ISection;
 use Formz\Contracts\IWorkflow;
 use Formz\RulesLibrary;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Formz\Contracts\IForm;
 use Formz\WorkflowFactory;
@@ -138,6 +139,13 @@ class Form implements IForm
         unset($formData['sections']);
 
         return new static($sections, $formData);
+    }
+
+    public function validate(Request $request)
+    {
+        return $request->validate(
+            $this->form->getFieldNames()
+        );
     }
 
     /**

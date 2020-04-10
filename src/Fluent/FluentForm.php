@@ -17,6 +17,8 @@ class FluentForm
 {
     private \Formz\Contracts\IForm $form;
 
+    private function __construct() {}
+
     /**
      * @return FluentForm
      */
@@ -40,6 +42,13 @@ class FluentForm
 
         return $instance;
     }
+//
+//    public function model(Model $model)
+//    {
+//        $this->model = $model;
+//
+//        return $this;
+//    }
 
     /**
      * @param string|null $label

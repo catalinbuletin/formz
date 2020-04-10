@@ -2,10 +2,13 @@
 
 namespace Formz\Contracts;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 interface IForm extends \JsonSerializable
 {
+    public function validate(Request $request);
+
     /**
      * @param array $only
      * @return Collection|IField[]
