@@ -30,14 +30,14 @@ class Field extends Component
     {
         /** @var ViewErrorBag $errors */
         $errors = request()->session()->get('errors');
-        return $errors->isNotEmpty();
+        return $errors instanceof ViewErrorBag && $errors->has($this->field->getName());
     }
 
     public function errors(): array
     {
         /** @var ViewErrorBag $errors */
         $errors = request()->session()->get('errors');
-        return $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
+        return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
     }
 
     /**
