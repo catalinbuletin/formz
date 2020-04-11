@@ -1,15 +1,12 @@
 <div class="col-md-12">
 
-    <label>
-        {{ $field->getLabel() }}
-        @if($isRequired)
-            <span class="required">*</span>
-        @endif
-    </label>
+    <x-formz-label :label="$field->getLabel()"
+                   :for-id="$field->getId()"
+                   :is-required="$isRequired"></x-formz-label>
 
     @foreach($field->getOptions() as $option)
         <div class="form-check">
-            <input class="form-check-input"
+            <input class="form-check-input {{ $hasErrors ? 'is-invalid' : '' }}"
                    type="checkbox"
                    name="{{ $field->getName() }}"
                    id="{{ $field->getName() . '-' . $option['value'] }}"
@@ -19,4 +16,8 @@
             </label>
         </div>
     @endforeach
+
+    @if ($hasErrors)
+        <x-formz-error :errors="$errors"></x-formz-error>
+    @endif
 </div>

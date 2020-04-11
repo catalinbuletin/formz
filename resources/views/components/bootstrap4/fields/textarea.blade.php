@@ -1,14 +1,17 @@
 <div class="col-md-12">
 
-    <label for="{{ $field->getId() }}">
-        {{ $field->getLabel() }}
-        @if($isRequired)
-            <span class="required">*</span>
-        @endif
-    </label>
+    <x-formz-label :label="$field->getLabel()"
+                    :for-id="$field->getId()"
+                    :is-required="$isRequired"></x-formz-label>
 
     <textarea
-        class="form-control"
+        class="{{ $attributes->get('class') }} {{ $hasErrors ? 'is-invalid' : '' }}"
         name="{{ $field->getName() }}"
-        id="{{ $field->getId() }}">{{ $field->getValue() }}</textarea>
+        id="{{ $field->getId() }}"
+        placeholder="{{ $attributes->get('placeholder') }}"
+    >{{ $field->getValue() }}</textarea>
+
+    @if ($hasErrors)
+        <x-formz-error :errors="$errors"></x-formz-error>
+    @endif
 </div>

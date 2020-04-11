@@ -1,19 +1,17 @@
 <div class="{{ $attributes->get('container.class') }}">
-    <label for="{{ $field->getId() }}">
-        {{ $field->getLabel() }}
-        @if($isRequired)
-            <span class="required">*</span>
-        @endif
-    </label>
+    <x-formz-label :label="$field->getLabel()"
+                   :for-id="$field->getId()"
+                   :is-required="$isRequired"></x-formz-label>
 
     <input
             type="text"
-            class="{{ $attributes->get('class') }}"
+            class="{{ $attributes->get('class') }} {{ $hasErrors ? 'is-invalid' : '' }}"
             name="{{ $field->getName() }}"
             id="{{ $field->getId() }}"
             value="{{ old($field->getName(), $field->getValue()) }}"
-            placeholder="{{ $attributes->get('placeholder') }}"
-    >
+            placeholder="{{ $attributes->get('placeholder') }}">
 
-    <span class="error-message">{{ $errors->first($field->getName()) }}</span>
+    @if ($hasErrors)
+        <x-formz-error :errors="$errors"></x-formz-error>
+    @endif
 </div>

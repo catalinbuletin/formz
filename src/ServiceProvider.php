@@ -2,7 +2,9 @@
 
 namespace Formz;
 
+use Formz\Blade\Components\Error;
 use Formz\Blade\Components\Form;
+use Formz\Blade\Components\Label;
 use Formz\Blade\Components\Section;
 use Formz\Blade\Components\Field;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
@@ -32,6 +34,8 @@ class ServiceProvider extends LaravelServiceProvider
             Form::class,
             Section::class,
             Field::class,
+            Label::class,
+            Error::class,
         ]);
     }
 

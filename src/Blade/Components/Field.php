@@ -4,6 +4,7 @@ namespace Formz\Blade\Components;
 
 use Formz\Contracts\IField;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Component;
 
 class Field extends Component
@@ -23,6 +24,20 @@ class Field extends Component
     public function isRequired()
     {
         return in_array('required', $this->field->getRules());
+    }
+
+    public function hasErrors(): bool
+    {
+        /** @var ViewErrorBag $errors */
+        $errors = request()->session()->get('errors');
+        return $errors->isNotEmpty();
+    }
+
+    public function errors(): array
+    {
+        /** @var ViewErrorBag $errors */
+        $errors = request()->session()->get('errors');
+        return $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
     }
 
     /**
