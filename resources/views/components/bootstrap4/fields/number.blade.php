@@ -13,5 +13,9 @@
         name="{{ $field->getName() }}"
         id="{{ $field->getId() }}"
         value="{{ $field->getValue() }}"
-        placeholder="{{ $attributes->get('placeholder') }}">
+        placeholder="{{ $attributes->get('placeholder') }}"
+        min="{{ $attributes->get('min') }}"
+        max="{{ $attributes->get('max') }}"
+        step="{{ $attributes->get('step') }}"
+    >
 </div>
