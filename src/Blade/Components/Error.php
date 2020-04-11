@@ -2,24 +2,26 @@
 
 namespace Formz\Blade\Components;
 
+use Formz\Contracts\IField;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 
 class Error extends Component
 {
     public array $errors;
+    protected IField $field;
 
     /**
      * Error constructor.
+     *
+     * @param IField $field
      * @param string|array $errors
      */
-    public function __construct($errors)
+    public function __construct(IField $field, $errors)
     {
-        if (is_string($errors)) {
-            $this->errors = [$errors];
-        } else {
-            $this->errors = $errors;
-        }
+        $this->errors = is_string($errors) ? [$errors] : $errors;
+        $this->field = $field;
     }
 
 
@@ -28,9 +30,9 @@ class Error extends Component
      */
     public function render()
     {
-        if (View::exists("formz::components.".config('formz.style').".error")) {
-            return View::make("formz::components." . config('formz.style') . ".error");
-        }
-        return View::make("formz::components.error");
+        $component = sprintf("formz::components.%s.error", $this->field->getFormContext()->getTheme());
+        $default = sprintf("formz::components.%s.error", Config::get('theme'));
+
+        return View::exists($component) ? View::make($component) : View::make($default);
     }
 }

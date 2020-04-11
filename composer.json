@@ -12,10 +12,12 @@
     "require": {
         "php": ">=7.4",
         "dflydev/dot-access-data": "^2.0",
+        "illuminate/http": "^7.5",
         "illuminate/support": "^7.2",
         "illuminate/view": "^7.4",
         "symfony/finder": "^5.0",
-        "webmozart/assert": "^1.7"
+        "webmozart/assert": "^1.7",
+        "ext-json": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

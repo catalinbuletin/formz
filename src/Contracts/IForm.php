@@ -7,7 +7,30 @@ use Illuminate\Support\Collection;
 
 interface IForm extends \JsonSerializable
 {
+    /**
+     * @param array $data
+     * @return IForm
+     */
+    public function setValues(?array $data): IForm;
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function validate(Request $request);
+
+    /**
+     * @param string $theme
+     *
+     * @return mixed
+     */
+    public function setTheme(string $theme);
+
+    /**
+     * @return string
+     */
+    public function getTheme(): string;
 
     /**
      * @param array $only
@@ -81,12 +104,6 @@ interface IForm extends \JsonSerializable
      * @return mixed
      */
     public function addWorkflows(array $array): IForm;
-
-    /**
-     * @param array $data
-     * @return IForm
-     */
-    public function setValues(?array $data): IForm;
 
     /**
      * @return array

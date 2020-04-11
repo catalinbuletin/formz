@@ -71,39 +71,28 @@ interface IField extends \JsonSerializable
     public function required(): IField;
 
     /**
+     * @param int $value
+     *
      * @return IField
      */
-    public function wFull(): IField;
+    public function setCols(int $value): IField;
 
     /**
+     * @param ISection $section
+     *
      * @return IField
      */
-    public function w1p2(): IField;
+    public function setContext(ISection $section): IField;
 
     /**
-     * @return IField
+     * @return ISection
      */
-    public function w1p3(): IField;
+    public function getContext(): ISection;
 
     /**
-     * @return IField
+     * @return IForm
      */
-    public function w1p4(): IField;
-
-    /**
-     * @return IField
-     */
-    public function w1p6(): IField;
-
-    /**
-     * @return IField
-     */
-    public function w2p3(): IField;
-
-    /**
-     * @return IField
-     */
-    public function w3p4(): IField;
+    public function getFormContext(): IForm;
 
     /**
      * @return string

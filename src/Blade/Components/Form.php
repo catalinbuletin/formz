@@ -3,6 +3,7 @@
 namespace Formz\Blade\Components;
 
 use Formz\Contracts\IForm;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 
@@ -25,8 +26,8 @@ class Form extends Component
     public function __construct(IForm $form, ?string $action = null, ?string $method = null)
     {
         $this->form = $form;
-        $this->action = $action ?? '';
-        $this->method = $method ?? 'get';
+        $this->action = $action ?: '';
+        $this->method = $method ?: 'get';
     }
 
     public function sections()
@@ -34,19 +35,14 @@ class Form extends Component
         return $this->form->getSections();
     }
 
-    public function count()
-    {
-        return 5;
-    }
-
     /**
      * @inheritDoc
      */
     public function render()
     {
-        if (View::exists('formz::components.'.config('formz.style').'.form')) {
-            return View::make('formz::components.'.config('formz.style').'.form');
-        }
-        return View::make('formz::components.bootstrap4.form');
+        $component = sprintf("formz::components.%s.form", $this->form->getTheme());
+        $default = sprintf("formz::components.%s.form", Config::get('theme'));
+
+        return View::exists($component) ? View::make($component) : View::make($default);
     }
 }

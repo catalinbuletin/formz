@@ -37,6 +37,11 @@ interface ISection extends \JsonSerializable
     public function setContext(IForm $context);
 
     /**
+     * @return IForm
+     */
+    public function getContext(): IForm;
+
+    /**
      * @param array $only
      * @return Collection|IField[]
      */

@@ -3,6 +3,7 @@
 namespace Formz\Blade\Components;
 
 use Formz\Contracts\IField;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Component;
@@ -30,6 +31,7 @@ class Field extends Component
     {
         /** @var ViewErrorBag $errors */
         $errors = request()->session()->get('errors');
+
         return $errors instanceof ViewErrorBag && $errors->has($this->field->getName());
     }
 
@@ -37,6 +39,7 @@ class Field extends Component
     {
         /** @var ViewErrorBag $errors */
         $errors = request()->session()->get('errors');
+
         return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
     }
 
@@ -45,9 +48,11 @@ class Field extends Component
      */
     public function render()
     {
-        if (View::exists("formz::components.".config('formz.style').".fields.{$this->field->getType()}")) {
-            return View::make("formz::components." . config('formz.style') . ".fields.{$this->field->getType()}");
-        }
-        return View::make("formz::components.fields.{$this->field->getType()}");
+        $theme = $this->field->getFormContext()->getTheme();
+        $component = sprintf("formz::components.%s.fields.%s", $theme, $this->field->getType());
+
+        $default = sprintf("formz::components.%s.fields.%s", Config::get('theme'), $this->field->getType());
+
+        return View::exists($component) ? View::make($component) : View::make($default);
     }
 }

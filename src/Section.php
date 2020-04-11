@@ -5,8 +5,6 @@ namespace Formz;
 use Formz\Contracts\IField;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
-use Formz\Fields\Hidden;
-use Formz\Fields\Number as NumberField;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Formz\Fields\Checkbox;
@@ -41,7 +39,9 @@ class Section implements ISection
     {
         $this->uuid = $uuid;
         $this->label = $label;
-        $this->fields = new Collection($fields);
+        $this->fields = new Collection();
+
+        $this->addFields($fields);
     }
 
     public static function make(?string $label = null, ?array $fields = [])
@@ -70,6 +70,22 @@ class Section implements ISection
         return $this->label;
     }
 
+    /**
+     * @param IField[] $fields
+     *
+     * @return ISection
+     */
+    public function addFields(array $fields): ISection
+    {
+        /** @var IField $field */
+        foreach ($fields as $field) {
+            $field->setContext($this);
+            $this->addField($field);
+        }
+
+        return $this;
+    }
+
 
     /**
      * @param IField $field
@@ -78,6 +94,7 @@ class Section implements ISection
      */
     public function addField(IField $field): ISection
     {
+        $field->setContext($this);
         $this->fields->push($field);
 
         return $this;
@@ -119,6 +136,11 @@ class Section implements ISection
         return $this->fields->filter(function (IField $field) use ($only) {
             return in_array($field->getName(), $only);
         });
+    }
+
+    public function getContext(): IForm
+    {
+        return $this->context;
     }
 
 

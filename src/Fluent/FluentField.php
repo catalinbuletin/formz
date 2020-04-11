@@ -35,9 +35,9 @@ class FluentField
         return $this;
     }
 
-    public function w1in2()
+    public function cols(int $value)
     {
-        $this->field->w1p2();
+        $this->field->setCols($value);
 
         return $this;
     }

@@ -1,8 +1,6 @@
 <div class="col-md-12">
 
-    <x-formz-label :label="$field->getLabel()"
-                   :for-id="$field->getId()"
-                   :is-required="$isRequired"></x-formz-label>
+    <x-formz-label :field="$field"></x-formz-label>
 
     @foreach($field->getOptions() as $option)
         <div class="form-check">
@@ -10,7 +8,8 @@
                    type="checkbox"
                    name="{{ $field->getName() }}"
                    id="{{ $field->getName() . '-' . $option['value'] }}"
-                   value="{{ $option['value'] }}">
+                   value="{{ $option['value'] }}"
+            >
             <label class="form-check-label" for="{{ $field->getName() . '-' . $option['value'] }}">
                 {{ $option['label'] }}
             </label>
@@ -18,6 +17,6 @@
     @endforeach
 
     @if ($hasErrors)
-        <x-formz-error :errors="$errors"></x-formz-error>
+        <x-formz-error :field="$field" :errors="$errors"></x-formz-error>
     @endif
 </div>

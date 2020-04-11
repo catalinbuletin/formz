@@ -1,8 +1,6 @@
 <div class="col-md-12">
 
-    <x-formz-label :label="$field->getLabel()"
-                   :for-id="$field->getId()"
-                   :is-required="$isRequired"></x-formz-label>
+    <x-formz-label :field="$field"></x-formz-label>
 
     <input
         type="password"
@@ -12,9 +10,10 @@
         value="{{ $field->getValue() }}"
         placeholder="{{ $attributes->get('placeholder') }}"
         minlength="{{ $attributes->get('min') }}"
-        maxlength="{{ $attributes->get('max') }}">
+        maxlength="{{ $attributes->get('max') }}"
+    >
 
     @if ($hasErrors)
-        <x-formz-error :errors="$errors"></x-formz-error>
+        <x-formz-error :field="$field" :errors="$errors"></x-formz-error>
     @endif
 </div>

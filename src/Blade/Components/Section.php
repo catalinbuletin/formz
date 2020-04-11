@@ -3,6 +3,7 @@
 namespace Formz\Blade\Components;
 
 use Formz\Contracts\ISection;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 
@@ -25,9 +26,9 @@ class Section extends Component
      */
     public function render()
     {
-        if (View::exists('formz::components.' . config('formz.style') . '.section')) {
-            return View::make('formz::components.' . config('formz.style') . '.section');
-        }
-        return View::make('formz::components.section');
+        $component = sprintf("formz::components.%s.section", $this->section->getContext()->getTheme());
+        $default = sprintf("formz::components.%s.section", Config::get('theme'));
+
+        return View::exists($component) ? View::make($component) : View::make($default);
     }
 }

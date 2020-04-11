@@ -8,19 +8,23 @@ use Formz\Contracts\ISection;
 use Formz\Contracts\IWorkflow;
 use Formz\RulesLibrary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Formz\Contracts\IForm;
 use Formz\WorkflowFactory;
+use Illuminate\Support\Facades\Config;
 
 class Form implements IForm
 {
     protected ?string $name;
 
-    protected ?string $type;
-
     protected array $layout;
 
-    /** @var Collection|ISection[] */
+    protected string $theme;
+
+    /**
+     * @var Collection|ISection[]
+     */
     protected $sections = [];
 
     /**
@@ -31,14 +35,14 @@ class Form implements IForm
      */
     public function __construct(array $sections = [], array $config = [])
     {
-        $this->name = array_key_exists('name', $config) ? $config['name'] : null;
+        $this->name = Arr::get($config, 'name');
 
-        $this->type = 'dynamicForm';
-
-        $this->layout = array_key_exists('layout', $config) ? $config['layout'] : [
+        $this->layout = Arr::get($config, 'layout', [
             'type' => 'labelValue',
             'params' => []
-        ];
+        ]);
+
+        $this->theme = Arr::get($config, 'theme', Config::get('formz.theme'));
 
         $this->sections = new Collection();
 
@@ -54,13 +58,25 @@ class Form implements IForm
 
     /**
      * @param null|array $sections
-     * @param null|array $properties
+     * @param null|array $config
      *
      * @return Form
      */
-    public static function make(?array $sections = [], ?array $properties = [])
+    public static function make(?array $sections = [], ?array $config = [])
     {
-        return new static($sections, $properties);
+        return new static($sections, $config);
+    }
+
+    public function setTheme(string $theme): IForm
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    public function getTheme(): string
+    {
+        return $this->theme;
     }
 
     /**

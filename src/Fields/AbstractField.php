@@ -3,6 +3,8 @@
 namespace Formz\Fields;
 
 use Dflydev\DotAccessData\Data;
+use Formz\Contracts\IForm;
+use Formz\Contracts\ISection;
 use Formz\Rules\Required;
 use Illuminate\Support\Str;
 use Formz\Contracts\IField;
@@ -38,6 +40,8 @@ class AbstractField implements IField
     protected array $listeners = [];
 
     protected Data $attributes;
+
+    protected ISection $context;
 
     /**
      * Field constructor.
@@ -187,13 +191,41 @@ class AbstractField implements IField
      * Set field 'width' when using the grid system
      * Used to set the proper classes for our fields so that are responsive
      *
+     * @param int $cols
+     *
      * @return AbstractField
      */
-    public function cols(int $cols): IField
+    public function setCols(int $cols): IField
     {
         $this->width = $cols;
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setContext(ISection $section): IField
+    {
+        $this->context = $section;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getContext(): ISection
+    {
+        return $this->context;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFormContext(): IForm
+    {
+        return $this->context->getContext();
     }
 
     /**
