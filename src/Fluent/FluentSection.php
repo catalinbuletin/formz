@@ -50,7 +50,7 @@ class FluentSection
      *
      * @return FluentText
      */
-    public function text(string $name, string $label = null, $value = null): FluentText
+    public function text(string $name, $value = null, string $label = null): FluentText
     {
         $field = FluentText::make($name, $label, $value)->setContext($this);
 
@@ -66,7 +66,7 @@ class FluentSection
      *
      * @return FluentPassword
      */
-    public function password(string $name, string $label = null, $value = null): FluentPassword
+    public function password(string $name, $value = null, string $label = null): FluentPassword
     {
         $field =  FluentPassword::make($name, $value, $label)->setContext($this);
 
@@ -82,7 +82,7 @@ class FluentSection
      *
      * @return FluentTextarea
      */
-    public function textarea(string $name, string $label = null, $value = null): FluentTextarea
+    public function textarea(string $name, $value = null, string $label = null): FluentTextarea
     {
         $field =  FluentTextarea::make($name, $value, $label)->setContext($this);
 
@@ -99,7 +99,7 @@ class FluentSection
      *
      * @return FluentHidden
      */
-    public function hidden(string $name, string $label = null, $value = null): FluentHidden
+    public function hidden(string $name, $value = null, string $label = null): FluentHidden
     {
         $field =  FluentHidden::make($name, $value, $label)->setContext($this);
 
@@ -115,7 +115,7 @@ class FluentSection
      *
      * @return FluentNumber
      */
-    public function number(string $name, string $label = null, $value = null): FluentNumber
+    public function number(string $name, $value = null, string $label = null): FluentNumber
     {
         $field = FluentNumber::make($name, $value, $label)->setContext($this);
 
@@ -132,7 +132,7 @@ class FluentSection
      *
      * @return FluentChoice
      */
-    public function select(string $name, Options $options, string $label = null, $value = null): FluentChoice
+    public function select(string $name, Options $options, $value = null, string $label = null): FluentChoice
     {
         $type = 'select';
 
@@ -152,7 +152,7 @@ class FluentSection
      *
      * @return FluentChoice
      */
-    public function selectMultiple(string $name, Options $options, string $label = null, $value = null): FluentChoice
+    public function selectMultiple(string $name, Options $options, array $value = [], string $label = null): FluentChoice
     {
         $type = 'multiselect';
 
@@ -171,7 +171,7 @@ class FluentSection
      *
      * @return FluentRadio
      */
-    public function radio(string $name, Options $options, string $label = null, $value = null): FluentRadio
+    public function radio(string $name, Options $options, $value = null, string $label = null): FluentRadio
     {
         $field =  FluentRadio::make($name, $options, $value, $label)->setContext($this);
 
@@ -188,7 +188,7 @@ class FluentSection
      *
      * @return FluentCheckbox
      */
-    public function checkbox(string $name, Options $options, string $label = null, $value = null): FluentCheckbox
+    public function checkbox(string $name, Options $options, array $value = [], string $label = null): FluentCheckbox
     {
         $field =  FluentCheckbox::make($name, $options, $value, $label)->setContext($this);
 

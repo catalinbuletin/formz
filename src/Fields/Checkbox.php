@@ -21,7 +21,7 @@ class Checkbox extends Choice
         $field = new static(
             $fieldData['name'],
             $options,
-            $fieldData['value'] ?? null,
+            $fieldData['value'] ?? [],
             $fieldData['label'] ?? null
         );
 

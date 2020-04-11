@@ -350,7 +350,7 @@ class Form implements IForm
     {
         return [
             'name' => $this->name,
-            'type' => $this->type,
+            'theme' => $this->theme,
             'sections' => $this->sections,
             'layout' => $this->layout
         ];

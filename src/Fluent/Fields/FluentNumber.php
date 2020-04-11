@@ -7,11 +7,11 @@ use Formz\Fluent\FluentField;
 
 class FluentNumber extends FluentField
 {
-    public static function make(string $name, string $label = null, $value = null)
+    public static function make(string $name, $value = null, string $label = null)
     {
         $instance = new static();
 
-        $instance->field = new Number($name, $label, $value);
+        $instance->field = new Number($name, $value, $label);
 
         return $instance;
     }

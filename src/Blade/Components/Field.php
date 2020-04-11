@@ -33,10 +33,16 @@ class Field extends Component
      */
     public array $themeConfig;
 
+    /**
+     * @var string
+     */
+    private string $theme;
+
     public function __construct(Request $request, $field)
     {
         $this->request = $request;
         $this->field = $field;
+        $this->theme = $this->field->getFormContext()->getTheme();
         $this->fieldConfig = $this->fieldConfig();
         $this->themeConfig = $this->themeConfig();
     }
@@ -44,6 +50,15 @@ class Field extends Component
     public function attributes()
     {
         return $this->field->getAttributes();
+    }
+
+    public function input()
+    {
+        $dedicated = sprintf("formz::components.%s.inputs.%s", $this->theme, $this->field->getType());
+
+        $default = sprintf("formz::components.inputs.%s", $this->field->getType());
+
+        return View::exists($dedicated) ? $dedicated : $default;
     }
 
     public function inputClass()
@@ -94,29 +109,27 @@ class Field extends Component
      */
     public function render()
     {
-        $theme = $this->field->getFormContext()->getTheme();
-        $component = sprintf("formz::components.%s.fields.%s", $theme, $this->field->getType());
+        $dedicated = sprintf("formz::components.%s.field", $this->theme);
 
-        $default = sprintf("formz::components.%s.fields.%s", Config::get('theme'), $this->field->getType());
+        $default = 'formz::components.field';
 
-        return View::exists($component) ? View::make($component) : View::make($default);
+        return View::exists($dedicated) ? View::make($dedicated) : View::make($default);
     }
 
     private function fieldConfig()
     {
-        $theme = $this->field->getFormContext()->getTheme();
         $type = $this->field->getType();
 
-        $path = sprintf('formz.themes.%s.fields.%s', $theme, $type);
+        $dedicated = sprintf('formz.themes.%s.fields.%s', $this->theme, $type);
 
-        return Config::get($path, []);
+        $default = sprintf('formz.themes.%s.fields.default', $this->theme);
+
+        return Config::get($dedicated, Config::get($default));
     }
 
     private function themeConfig()
     {
-        $theme = $this->field->getFormContext()->getTheme();
-
-        $path = sprintf('formz.themes.%s', $theme);
+        $path = sprintf('formz.themes.%s', $this->theme);
 
         return Config::get($path);
     }

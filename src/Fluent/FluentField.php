@@ -56,9 +56,9 @@ class FluentField
         return $this;
     }
 
-    public function text(string $name, string $label = null, $value = null): FluentText
+    public function text(string $name, $value = null, string $label = null): FluentText
     {
-        return $this->context->text($name, $label, $value);
+        return $this->context->text($name, $value, $label);
     }
 
     /**
@@ -68,7 +68,7 @@ class FluentField
      *
      * @return FluentPassword
      */
-    public function password(string $name, string $label = null, $value = null): FluentPassword
+    public function password(string $name, $value = null, string $label = null): FluentPassword
     {
         return $this->context->password($name, $value, $label);
     }
@@ -80,7 +80,7 @@ class FluentField
      *
      * @return FluentTextarea
      */
-    public function textarea(string $name, string $label = null, $value = null): FluentTextarea
+    public function textarea(string $name, $value = null, string $label = null): FluentTextarea
     {
         return $this->context->textarea($name, $value, $label);
 
@@ -93,7 +93,7 @@ class FluentField
      *
      * @return FluentHidden
      */
-    public function hidden(string $name, string $label = null, $value = null): FluentHidden
+    public function hidden(string $name, $value = null, string $label = null): FluentHidden
     {
         return $this->context->hidden($name, $value, $label);
     }
@@ -105,7 +105,7 @@ class FluentField
      *
      * @return FluentNumber
      */
-    public function number(string $name, string $label = null, $value = null): FluentNumber
+    public function number(string $name, $value = null, string $label = null): FluentNumber
     {
         return $this->context->number($name, $value, $label);
     }
@@ -118,7 +118,7 @@ class FluentField
      *
      * @return FluentChoice
      */
-    public function select(string $name, Options $options, string $label = null, $value = null): FluentChoice
+    public function select(string $name, Options $options, $value = null, string $label = null): FluentChoice
     {
         return $this->context->select($name, $options, $value, $label);
     }
@@ -132,7 +132,7 @@ class FluentField
      *
      * @return FluentChoice
      */
-    public function selectMultiple(string $name, Options $options, string $label = null, $value = null): FluentChoice
+    public function selectMultiple(string $name, Options $options, array $value = [], string $label = null): FluentChoice
     {
         return $this->context->selectMultiple($name, $options, $value, $label);
     }
@@ -145,7 +145,7 @@ class FluentField
      *
      * @return FluentRadio
      */
-    public function radio(string $name, Options $options, string $label = null, $value = null): FluentRadio
+    public function radio(string $name, Options $options, $value = null, string $label = null): FluentRadio
     {
         return $this->context->radio($name, $options, $value, $label);
     }
@@ -158,7 +158,7 @@ class FluentField
      *
      * @return FluentCheckbox
      */
-    public function checkbox(string $name, Options $options, string $label = null, $value = null): FluentCheckbox
+    public function checkbox(string $name, Options $options, array $value = [], string $label = null): FluentCheckbox
     {
         return $this->context->checkbox($name, $options, $value, $label);
     }
