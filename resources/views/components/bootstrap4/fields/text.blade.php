@@ -3,10 +3,10 @@
 
     <input
             type="text"
-            class="{{ $inputClass }} {{ $hasErrors ? 'is-invalid' : '' }}"
+            class="{{ $inputClass }}"
             name="{{ $field->getName() }}"
             id="{{ $field->getId() }}"
-            value="{{ old($field->getName(), $field->getValue()) }}"
+            value="{{ $request->old($field->getName(), $field->getValue()) }}"
             placeholder="{{ $attributes->get('placeholder') }}"
     >
 

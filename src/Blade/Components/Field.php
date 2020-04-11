@@ -19,19 +19,19 @@ class Field extends Component
     /**
      * @var Request
      */
-    protected Request $request;
+    public Request $request;
 
     /**
      * Array containing config values for the specific field type of the used theme
      * @var array|mixed
      */
-    private array $fieldConfig;
+    public array $fieldConfig;
 
     /**
      * Array containing config values for the used theme
      * @var array|mixed
      */
-    private array $themeConfig;
+    public array $themeConfig;
 
     public function __construct(Request $request, $field)
     {
@@ -48,18 +48,24 @@ class Field extends Component
 
     public function inputClass()
     {
-        return $this->fieldConfig['input-class'] ?? '';
+        $classes[] = $this->fieldConfig['input-class'] ?? '';
+
+        if ($this->hasErrors()) {
+            $classes[] = 'is-invalid';
+        }
+
+        return implode(' ', $classes);
     }
 
     public function wrapperClass()
     {
-        $wrapperClasses[] = $this->fieldConfig['wrapper-class'] ?? '';
+        $classes[] = $this->fieldConfig['wrapper-class'] ?? '';
 
         foreach ($this->field->getCols() as $key => $col) {
-            $wrapperClasses[] = sprintf('%s%d', $this->themeConfig['grid-map'][$key], $col);
+            $classes[] = $this->themeConfig['grid-map'][$key] . $col;
         }
 
-        return implode(' ', $wrapperClasses);
+        return implode(' ', $classes);
     }
 
     public function isRequired()
