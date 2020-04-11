@@ -37,6 +37,13 @@ class AbstractField implements IField
 
     protected string $width = 'wFull';
 
+    protected array $cols = [
+        'xs' => 12,
+        'sm' => 12,
+        'md' => 12,
+        'lg' => 12
+    ];
+
     protected array $listeners = [];
 
     protected Data $attributes;
@@ -191,13 +198,25 @@ class AbstractField implements IField
      * Set field 'width' when using the grid system
      * Used to set the proper classes for our fields so that are responsive
      *
-     * @param int $cols
+     * @param int $xs
+     * @param int|null $sm
+     * @param int|null $md
+     * @param int|null $lg
      *
      * @return AbstractField
      */
-    public function setCols(int $cols): IField
+    public function setCols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null): IField
     {
-        $this->width = $cols;
+        $sm = $sm ?: $xs;
+        $md = $md ?: $sm;
+        $lg = $lg ?: $md;
+
+        $this->cols = [
+            'xs' => $xs,
+            'sm' => $sm,
+            'md' => $md,
+            'lg' => $lg
+        ];
 
         return $this;
     }
@@ -228,82 +247,6 @@ class AbstractField implements IField
         return $this->context->getContext();
     }
 
-    /**
-     * @return AbstractField
-     */
-    public function wFull(): IField
-    {
-        $this->width = 'wFull';
-        $this->attributes->set('container.class', 'col-xs-12');
-
-        return $this;
-    }
-
-    /**
-     * @return AbstractField
-     */
-    public function w1p2(): IField
-    {
-        $this->width = 'w1p2';
-        $this->attributes->set('container.class', 'col-xs-12 col-sm-6');
-
-        return $this;
-    }
-
-    /**
-     * @return AbstractField
-     */
-    public function w1p3(): IField
-    {
-        $this->width = 'w1p3';
-        $this->attributes->set('container.class', 'col-xs-12 col-sm-6 col-md-4');
-
-        return $this;
-    }
-
-    /**
-     * @return AbstractField
-     */
-    public function w1p4(): IField
-    {
-        $this->width = 'w1p4';
-        $this->attributes->set('container.class', 'col-xs-12 col-sm-6 col-md-3');
-
-        return $this;
-    }
-
-    /**
-     * @return AbstractField
-     */
-    public function w1p6(): IField
-    {
-        $this->width = 'w1p6';
-        $this->attributes->set('container.class', 'col-xs-12 col-sm-6 col-md-2');
-
-        return $this;
-    }
-
-    /**
-     * @return AbstractField
-     */
-    public function w2p3(): IField
-    {
-        $this->width = 'w2p3';
-        $this->attributes->set('container.class', 'col-xs-12 col-sm-8 col-md-8');
-
-        return $this;
-    }
-
-    /**
-     * @return AbstractField
-     */
-    public function w3p4(): IField
-    {
-        $this->width = 'w3p4';
-        $this->attributes->set('container.class', 'col-xs-12 col-sm-9 col-md-9');
-
-        return $this;
-    }
 
     /**
      * @return string
@@ -356,6 +299,11 @@ class AbstractField implements IField
     public function getRules(): array
     {
         return $this->rules;
+    }
+
+    public function getCols(): array
+    {
+        return $this->cols;
     }
 
     public function jsonSerialize()

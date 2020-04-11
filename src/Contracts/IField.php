@@ -71,11 +71,14 @@ interface IField extends \JsonSerializable
     public function required(): IField;
 
     /**
-     * @param int $value
+     * @param int $xs
+     * @param int|null $sm
+     * @param int|null $md
+     * @param int|null $lg
      *
      * @return IField
      */
-    public function setCols(int $value): IField;
+    public function setCols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null): IField;
 
     /**
      * @param ISection $section
@@ -117,6 +120,11 @@ interface IField extends \JsonSerializable
      * @return mixed
      */
     public function getRules();
+
+    /**
+     * @return array
+     */
+    public function getCols();
 
     /**
      * @return mixed

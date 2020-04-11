@@ -1,9 +1,9 @@
-<div class="{{ $attributes->get('container.class') }}">
+<div class="{{ $wrapperClass }}">
     <x-formz-label :field="$field"></x-formz-label>
 
     <input
             type="text"
-            class="{{ $attributes->get('class') }} {{ $hasErrors ? 'is-invalid' : '' }}"
+            class="{{ $inputClass }} {{ $hasErrors ? 'is-invalid' : '' }}"
             name="{{ $field->getName() }}"
             id="{{ $field->getId() }}"
             value="{{ old($field->getName(), $field->getValue()) }}"
