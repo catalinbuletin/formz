@@ -1,8 +1,6 @@
 <?php
 
 return [
-    'style' => 'bootstrap4',
-
     'theme' => 'foundation',
 
     'themes' => [
