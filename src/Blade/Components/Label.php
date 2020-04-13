@@ -31,6 +31,17 @@ class Label extends Component
         return in_array('required', $this->field->getRules());
     }
 
+    public function labelClass()
+    {
+        $classes[] = $this->fieldConfig['wrapper-class'] ?? '';
+
+        foreach ($this->field->getCols() as $key => $col) {
+            $classes[] = $this->themeConfig['grid-map'][$key] . $col;
+        }
+
+        return implode(' ', $classes);
+    }
+
     /**
      * @inheritDoc
      */

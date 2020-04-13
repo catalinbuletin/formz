@@ -63,10 +63,14 @@ class Field extends Component
 
     public function inputClass()
     {
-        $classes[] = $this->fieldConfig['input-class'] ?? '';
+        $classes = [$this->fieldConfig['input-class'] ?? ''];
 
         if ($this->hasErrors()) {
             $classes[] = 'is-invalid';
+        }
+
+        if ($this->hasErrors()) {
+            $classes[] = $this->themeConfig['error-class']['input'];
         }
 
         return implode(' ', $classes);
@@ -74,13 +78,28 @@ class Field extends Component
 
     public function wrapperClass()
     {
-        $classes[] = $this->fieldConfig['wrapper-class'] ?? '';
+        $classes = [$this->fieldConfig['wrapper-class'] ?? ''];
 
         foreach ($this->field->getCols() as $key => $col) {
             $classes[] = $this->themeConfig['grid-map'][$key] . $col;
         }
 
-        return implode(' ', $classes);
+        if ($this->hasErrors()) {
+            $classes[] = $this->themeConfig['error-class']['wrapper'];
+        }
+
+        return trim(implode(' ', $classes));
+    }
+
+    public function labelClass()
+    {
+        $classes = [$this->fieldConfig['label-class'] ?? ''];
+
+        if ($this->hasErrors()) {
+            $classes[] = $this->themeConfig['error-class']['label'];
+        }
+
+        return trim(implode(' ', $classes));
     }
 
     public function isRequired()
