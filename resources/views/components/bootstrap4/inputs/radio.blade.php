@@ -1,5 +1,5 @@
 @foreach($field->getOptions() as $option)
-    <div class="form-check">
+    <div class="custom-control custom-radio">
         <input class="{{ $inputClass }}"
                type="radio"
                name="{{ $field->getName() }}"
@@ -7,7 +7,7 @@
                value="{{ $option['value'] }}"
                {{ $request->old($field->getName()) === $option['value'] ? "checked" : "" }}
         >
-        <label class="form-check-label" for="{{ $field->getName() . '-' . $option['value'] }}">
+        <label class="custom-control-label" for="{{ $field->getName() . '-' . $option['value'] }}">
             {{ $option['label'] }}
         </label>
     </div>

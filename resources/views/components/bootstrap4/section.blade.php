@@ -9,13 +9,3 @@
         <x-formz-field :field="$field"></x-formz-field>
     @endforeach
 </div>
-
-<style>
-    .formz-section {
-        margin-bottom: 30px;
-    }
-
-    .formz__section-name {
-        margin-bottom: 15px;
-    }
-</style>

@@ -1,9 +1,16 @@
 <div class="{{ $wrapperClass }}">
-    <x-formz-label :field="$field"></x-formz-label>
+    <label class="{{ $labelClass }}" for="{{ $field->getId() }}">
+        {{ $field->getLabel() }}
+        @if($isRequired)
+            <span class="required">*</span>
+        @endif
+    </label>
 
     @include($input)
 
     @if ($hasErrors)
-        <x-formz-error :field="$field" :errors="$errors"></x-formz-error>
+        <div class="invalid-feedback">
+            {{ $errors ? $errors[0] : '' }}
+        </div>
     @endif
 </div>
