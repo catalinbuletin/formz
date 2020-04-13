@@ -3,7 +3,7 @@
 return [
     'style' => 'bootstrap4',
 
-    'theme' => 'bootstrap4',
+    'theme' => 'foundation',
 
     'themes' => [
         'bootstrap4' => [
@@ -42,6 +42,46 @@ return [
                     'label-class' => '',
                     'input-class' => 'form-control-file',
                     'wrapper-class' => 'form-group'
+                ],
+            ],
+        ],
+
+        'foundation' => [
+
+            'form-class' => '',
+
+            'section-class' => 'form-row',
+
+            'grid-map' => [
+                'xs' => 'small-',
+                'sm' => 'medium-',
+                'md' => 'large-',
+                'lg' => 'large-',
+            ],
+
+            'fields' => [
+                'default' => [
+                    'label-class' => '',
+                    'input-class' => '',
+                    'wrapper-class' => 'cell'
+                ],
+
+                'radio' => [
+                    'label-class' => '',
+                    'input-class' => '',
+                    'wrapper-class' => 'cell'
+                ],
+
+                'checkbox' => [
+                    'label-class' => '',
+                    'input-class' => '',
+                    'wrapper-class' => 'cell'
+                ],
+
+                'file' => [
+                    'label-class' => '',
+                    'input-class' => '',
+                    'wrapper-class' => 'cell'
                 ],
             ],
         ]
