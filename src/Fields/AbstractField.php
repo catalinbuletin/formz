@@ -195,15 +195,15 @@ class AbstractField implements IField
      * Set field 'width' when using the grid system
      * Used to set the proper classes for our fields so that are responsive
      *
-     * @param int $xs
-     * @param int|null $sm
-     * @param int|null $md
-     * @param int|null $lg
-     * @param int|null $xlg
+     * @param int|string $xs
+     * @param int|string|null $sm
+     * @param int|string|null $md
+     * @param int|string|null $lg
+     * @param int|string|null $xlg
      *
      * @return AbstractField
      */
-    public function setCols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null, ?int $xlg = null): IField
+    public function setCols($xs, $sm = null, $md = null, $lg = null, $xlg = null): IField
     {
 //        $sm = $sm ?: $xs;
 //        $md = $md ?: $sm;
