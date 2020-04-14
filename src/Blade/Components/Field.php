@@ -34,9 +34,6 @@ class Field extends Component
      */
     public array $themeConfig;
 
-    /**
-     * @var string
-     */
     private string $theme;
 
     public function __construct(Request $request, $field)
@@ -81,11 +78,11 @@ class Field extends Component
     {
         $classes = [$this->fieldConfig['wrapper-class'] ?? ''];
 
-        foreach ($this->field->getCols() as $key => $col) {
+        foreach ($this->themeConfig['grid-map'] as $key => $col) {
+            $fieldCol = $this->field->getCols()[$key] ?? null;
+            $lastUsedCol = $fieldCol ?? 12;
             if (Str::contains($this->themeConfig['grid-map'][$key], '%s')) {
-                if ($col) {
-                    $classes[] = sprintf($this->themeConfig['grid-map'][$key], $col);
-                }
+                $classes[] = sprintf($this->themeConfig['grid-map'][$key], $fieldCol ?? $lastUsedCol);
             } else {
                 $classes[] = $this->themeConfig['grid-map'][$key] . $col;
             }

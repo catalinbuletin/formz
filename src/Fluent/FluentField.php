@@ -35,9 +35,9 @@ class FluentField
         return $this;
     }
 
-    public function cols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null)
+    public function cols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null, ?int $xlg = null)
     {
-        $this->field->setCols($xs, $sm, $md, $lg);
+        $this->field->setCols($xs, $sm, $md, $lg, $xlg);
 
         return $this;
     }

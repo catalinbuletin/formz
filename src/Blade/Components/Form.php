@@ -18,6 +18,14 @@ class Form extends Component
     public string $footer = '';
 
     /**
+     * Array containing config values for the used theme
+     * @var array|mixed
+     */
+    public array $themeConfig;
+
+    private string $theme;
+
+    /**
      * Form constructor.
      * @param IForm $form
      * @param string|null $action
@@ -28,11 +36,18 @@ class Form extends Component
         $this->form = $form;
         $this->action = $action ?: '';
         $this->method = $method ?: 'get';
+        $this->theme = $this->form->getTheme();
+        $this->themeConfig = $this->themeConfig();
     }
 
     public function sections()
     {
         return $this->form->getSections();
+    }
+
+    public function formClass()
+    {
+        return $this->themeConfig['form-class'];
     }
 
     /**
@@ -44,5 +59,14 @@ class Form extends Component
         $default = sprintf("formz::components.%s.form", Config::get('theme'));
 
         return View::exists($component) ? View::make($component) : View::make($default);
+    }
+
+    private function themeConfig()
+    {
+        $path = sprintf('formz.themes.%s', $this->theme);
+
+        dd($path);
+
+        return Config::get($path);
     }
 }

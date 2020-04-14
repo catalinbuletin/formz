@@ -1,4 +1,4 @@
-<div class="grid-x grid-padding-x">
+<div class="formz-section {{ $sectionClass }}">
     @if($section->getLabel())
         <div class="small-12 cell">
             <div class="formz__section-name">{{ $section->getLabel() }}</div>

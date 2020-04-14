@@ -199,10 +199,11 @@ class AbstractField implements IField
      * @param int|null $sm
      * @param int|null $md
      * @param int|null $lg
+     * @param int|null $xlg
      *
      * @return AbstractField
      */
-    public function setCols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null): IField
+    public function setCols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null, ?int $xlg = null): IField
     {
 //        $sm = $sm ?: $xs;
 //        $md = $md ?: $sm;
@@ -220,6 +221,7 @@ class AbstractField implements IField
         if ($sm) $this->cols['sm'] = $sm;
         if ($md) $this->cols['md'] = $md;
         if ($lg) $this->cols['lg'] = $lg;
+        if ($xlg) $this->cols['xlg'] = $xlg;
 
         return $this;
     }

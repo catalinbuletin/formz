@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'theme' => 'foundation',
+    'theme' => 'bulma',
 
     'themes' => [
         'bootstrap4' => [
@@ -67,14 +67,14 @@ return [
 
             'form-class' => '',
 
-            'section-class' => 'form-row',
+            'section-class' => 'grid-x grid-padding-x',
 
             'grid-map' => [
                 'xs' => 'small-',
                 'sm' => 'medium-',
                 'md' => 'large-',
                 'lg' => 'large-',
-                'xlg' => 'column is-'
+                'xlg' => 'large-'
             ],
 
             'fields' => [
@@ -114,57 +114,57 @@ return [
 
             'form-class' => '',
 
-            'section-class' => 'columns is-multiline',
+            'section-class' => 'columns is-multiline is-mobile',
 
             'grid-map' => [
-                'xs' => 'column is-%s-mobile',
-                'sm' => 'column is-%s-tablet',
-                'md' => 'column is-%s-desktop',
-                'lg' => 'column is-%s-widescreen',
-                'xlg' => 'column is-%s-fullhd'
+                'xs' => 'is-%s-mobile',
+                'sm' => 'is-%s-tablet',
+                'md' => 'is-%s-desktop',
+                'lg' => 'is-%s-widescreen',
+                'xlg' => 'is-%s-fullhd'
             ],
 
             'fields' => [
                 'default' => [
                     'label-class' => 'label',
                     'input-class' => 'input',
-                    'wrapper-class' => 'field'
+                    'wrapper-class' => 'field column'
                 ],
 
                 'textarea' => [
                     'label-class' => 'label',
                     'input-class' => 'textarea',
-                    'wrapper-class' => 'field'
+                    'wrapper-class' => 'field column'
                 ],
 
                 'select' => [
                     'label-class' => 'label',
                     'input-class' => '',
-                    'wrapper-class' => 'field'
+                    'wrapper-class' => 'field column'
                 ],
 
                 'multiselect' => [
                     'label-class' => 'label',
                     'input-class' => '',
-                    'wrapper-class' => 'field'
+                    'wrapper-class' => 'field column'
                 ],
 
                 'checkbox' => [
                     'label-class' => 'label',
                     'input-class' => '',
-                    'wrapper-class' => 'field'
+                    'wrapper-class' => 'field column'
                 ],
 
                 'radio' => [
                     'label-class' => 'label',
                     'input-class' => '',
-                    'wrapper-class' => 'field'
+                    'wrapper-class' => 'field column'
                 ],
 
                 'file' => [
                     'label-class' => 'label',
                     'input-class' => 'file-input',
-                    'wrapper-class' => 'field'
+                    'wrapper-class' => 'field column'
                 ],
             ],
 

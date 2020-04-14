@@ -75,10 +75,11 @@ interface IField extends \JsonSerializable
      * @param int|null $sm
      * @param int|null $md
      * @param int|null $lg
+     * @param int|null $xlg
      *
      * @return IField
      */
-    public function setCols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null): IField;
+    public function setCols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null, ?int $xlg = null): IField;
 
     /**
      * @param ISection $section

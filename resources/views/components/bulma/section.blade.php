@@ -1,4 +1,4 @@
-<div class="formz-section columns is-multiline is-mobile">
+<div class="formz-section {{ $sectionClass }}">
     @if($section->getLabel())
         <div class="column is-12">
             <div class="formz__section-name">{{ $section->getLabel() }}</div>
