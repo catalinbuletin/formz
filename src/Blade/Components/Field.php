@@ -81,11 +81,7 @@ class Field extends Component
         foreach ($this->themeConfig['grid-map'] as $key => $col) {
             $fieldCol = $this->field->getCols()[$key] ?? null;
             $lastUsedCol = $fieldCol ?? 12;
-            if (Str::contains($this->themeConfig['grid-map'][$key], '%s')) {
-                $classes[] = sprintf($this->themeConfig['grid-map'][$key], $fieldCol ?? $lastUsedCol);
-            } else {
-                $classes[] = $this->themeConfig['grid-map'][$key] . $col;
-            }
+            $classes[] = sprintf($this->themeConfig['grid-map'][$key], $fieldCol ?? $lastUsedCol);
         }
 
         if ($this->hasErrors()) {

@@ -11,11 +11,11 @@ return [
             'section-class' => 'form-row',
 
             'grid-map' => [
-                'xs' => 'col-',
-                'sm' => 'col-sm-',
-                'md' => 'col-md-',
-                'lg' => 'col-lg-',
-                'xlg' => 'col-xlg-'
+                'xs' => 'col-%s',
+                'sm' => 'col-sm-%s',
+                'md' => 'col-md-%s',
+                'lg' => 'col-lg-%s',
+                'xlg' => 'col-xlg-%s'
             ],
 
             'fields' => [
@@ -70,11 +70,11 @@ return [
             'section-class' => 'grid-x grid-padding-x',
 
             'grid-map' => [
-                'xs' => 'small-',
-                'sm' => 'medium-',
-                'md' => 'large-',
-                'lg' => 'large-',
-                'xlg' => 'large-'
+                'xs' => 'small-%s',
+                'sm' => 'medium-%s',
+                'md' => 'large-%s',
+                'lg' => 'large-%s',
+                'xlg' => 'large-%s'
             ],
 
             'fields' => [

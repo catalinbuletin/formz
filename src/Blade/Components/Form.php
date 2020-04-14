@@ -65,8 +65,6 @@ class Form extends Component
     {
         $path = sprintf('formz.themes.%s', $this->theme);
 
-        dd($path);
-
         return Config::get($path);
     }
 }
