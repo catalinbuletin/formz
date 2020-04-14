@@ -11,6 +11,8 @@
     </div>
 
     @if ($hasErrors)
-        <x-formz-error :field="$field" :errors="$errors"></x-formz-error>
+        <p class="help is-danger">
+            {{ $errors ? $errors[0] : '' }}
+        </p>
     @endif
 </div>

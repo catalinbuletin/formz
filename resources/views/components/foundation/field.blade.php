@@ -4,13 +4,13 @@
         @if($isRequired)
             <span class="required">*</span>
         @endif
+
+        @include($input)
+
+        @if ($hasErrors)
+            <span class="form-error is-visible">
+                {{ $errors ? $errors[0] : '' }}
+            </span>
+        @endif
     </label>
-
-    @include($input)
-
-    @if ($hasErrors)
-        <div class="invalid-feedback">
-            {{ $errors ? $errors[0] : '' }}
-        </div>
-    @endif
 </div>

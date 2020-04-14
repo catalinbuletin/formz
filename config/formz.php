@@ -1,9 +1,7 @@
 <?php
 
 return [
-    'style' => 'bootstrap4',
-
-    'theme' => 'bulma',
+    'theme' => 'foundation',
 
     'themes' => [
         'bootstrap4' => [
@@ -27,21 +25,33 @@ return [
                     'wrapper-class' => 'form-group'
                 ],
 
+                'select' => [
+                    'label-class' => '',
+                    'input-class' => 'custom-select',
+                    'wrapper-class' => 'form-group'
+                ],
+
+                'multiselect' => [
+                    'label-class' => '',
+                    'input-class' => 'custom-select',
+                    'wrapper-class' => 'form-group'
+                ],
+
                 'radio' => [
                     'label-class' => '',
-                    'input-class' => 'form-check-input',
+                    'input-class' => 'custom-control-input',
                     'wrapper-class' => 'form-group'
                 ],
 
                 'checkbox' => [
                     'label-class' => '',
-                    'input-class' => 'form-check-input',
+                    'input-class' => 'custom-control-input',
                     'wrapper-class' => 'form-group'
                 ],
 
                 'file' => [
                     'label-class' => '',
-                    'input-class' => 'form-control-file',
+                    'input-class' => 'control-file-input',
                     'wrapper-class' => 'form-group'
                 ],
             ],
@@ -50,6 +60,53 @@ return [
                 'input' => 'is-invalid',
                 'wrapper' => '',
                 'label' => ''
+            ]
+        ],
+
+        'foundation' => [
+
+            'form-class' => '',
+
+            'section-class' => 'form-row',
+
+            'grid-map' => [
+                'xs' => 'small-',
+                'sm' => 'medium-',
+                'md' => 'large-',
+                'lg' => 'large-',
+                'xlg' => 'column is-'
+            ],
+
+            'fields' => [
+                'default' => [
+                    'label-class' => '',
+                    'input-class' => '',
+                    'wrapper-class' => 'cell'
+                ],
+
+                'radio' => [
+                    'label-class' => '',
+                    'input-class' => '',
+                    'wrapper-class' => 'cell'
+                ],
+
+                'checkbox' => [
+                    'label-class' => '',
+                    'input-class' => '',
+                    'wrapper-class' => 'cell'
+                ],
+
+                'file' => [
+                    'label-class' => '',
+                    'input-class' => '',
+                    'wrapper-class' => 'cell'
+                ],
+            ],
+
+            'error-class' => [
+                'input' => 'is-invalid-input',
+                'wrapper' => '',
+                'label' => 'is-invalid-label'
             ]
         ],
 
