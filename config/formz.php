@@ -57,14 +57,14 @@ return [
 
             'form-class' => '',
 
-            'section-class' => 'columns',
+            'section-class' => 'columns is-multiline',
 
             'grid-map' => [
-                'xs' => 'column is-',
-                'sm' => 'column is-',
-                'md' => 'column is-',
-                'lg' => 'column is-',
-                'xlg' => 'column is-'
+                'xs' => 'column is-%s-mobile',
+                'sm' => 'column is-%s-tablet',
+                'md' => 'column is-%s-desktop',
+                'lg' => 'column is-%s-widescreen',
+                'xlg' => 'column is-%s-fullhd'
             ],
 
             'fields' => [

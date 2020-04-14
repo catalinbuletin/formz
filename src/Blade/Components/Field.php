@@ -6,6 +6,7 @@ use Formz\Contracts\IField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Component;
 
@@ -81,7 +82,13 @@ class Field extends Component
         $classes = [$this->fieldConfig['wrapper-class'] ?? ''];
 
         foreach ($this->field->getCols() as $key => $col) {
-            $classes[] = $this->themeConfig['grid-map'][$key] . $col;
+            if (Str::contains($this->themeConfig['grid-map'][$key], '%s')) {
+                if ($col) {
+                    $classes[] = sprintf($this->themeConfig['grid-map'][$key], $col);
+                }
+            } else {
+                $classes[] = $this->themeConfig['grid-map'][$key] . $col;
+            }
         }
 
         if ($this->hasErrors()) {
