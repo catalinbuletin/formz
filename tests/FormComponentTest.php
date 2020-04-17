@@ -3,7 +3,6 @@
 
 use Formz\Blade\Components\Form;
 use Formz\Contracts\IForm;
-use Formz\Fluent\FluentForm;
 use Illuminate\Support\Facades\Config;
 
 class FormComponentTest extends \Orchestra\Testbench\TestCase
@@ -14,7 +13,7 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
     }
 
     /** @test */
-    public function form_component_has_action_and_method()
+    public function a_form_component_has_action_and_method()
     {
         $formComponent = new Form($this->mockForm(), '/action', 'post');
 
@@ -23,7 +22,7 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
     }
 
     /** @test */
-    public function form_component_has_form_class()
+    public function a_form_component_has_form_class()
     {
         Config::shouldReceive('get')->with('formz.themes.bootstrap4')
                 ->andReturn([
@@ -36,7 +35,7 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
     }
 
     /** @test */
-    public function form_component_has_collection_of_sections()
+    public function a_form_component_has_collection_of_sections()
     {
         $formComponent = new Form($this->mockForm());
 
