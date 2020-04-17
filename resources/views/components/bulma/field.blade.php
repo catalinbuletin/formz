@@ -6,8 +6,13 @@
         @endif
     </label>
 
-    <div class="control">
+    <div class="control {{ $hasErrors ? 'has-icons-right' : '' }}">
         @include($input)
+        @if ($hasErrors)
+            <span class="icon is-small is-right">
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+        @endif
     </div>
 
     @if ($hasErrors)

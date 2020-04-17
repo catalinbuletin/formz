@@ -2,8 +2,13 @@
 
 use Formz\Fluent\FluentForm;
 
-class FluentFormTest extends PHPUnit\Framework\TestCase
+class FluentFormTest extends \Orchestra\Testbench\TestCase
 {
+    protected function getPackageProviders($app)
+    {
+        return ['Formz\FormzServiceProvider'];
+    }
+
     public function testFluent()
     {
         $builder = FluentForm::make()
@@ -21,9 +26,9 @@ class FluentFormTest extends PHPUnit\Framework\TestCase
         $form = $builder->get();
 
         $this->assertCount(3, $form->getSections());
-        $this->assertCount(6, $form->getFields());
+        $this->assertCount(7, $form->getFields());
 
-        $this->assertArrayHasKey('name', $form->getFieldNames(true));
+        $this->assertArrayHasKey('firstName', $form->getFieldNames(true));
         $this->assertArrayHasKey('email', $form->getFieldNames(true));
     }
 }

@@ -4,8 +4,13 @@ use Formz\Field;
 use Formz\Form;
 use Formz\Section;
 
-class BuildFormTest extends PHPUnit\Framework\TestCase
+class BuildFormTest extends \Orchestra\Testbench\TestCase
 {
+    protected function getPackageProviders($app)
+    {
+        return ['Formz\FormzServiceProvider'];
+    }
+
     public function testMake()
     {
         $emptyForm = Form::make();
@@ -72,8 +77,8 @@ class BuildFormTest extends PHPUnit\Framework\TestCase
 
         $section = Section::make('Detaii Personale');
         $section->addField(Field::text('name', 'Name'));
-        $section->addField(Field::text('username', 'Username')->w1p2());
-        $section->addField(Field::password('password', 'Password')->w1p2());
+        $section->addField(Field::text('username', 'Username'));
+        $section->addField(Field::password('password', 'Password'));
 
         $form->addSection($section);
 
