@@ -3,7 +3,11 @@
     "authors": [
         {
             "name": "Catalin Buletin",
-            "email": "sanateria@gmail.coom"
+            "email": "sanateria@gmail.com"
+        },
+        {
+            "name": "Costin Moraru",
+            "email": "costinmoraru1989@gmail.com"
         }
     ],
     "description": "Build forms in a fluent and easy way",
@@ -12,9 +16,9 @@
     "require": {
         "php": ">=7.4",
         "dflydev/dot-access-data": "^2.0",
-        "illuminate/http": "^7.5",
-        "illuminate/support": "^7.2",
-        "illuminate/view": "^7.4",
+        "illuminate/http": "^7.0",
+        "illuminate/support": "^7.0",
+        "illuminate/view": "^7.0",
         "symfony/finder": "^5.0",
         "webmozart/assert": "^1.7",
         "ext-json": "*"
@@ -31,10 +35,7 @@
         ],
         "psr-4": {
             "Formz\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

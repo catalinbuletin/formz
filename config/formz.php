@@ -1,7 +1,11 @@
 <?php
 
 return [
-    'theme' => 'bulma',
+    'theme' => 'foundation',
+
+    'error-message' => [
+        'display-all-errors' => true,
+    ],
 
     'themes' => [
         'bootstrap4' => [

@@ -1,7 +1,7 @@
 <?php
 
 
-use Formz\Blade\Components\Section;
+use Formz\View\Components\Section;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
 use Illuminate\Support\Collection;

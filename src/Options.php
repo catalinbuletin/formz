@@ -13,6 +13,11 @@ class Options implements \JsonSerializable
     protected $resource;
 
     /**
+     * @var \Closure|null
+     */
+    protected $closure;
+
+    /**
      * @var array
      */
     protected $options = [];
@@ -27,15 +32,11 @@ class Options implements \JsonSerializable
      */
     protected $orderBy;
 
-    public static function dictionary($dictionary): Options
+    public static function closure(\Closure $closure): Options
     {
         $instance = new static();
 
-        if (!$dictionary instanceof DictionaryOptions) {
-            $dictionary = new DictionaryOptions($dictionary);
-        }
-        
-        $instance->dictionary = $dictionary;
+        $instance->closure = $closure;
 
         return $instance;
     }
@@ -135,6 +136,10 @@ class Options implements \JsonSerializable
             return $this->optionsFromResource()->toArray();
         }
 
+        if ($this->closure) {
+            return $this->optionsFromClosure($this->closure);
+        }
+
         return $this->options;
     }
 
@@ -160,6 +165,12 @@ class Options implements \JsonSerializable
         return $this;
     }
 
+    public function optionsFromClosure(\Closure $closure)
+    {
+        $options = $closure();
+
+        dd($options);
+    }
 
     private function optionsFromResource(): Collection
     {

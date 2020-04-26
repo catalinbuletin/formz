@@ -1,6 +1,6 @@
 <?php
 
-namespace Formz\Blade\Components;
+namespace Formz\View\Components;
 
 use Formz\Contracts\IField;
 use Illuminate\Http\Request;
@@ -121,6 +121,17 @@ class Field extends Component
         $errors = $this->request->session()->get('errors');
 
         return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
+    }
+
+    public function errorMessage(): string
+    {
+        $errors = $this->errors();
+
+        if (config('formz.error-message.display-all-errors')) {
+            return implode("\n", $errors);
+        }
+
+        return reset($errors) ?: '';
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 
-use Formz\Blade\Components\Form;
+use Formz\View\Components\Form;
 use Formz\Contracts\IForm;
 use Illuminate\Support\Facades\Config;
 

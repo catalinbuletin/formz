@@ -1,6 +1,6 @@
 <?php
 
-namespace Formz\Blade\Components;
+namespace Formz\View\Components;
 
 use Formz\Contracts\ISection;
 use Illuminate\Support\Facades\Config;

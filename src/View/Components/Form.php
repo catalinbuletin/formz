@@ -1,6 +1,6 @@
 <?php
 
-namespace Formz\Blade\Components;
+namespace Formz\View\Components;
 
 use Formz\Contracts\IForm;
 use Illuminate\Support\Facades\Config;
@@ -65,6 +65,7 @@ class Form extends Component
     {
         $path = sprintf('formz.themes.%s', $this->theme);
 
+        // @todo - throw exception if the theme is not found
         return Config::get($path);
     }
 }
