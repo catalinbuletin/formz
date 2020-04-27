@@ -39,6 +39,10 @@ class AbstractField implements IField
 
     protected array $cols = [
         'xs' => 12,
+        'sm' => 12,
+        'md' => 12,
+        'lg' => 12,
+        'xlg' => 12
     ];
 
     protected array $listeners = [];
@@ -205,23 +209,25 @@ class AbstractField implements IField
      */
     public function setCols($xs, $sm = null, $md = null, $lg = null, $xlg = null): IField
     {
-//        $sm = $sm ?: $xs;
-//        $md = $md ?: $sm;
-//        $lg = $lg ?: $md;
+        $sm = $sm ?: $xs;
+        $md = $md ?: $sm;
+        $lg = $lg ?: $md;
+        $xlg = $xlg ?: $lg;
+
+        $this->cols = [
+            'xs' => $xs,
+            'sm' => $sm,
+            'md' => $md,
+            'lg' => $lg,
+            'xlg' => $xlg
+        ];
+
+//        $this->cols['xs'] = $xs;
 //
-//        $this->cols = [
-//            'xs' => $xs,
-//            'sm' => $sm,
-//            'md' => $md,
-//            'lg' => $lg
-//        ];
-
-        $this->cols['xs'] = $xs;
-
-        if ($sm) $this->cols['sm'] = $sm;
-        if ($md) $this->cols['md'] = $md;
-        if ($lg) $this->cols['lg'] = $lg;
-        if ($xlg) $this->cols['xlg'] = $xlg;
+//        if ($sm) $this->cols['sm'] = $sm;
+//        if ($md) $this->cols['md'] = $md;
+//        if ($lg) $this->cols['lg'] = $lg;
+//        if ($xlg) $this->cols['xlg'] = $xlg;
 
         return $this;
     }

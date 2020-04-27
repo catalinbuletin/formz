@@ -78,17 +78,15 @@ class Field extends Component
     {
         $classes = [$this->fieldConfig['wrapper-class'] ?? ''];
 
-        foreach ($this->themeConfig['grid-map'] as $key => $col) {
-            $fieldCol = $this->field->getCols()[$key] ?? null;
-            $lastUsedCol = $fieldCol ?? 12;
-            $classes[] = sprintf($this->themeConfig['grid-map'][$key], $fieldCol ?? $lastUsedCol);
+        foreach ($this->themeConfig['grid-map'] as $key => $colClass) {
+            $classes[] = sprintf($colClass, $this->field->getCols()[$key] ?? 12);
         }
 
         if ($this->hasErrors()) {
             $classes[] = $this->themeConfig['error-class']['wrapper'];
         }
 
-        return trim(implode(' ', $classes));
+        return trim(implode(' ', array_unique($classes)));
     }
 
     public function labelClass()
