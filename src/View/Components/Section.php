@@ -19,7 +19,7 @@ class Section extends Component
 
     private string $theme;
 
-    public function __construct($section)
+    public function __construct(ISection $section)
     {
         $this->section = $section;
         $this->theme = $this->section->getContext()->getTheme();

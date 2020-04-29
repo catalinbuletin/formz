@@ -37,11 +37,11 @@ class SectionComponentTest extends \Orchestra\Testbench\TestCase
         return $section;
     }
 
-    private function mockForm()
+    private function mockForm(string $theme = 'bootstrap4')
     {
         $form = Mockery::mock(IForm::class);
         $form->shouldReceive('getTheme')
-            ->andReturn('bootstrap4');
+            ->andReturn($theme);
         return $form;
     }
 }

@@ -71,7 +71,7 @@ class Field extends Component
             $classes[] = $this->themeConfig['error-class']['input'];
         }
 
-        return implode(' ', $classes);
+        return implode(' ', array_unique($classes));
     }
 
     public function wrapperClass()
@@ -88,7 +88,7 @@ class Field extends Component
             $classes[] = $this->themeConfig['error-class']['wrapper'];
         }
 
-        return trim(implode(' ', $classes));
+        return trim(implode(' ', array_unique($classes)));
     }
 
     public function labelClass()
@@ -99,7 +99,7 @@ class Field extends Component
             $classes[] = $this->themeConfig['error-class']['label'];
         }
 
-        return trim(implode(' ', $classes));
+        return trim(implode(' ', array_unique($classes)));
     }
 
     public function isRequired()
@@ -109,10 +109,13 @@ class Field extends Component
 
     public function hasErrors(): bool
     {
-        /** @var ViewErrorBag $errors */
-        $errors = $this->request->session()->get('errors');
+        if ($this->request->getSession()) {
+            /** @var ViewErrorBag $errors */
+            $errors = $this->request->session()->get('errors');
 
-        return $errors instanceof ViewErrorBag && $errors->has($this->field->getName());
+            return $errors instanceof ViewErrorBag && $errors->has($this->field->getName());
+        }
+        return false;
     }
 
     public function errors(): array

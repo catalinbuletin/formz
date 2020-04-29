@@ -34,6 +34,7 @@ class FormzServiceProvider extends ServiceProvider
         ], 'views');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'formz');
+
         $this->loadViewComponentsAs('formz', [
             Form::class,
             Section::class,

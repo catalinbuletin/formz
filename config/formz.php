@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'theme' => 'foundation',
+    'theme' => 'bulma',
 
     'error-message' => [
         'display-all-errors' => true,

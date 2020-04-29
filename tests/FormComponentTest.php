@@ -47,11 +47,11 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
 
 
 
-    private function mockForm(): IForm
+    private function mockForm(string $theme = 'bootstrap4'): IForm
     {
         $form = Mockery::mock(IForm::class);
         $form->shouldReceive('getTheme')
-            ->andReturn('bootstrap4');
+            ->andReturn($theme);
         $form->shouldReceive('getSections')
             ->andReturn(collect(['section1', 'section2']));
         return $form;
