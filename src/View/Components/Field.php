@@ -100,9 +100,9 @@ class Field extends Component
         return trim(implode(' ', array_unique($classes)));
     }
 
-    public function isRequired()
+    public function isRequired(): bool
     {
-        return in_array('required', $this->field->getRules());
+        return in_array('Formz/Rules/Required', $this->field->getRules());
     }
 
     public function hasErrors(): bool
@@ -113,6 +113,7 @@ class Field extends Component
 
             return $errors instanceof ViewErrorBag && $errors->has($this->field->getName());
         }
+
         return false;
     }
 

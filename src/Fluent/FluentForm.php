@@ -74,6 +74,13 @@ class FluentForm
 
     }
 
+    public function theme(string $theme)
+    {
+        $this->form->setTheme($theme);
+
+        return $this;
+    }
+
     public function get(): IForm
     {
         return $this->form;
