@@ -3,6 +3,7 @@
 namespace Formz\View\Components;
 
 use Formz\Contracts\IField;
+use Formz\Rules\Required;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
@@ -102,7 +103,12 @@ class Field extends Component
 
     public function isRequired(): bool
     {
-        return in_array('Formz/Rules/Required', $this->field->getRules());
+        foreach ($this->field->getRules() as $rule) {
+            if ($rule instanceof Required) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function hasErrors(): bool

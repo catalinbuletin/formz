@@ -3,7 +3,7 @@
 
         {{ $field->getLabel() }}
 
-        @if($isRequired)
+        @if($isRequired())
             <span class="required">*</span>
         @endif
 
@@ -11,7 +11,7 @@
 
     @include($input)
 
-    @if ($hasErrors)
+    @if ($hasErrors())
         <div class="invalid-feedback">
             {!! nl2br($errorMessage) !!}
         </div>
