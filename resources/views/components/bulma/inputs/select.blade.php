@@ -6,7 +6,7 @@
         @foreach($field->getOptions() as $option)
             <option
                     value="{{ $option['value'] }}"
-                    {{ $request->old($field->getName(), $field->getValue()) === $option['value'] ? "selected" : "" }}
+                    {{ $request->old($field->getName(), (string)$field->getValue()) === (string)$option['value'] ? "selected" : "" }}
             >
                     {{ $option['label'] }}
             </option>
