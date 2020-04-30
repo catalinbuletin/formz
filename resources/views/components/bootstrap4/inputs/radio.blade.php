@@ -5,7 +5,7 @@
                name="{{ $field->getName() }}"
                id="{{ $field->getName() . '-' . $option['value'] }}"
                value="{{ $option['value'] }}"
-               {{ $request->old($field->getName()) === $option['value'] ? "checked" : "" }}
+               {{ $request->old($field->getName(), (string) $field->getValue()) === (string) $option['value'] ? "checked" : "" }}
         >
         <label class="custom-control-label" for="{{ $field->getName() . '-' . $option['value'] }}">
             {{ $option['label'] }}

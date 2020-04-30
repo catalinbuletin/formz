@@ -5,7 +5,7 @@
                name="{{ $field->getName() }}[]"
                id="{{ $field->getName() . '-' . $option['value'] }}"
                value="{{ $option['value'] }}"
-                {{ in_array($option['value'], $request->old($field->getName(), $field->getValue())) ? "checked" : "" }}
+                {{ in_array((string) $option['value'], $request->old($field->getName(), $field->getValue())) ? "checked" : "" }}
         >
         {{ $option['label'] }}
     </label>
