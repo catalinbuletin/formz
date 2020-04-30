@@ -12,17 +12,17 @@ class File extends AbstractField
     private ?int $maxFiles = null;
     private string $helpText = 'Upload file or drag & drop';
 
-    public function __construct(string $name, $value, string $label = null)
+    public function __construct(string $name, string $label = null, $value = null)
     {
-        parent::__construct('file', $name, $value, $label);
+        parent::__construct('file', $name, $label, $value);
     }
 
     public static function makeFromArray(array $fieldData)
     {
         $field = new static(
             $fieldData['name'],
-            $fieldData['value'] ?? null,
-            $fieldData['label'] ?? null
+            $fieldData['label'] ?? null,
+            $fieldData['value'] ?? null
         );
         $field->setId($fieldData['id']);
         $field->setAttributes($fieldData['attributes']);

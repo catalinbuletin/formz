@@ -56,135 +56,135 @@ class FluentField
         return $this;
     }
 
-    public function text(string $name, $value = null, string $label = null): FluentText
+    public function text(string $name, string $label = null, $value = null): FluentText
     {
-        return $this->context->text($name, $value, $label);
+        return $this->context->text($name, $label, $value);
     }
 
     /**
      * @param string $name
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentPassword
      */
-    public function password(string $name, $value = null, string $label = null): FluentPassword
+    public function password(string $name, string $label = null, $value = null): FluentPassword
     {
-        return $this->context->password($name, $value, $label);
+        return $this->context->password($name, $label, $value);
     }
 
     /**
      * @param string $name
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentTextarea
      */
-    public function textarea(string $name, $value = null, string $label = null): FluentTextarea
+    public function textarea(string $name, string $label = null, $value = null): FluentTextarea
     {
-        return $this->context->textarea($name, $value, $label);
+        return $this->context->textarea($name, $label, $value);
 
     }
 
     /**
      * @param string $name
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentHidden
      */
-    public function hidden(string $name, $value = null, string $label = null): FluentHidden
+    public function hidden(string $name, string $label = null, $value = null): FluentHidden
     {
-        return $this->context->hidden($name, $value, $label);
+        return $this->context->hidden($name, $label, $value);
     }
 
     /**
      * @param string $name
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentNumber
      */
-    public function number(string $name, $value = null, string $label = null): FluentNumber
+    public function number(string $name, string $label = null, $value = null): FluentNumber
     {
-        return $this->context->number($name, $value, $label);
+        return $this->context->number($name, $label, $value);
     }
 
     /**
      * @param string $name
      * @param Options $options
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentChoice
      */
-    public function select(string $name, Options $options, $value = null, string $label = null): FluentChoice
+    public function select(string $name, Options $options, string $label = null, $value = null): FluentChoice
     {
-        return $this->context->select($name, $options, $value, $label);
+        return $this->context->select($name, $options, $label, $value);
     }
 
 
     /**
      * @param string $name
      * @param Options $options
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentChoice
      */
-    public function selectMultiple(string $name, Options $options, array $value = [], string $label = null): FluentChoice
+    public function selectMultiple(string $name, Options $options, string $label = null, array $value = []): FluentChoice
     {
-        return $this->context->selectMultiple($name, $options, $value, $label);
+        return $this->context->selectMultiple($name, $options, $label, $value);
     }
 
     /**
      * @param string $name
      * @param Options $options
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentRadio
      */
-    public function radio(string $name, Options $options, $value = null, string $label = null): FluentRadio
+    public function radio(string $name, Options $options, string $label = null, $value = null): FluentRadio
     {
-        return $this->context->radio($name, $options, $value, $label);
+        return $this->context->radio($name, $options, $label, $value);
     }
 
     /**
      * @param string $name
      * @param Options $options
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentCheckbox
      */
-    public function checkbox(string $name, Options $options, array $value = [], string $label = null): FluentCheckbox
+    public function checkbox(string $name, Options $options, string $label = null, array $value = []): FluentCheckbox
     {
-        return $this->context->checkbox($name, $options, $value, $label);
+        return $this->context->checkbox($name, $options, $label, $value);
     }
 
     /**
      * @param string $name
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentDate
      */
     public function date(string $name, $label = null, $value = null): FluentDate
     {
-        return $this->context->date($name, $value, $label);
+        return $this->context->date($name, $label, $value);
     }
 
     /**
      * @param string $name
-     * @param $value
      * @param string|null $label
+     * @param $value
      *
      * @return FluentFile
      */
-    public function file(string $name, $value = null, $label = null): FluentFile
+    public function file(string $name, $label = null, $value = null): FluentFile
     {
-        return $this->context->file($name, $value, $label);
+        return $this->context->file($name, $label, $value);
     }
 
     public function setContext(FluentSection $context)

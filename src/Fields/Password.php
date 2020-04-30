@@ -9,9 +9,9 @@ class Password extends AbstractField
     const MIN = 0;
     const MAX = null;
 
-    public function __construct(string $name, $value, string $label = null)
+    public function __construct(string $name, string $label = null, $value = null)
     {
-        parent::__construct('password', $name, $value, $label);
+        parent::__construct('password', $name, $label, $value);
     }
 
     public function min($length): Password

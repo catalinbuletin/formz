@@ -7,11 +7,11 @@ use Formz\Fluent\FluentField;
 
 class FluentDate extends FluentField
 {
-    public static function make(string $name, $value = null, string $label = null)
+    public static function make(string $name, string $label = null, $value = null)
     {
         $instance = new static();
 
-        $instance->field = new Date($name, $value, $label);
+        $instance->field = new Date($name, $label, $value);
 
         return $instance;
     }

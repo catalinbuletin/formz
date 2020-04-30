@@ -8,11 +8,11 @@ use Formz\Field;
 
 class FluentTextarea extends FluentField
 {
-    public static function make(string $name, $value = null, string $label = null)
+    public static function make(string $name, string $label = null, $value = null)
     {
         $instance = new static();
 
-        $instance->field = new Textarea($name, $value, $label);
+        $instance->field = new Textarea($name, $label, $value);
 
         return $instance;
     }

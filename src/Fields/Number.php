@@ -10,9 +10,9 @@ class Number extends AbstractField
     const MAX = null;
     const STEP = 1;
 
-    public function __construct(string $name, $value, string $label = null)
+    public function __construct(string $name, string $label = null, $value = null)
     {
-        parent::__construct('number', $name, $value, $label);
+        parent::__construct('number', $name, $label, $value);
     }
 
     public function min($length): self

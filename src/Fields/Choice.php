@@ -26,12 +26,12 @@ class Choice extends AbstractField
      * @param string $type
      * @param string $name
      * @param mixed $options
-     * @param mixed $value
      * @param string $label
+     * @param mixed $value
      */
-    public function __construct(string $type, string $name, Options $options, $value, string $label = null)
+    public function __construct(string $type, string $name, Options $options, string $label = null, $value = null)
     {
-        parent::__construct($type, $name, $value, $label);
+        parent::__construct($type, $name, $label, $value);
 
         $this->setOptions($options);
     }
@@ -44,8 +44,8 @@ class Choice extends AbstractField
             $fieldData['type'],
             $fieldData['name'],
             $options,
-            $fieldData['value'] ?? null,
-            $fieldData['label'] ?? null
+            $fieldData['label'] ?? null,
+            $fieldData['value'] ?? null
         );
 
         $field->setId($fieldData['id']);

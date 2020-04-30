@@ -8,11 +8,11 @@ use Formz\Options;
 
 class FluentCheckbox extends FluentField
 {
-    public static function make(string $name, Options $options, $value = null, string $label = null)
+    public static function make(string $name, Options $options, string $label = null, $value = null)
     {
         $instance = new static();
 
-        $instance->field = new Checkbox($name, $options, $value, $label);
+        $instance->field = new Checkbox($name, $options, $label, $value);
 
         return $instance;
     }

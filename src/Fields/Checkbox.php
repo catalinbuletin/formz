@@ -9,9 +9,9 @@ class Checkbox extends Choice
 {
     const INLINE_OPTIONS = false;
 
-    public function __construct(string $name, Options $options, $value, string $label = null)
+    public function __construct(string $name, Options $options, string $label = null, $value = null)
     {
-        parent::__construct('checkbox', $name, $options, $value, $label);
+        parent::__construct('checkbox', $name, $options, $label, $value);
     }
 
     public static function makeFromArray(array $fieldData)
@@ -21,8 +21,8 @@ class Checkbox extends Choice
         $field = new static(
             $fieldData['name'],
             $options,
-            $fieldData['value'] ?? [],
-            $fieldData['label'] ?? null
+            $fieldData['label'] ?? null,
+            $fieldData['value'] ?? []
         );
 
         $field->setId($fieldData['id']);

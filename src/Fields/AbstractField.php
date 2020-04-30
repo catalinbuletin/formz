@@ -55,11 +55,11 @@ class AbstractField implements IField
      * Field constructor.
      * @param string $type
      * @param string $name
-     * @param $value
      * @param string $label
+     * @param $value
      * @internal param array $attributes
      */
-    public function __construct(string $type, string $name, $value, string $label = null)
+    public function __construct(string $type, string $name, string $label = null, $value = null)
     {
         $this->id = Str::random(10);
         $this->type = $type;

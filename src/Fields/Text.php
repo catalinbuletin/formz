@@ -4,17 +4,17 @@ namespace Formz\Fields;
 
 class Text extends AbstractField
 {
-    public function __construct(string $name, string $value = null, string $label = null)
+    public function __construct(string $name, string $label = null, $value = null)
     {
-        parent::__construct('text', $name, $value, $label);
+        parent::__construct('text', $name, $label, $value);
     }
 
     public static function makeFromArray(array $fieldData)
     {
         $field = new static(
             $fieldData['name'],
-            $fieldData['value'] ?? null,
-            $fieldData['label'] ?? null
+            $fieldData['label'] ?? null,
+            $fieldData['value'] ?? null
         );
 
         $field->setId($fieldData['id']);

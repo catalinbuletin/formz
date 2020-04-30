@@ -8,11 +8,11 @@ use Formz\Field;
 
 class FluentFile extends FluentField
 {
-    public static function make(string $name, $value = null, string $label = null)
+    public static function make(string $name, string $label = null, $value = null)
     {
         $instance = new static();
 
-        $instance->field = new File($name, $value, $label);
+        $instance->field = new File($name, $label, $value);
 
         return $instance;
     }
