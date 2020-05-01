@@ -9,7 +9,14 @@ class Radio extends Choice
 {
     const INLINE_OPTIONS = false;
 
-    public function __construct(string $name, Options $options, string $label = null, $value = null)
+    /**
+     * Radio constructor.
+     * @param string $name
+     * @param iterable|\Closure $options
+     * @param string|null $label
+     * @param null $value
+     */
+    public function __construct(string $name, $options, string $label = null, $value = null)
     {
         parent::__construct('radio', $name, $options, $label, $value);
     }

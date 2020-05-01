@@ -126,13 +126,13 @@ class FluentSection
 
     /**
      * @param string $name
-     * @param Options $options
+     * @param iterable|\Closure $options
      * @param string|null $label
      * @param $value
      *
      * @return FluentChoice
      */
-    public function select(string $name, Options $options, string $label = null, $value = null): FluentChoice
+    public function select(string $name, $options, string $label = null, $value = null): FluentChoice
     {
         $type = 'select';
 
@@ -146,13 +146,13 @@ class FluentSection
 
     /**
      * @param string $name
-     * @param Options $options
+     * @param iterable|\Closure $options
      * @param string|null $label
      * @param $value
      *
      * @return FluentChoice
      */
-    public function selectMultiple(string $name, Options $options, string $label = null, array $value = []): FluentChoice
+    public function selectMultiple(string $name, $options, string $label = null, array $value = []): FluentChoice
     {
         $type = 'multiselect';
 
@@ -165,13 +165,13 @@ class FluentSection
 
     /**
      * @param string $name
-     * @param Options $options
+     * @param iterable|\Closure $options
      * @param string|null $label
      * @param $value
      *
      * @return FluentRadio
      */
-    public function radio(string $name, Options $options, string $label = null, $value = null): FluentRadio
+    public function radio(string $name, $options, string $label = null, $value = null): FluentRadio
     {
         $field =  FluentRadio::make($name, $options, $label, $value)->setContext($this);
 
@@ -182,15 +182,15 @@ class FluentSection
 
     /**
      * @param string $name
-     * @param Options $options
+     * @param iterable|\Closure $options
      * @param string|null $label
      * @param $value
      *
      * @return FluentCheckbox
      */
-    public function checkbox(string $name, Options $options, string $label = null, array $value = []): FluentCheckbox
+    public function checkbox(string $name, $options, string $label = null, array $value = []): FluentCheckbox
     {
-        $field =  FluentCheckbox::make($name, $options, $label, $value)->setContext($this);
+        $field = FluentCheckbox::make($name, $options, $label, $value)->setContext($this);
 
         $this->section->addField($field->getField());
 

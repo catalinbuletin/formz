@@ -3,12 +3,12 @@
         <input class="{{ $inputClass }}"
                type="checkbox"
                name="{{ $field->getName() }}"
-               id="{{ $field->getName() . '-' . $option['value'] }}"
-               value="{{ $option['value'] }}"
-            {{ in_array((string) $option['value'], $request->old($field->getName(), $field->getValue())) ? "checked" : "" }}
+               id="{{ $field->getName() . '-' . $option->getValue() }}"
+               value="{{ $option->getValue() }}"
+            {{ in_array((string) $option->getValue(), $request->old($field->getName(), $field->getValue())) ? "checked" : "" }}
         >
-        <label class="form-check-label" for="{{ $field->getName() . '-' . $option['value'] }}">
-            {{ $option['label'] }}
+        <label class="form-check-label" for="{{ $field->getName() . '-' . $option->getValue() }}">
+            {{ $option->getLabel() }}
         </label>
     </div>
 @endforeach

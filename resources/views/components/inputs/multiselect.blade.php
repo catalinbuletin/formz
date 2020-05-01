@@ -5,10 +5,10 @@
 >
         @foreach($field->getOptions() as $option)
                 <option
-                        value="{{ $option['value'] }}"
-                        {{ in_array((string)$option['value'], $request->old($field->getName(), $field->getValue())) ? "selected" : "" }}
+                        value="{{ $option->getValue() }}"
+                        {{ in_array($option->getValue(), $request->old($field->getName(), $field->getValue())) ? "selected" : "" }}
                 >
-                        {{ $option['label'] }}
+                        {{ $option->getLabel() }}
                 </option>
         @endforeach
 </select>

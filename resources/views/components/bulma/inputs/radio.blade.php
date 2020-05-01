@@ -3,10 +3,10 @@
         <input class="{{ $inputClass }}"
                type="radio"
                name="{{ $field->getName() }}"
-               id="{{ $field->getName() . '-' . $option['value'] }}"
-               value="{{ $option['value'] }}"
-                {{ $request->old($field->getName(), (string)$field->getValue()) === (string)$option['value'] ? "checked" : "" }}
+               id="{{ $field->getName() . '-' . $option->getValue() }}"
+               value="{{ $option->getValue() }}"
+                {{ $request->old($field->getName(), (string)$field->getValue()) === $option->getValue() ? "checked" : "" }}
         >
-        {{ $option['label'] }}
+        {{ $option->getLabel() }}
     </label>
 @endforeach

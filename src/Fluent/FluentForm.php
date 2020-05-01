@@ -64,17 +64,17 @@ class FluentForm
         return $fluentSection;
     }
 
-    public function name()
+    public function name(): self
     {
-
+        return $this;
     }
 
-    public function config()
+    public function config(): self
     {
-
+        return $this;
     }
 
-    public function theme(string $theme)
+    public function theme(string $theme): self
     {
         $this->form->setTheme($theme);
 

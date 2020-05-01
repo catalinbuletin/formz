@@ -3,12 +3,12 @@
         <input class="{{ $inputClass }}"
                type="radio"
                name="{{ $field->getName() }}"
-               id="{{ $field->getName() . '-' . $option['value'] }}"
-               value="{{ $option['value'] }}"
-                {{ $request->old($field->getName(), (string)$field->getValue()) === (string)$option['value'] ? "checked" : "" }}
+               id="{{ $field->getName() . '-' . $option->getValue() }}"
+               value="{{ $option->getValue() }}"
+                {{ $request->old($field->getName(), (string)$field->getValue()) === $option->getValue() ? "checked" : "" }}
         >
-        <label class="custom-control-label" for="{{ $field->getName() . '-' . $option['value'] }}">
-            {{ $option['label'] }}
+        <label class="custom-control-label" for="{{ $field->getName() . '-' . $option->getValue() }}">
+            {{ $option->getLabel() }}
         </label>
     </div>
 @endforeach

@@ -1,5 +1,7 @@
 <?php
 
+namespace Unit;
+
 use Formz\Fluent\FluentForm;
 
 class FluentFormTest extends \Orchestra\Testbench\TestCase

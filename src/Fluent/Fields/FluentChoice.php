@@ -8,7 +8,15 @@ use Formz\Options;
 
 class FluentChoice extends FluentField
 {
-    public static function make(string $type, string $name, Options $options, string $label = null, $value = null)
+    /**
+     * @param string $type
+     * @param string $name
+     * @param iterable|\Closure $options
+     * @param string|null $label
+     * @param null $value
+     * @return static
+     */
+    public static function make(string $type, string $name, $options, string $label = null, $value = null)
     {
         $instance = new static();
 

@@ -77,13 +77,13 @@ class Field
 
     /**
      * @param string $name
-     * @param Options $options
+     * @param iterable|\Closure $options
      * @param string|null $label
      * @param $value
      *
      * @return Choice
      */
-    public static function select(string $name, Options $options, string $label = null, $value = null): Choice
+    public static function select(string $name, $options, string $label = null, $value = null): Choice
     {
         $type = 'select';
 
@@ -93,13 +93,13 @@ class Field
 
     /**
      * @param string $name
-     * @param Options $options
+     * @param iterable|\Closure $options
      * @param string|null $label
      * @param $value
      *
      * @return Choice
      */
-    public static function selectMultiple(string $name, Options $options, string $label = null, $value = null): Choice
+    public static function selectMultiple(string $name, $options, string $label = null, $value = null): Choice
     {
         $type = 'multiselect';
 
@@ -108,26 +108,26 @@ class Field
 
     /**
      * @param string $name
-     * @param Options $options
+     * @param iterable|\Closure $options
      * @param string|null $label
      * @param $value
      *
      * @return Radio
      */
-    public static function radio(string $name, Options $options, string $label = null, $value = null): Radio
+    public static function radio(string $name, $options, string $label = null, $value = null): Radio
     {
         return new Radio($name, $options, $label, $value);
     }
 
     /**
      * @param string $name
-     * @param Options $options
+     * @param iterable|\Closure $options
      * @param string|null $label
      * @param $value
      *
      * @return Checkbox
      */
-    public static function checkbox(string $name, Options $options, string $label = null, $value = null): Checkbox
+    public static function checkbox(string $name, $options, string $label = null, $value = null): Checkbox
     {
         return new Checkbox($name, $options, $label, $value);
     }

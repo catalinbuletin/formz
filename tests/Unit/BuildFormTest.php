@@ -1,5 +1,7 @@
 <?php
 
+namespace Unit;
+
 use Formz\Field;
 use Formz\Form;
 use Formz\Section;

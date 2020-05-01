@@ -1,13 +1,13 @@
 <select class="{{ $inputClass }}"
         name="{{ $field->getName() }}"
         id="{{ $field->getId() }}"
->
+        >
     @foreach($field->getOptions() as $option)
         <option
-                value="{{ $option['value'] }}"
-                {{ $request->old($field->getName(), (string)$field->getValue()) === (string)$option['value'] ? "selected" : "" }}
+                value="{{ $option->getValue() }}"
+                {{ $request->old($field->getName(), (string)$field->getValue()) === (string)$option->getValue() ? "selected" : "" }}
         >
-                {{ $option['label'] }}
+                {{ $option->getLabel() }}
         </option>
     @endforeach
 </select>

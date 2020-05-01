@@ -10,33 +10,33 @@ class Choice extends AbstractField
     /**
      * Possible options for select
      *
-     * @var array|string
+     * @var Options
      */
-    private $options = [];
+    private Options $options;
 
     /**
      * @optionSource 'manual', 'resource', 'collection'
      */
-    private string $optionSource = 'manual';
+    /*private string $optionSource = 'manual';
 
-    private ?ResourceOptions $resource = null;
+    private ?ResourceOptions $resource = null;*/
 
     /**
      * Field constructor.
      * @param string $type
      * @param string $name
-     * @param mixed $options
+     * @param iterable|\Closure $options
      * @param string $label
      * @param mixed $value
      */
-    public function __construct(string $type, string $name, Options $options, string $label = null, $value = null)
+    public function __construct(string $type, string $name, $options, string $label = null, $value = null)
     {
         parent::__construct($type, $name, $label, $value);
 
-        $this->setOptions($options);
+        $this->setOptions(new Options($options));
     }
 
-    public static function makeFromArray(array $fieldData)
+    /*public static function makeFromArray(array $fieldData)
     {
         $options = self::makeOptionsFromArray($fieldData);
 
@@ -54,13 +54,13 @@ class Choice extends AbstractField
         $field->workflows($fieldData['workflows']);
 
         return $field;
-    }
+    }*/
 
     /**
      * @param array $fieldData
      * @return Options
      */
-    protected static function makeOptionsFromArray(array $fieldData)
+    /*protected static function makeOptionsFromArray(array $fieldData)
     {
         switch ($fieldData['optionSource']) {
             case 'manual':
@@ -70,36 +70,31 @@ class Choice extends AbstractField
                     ResourceOptions::makeFromArray($fieldData['resource'])
                 );
         }
-    }
+    }*/
 
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [
-            'options' => $this->options,
-            'optionSource' => $this->optionSource,
-            'resource' => $this->resource ? $this->resource->toArray() : null,
+            'options' => $this->options->resolve(),
+            //'optionSource' => $this->optionSource,
+            //'resource' => $this->resource ? $this->resource->toArray() : null,
         ]);
     }
 
     /**
-     * @param $options
+     * @param Options $options
      * @return void
      */
     private function setOptions(Options $options): void
     {
-        if ($options->hasResource()) {
-            $this->optionSource = 'resource';
-            $this->resource = $options->getResource();
-        }
-
-        $this->options = $options->getOptions();
+        $this->options = $options;
     }
 
     /**
-     * @return array|string
+     * @return Options
      */
-    public function getOptions()
+    public function getOptions(): Options
     {
-        return $this->options;
+        return $this->options->resolve();
     }
 }

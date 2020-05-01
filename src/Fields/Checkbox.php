@@ -9,12 +9,19 @@ class Checkbox extends Choice
 {
     const INLINE_OPTIONS = false;
 
-    public function __construct(string $name, Options $options, string $label = null, $value = null)
+    /**
+     * Checkbox constructor.
+     * @param string $name
+     * @param iterable|\Closure $options
+     * @param string|null $label
+     * @param null $value
+     */
+    public function __construct(string $name, $options, string $label = null, $value = null)
     {
         parent::__construct('checkbox', $name, $options, $label, $value);
     }
 
-    public static function makeFromArray(array $fieldData)
+    /*public static function makeFromArray(array $fieldData)
     {
         $options = self::makeOptionsFromArray($fieldData);
 
@@ -31,7 +38,7 @@ class Checkbox extends Choice
         $field->workflows($fieldData['workflows']);
 
         return $field;
-    }
+    }*/
 
     public function inlineOptions($value = true): Checkbox
     {
