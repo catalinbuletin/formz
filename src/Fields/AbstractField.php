@@ -125,7 +125,13 @@ class AbstractField implements IField
      */
     public function rules(array $rules): IField
     {
-        $this->rules = array_merge($this->rules, $rules);
+        foreach ($rules as $rule) {
+            $brokenRules = explode('|', $rule);
+            foreach ($brokenRules as $brokenRule) {
+                $this->rules[] = $brokenRule;
+            }
+        }
+        $this->rules = array_unique($this->rules);
 
         return $this;
     }
@@ -190,7 +196,8 @@ class AbstractField implements IField
      */
     public function required(): IField
     {
-        $this->rules([new Required()]);
+        //$this->rules([new Required()]);
+        $this->rules(['required']);
 
         return $this;
     }
@@ -383,7 +390,7 @@ class AbstractField implements IField
     /**
      * @return bool
      */
-    private function isRequired(): bool
+    public function isRequired(): bool
     {
         return in_array('required', $this->rules);
     }
