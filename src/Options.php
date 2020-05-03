@@ -4,14 +4,12 @@ namespace Formz;
 
 use Illuminate\Support\Str;
 
-class Options implements \JsonSerializable, \Iterator, \Countable, \ArrayAccess
+class Options implements \JsonSerializable, \IteratorAggregate, \Countable, \ArrayAccess
 {
     /** @var null|iterable|\Closure */
-    private $resolver = null;
+    private $resolver;
 
     private array $options = [];
-
-    private int $index = 0;
 
     /**
      * Options constructor.
@@ -22,29 +20,9 @@ class Options implements \JsonSerializable, \Iterator, \Countable, \ArrayAccess
         $this->resolver = $options;
     }
 
-    public function current()
+    public function getIterator()
     {
-        return $this->options[$this->index];
-    }
-
-    public function key()
-    {
-        return $this->index;
-    }
-
-    public function next()
-    {
-        return $this->index++;
-    }
-
-    public function rewind()
-    {
-        $this->index = 0;
-    }
-
-    public function valid()
-    {
-        return isset($this->options[$this->key()]);
+        return new \ArrayIterator($this->options);
     }
 
     public function count()

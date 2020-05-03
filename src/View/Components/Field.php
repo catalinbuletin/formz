@@ -103,12 +103,7 @@ class Field extends Component
 
     public function isRequired(): bool
     {
-        foreach ($this->field->getRules() as $rule) {
-            if ($rule instanceof Required) {
-                return true;
-            }
-        }
-        return false;
+        return $this->field->isRequired();
     }
 
     public function hasErrors(): bool
