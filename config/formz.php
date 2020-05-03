@@ -31,9 +31,14 @@ return [
 
     'buttons' => [
         /**
-         * Let the package show the buttons for your form
+         * Show the buttons on top of the form
          */
-        'active' => true,
+        'active_top' => false,
+
+        /**
+         * Show the buttons at the bottom of the form
+         */
+        'active_bottom' => true,
 
         /**
          * The horizontal placement of the buttons

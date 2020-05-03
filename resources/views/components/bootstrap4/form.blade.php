@@ -10,7 +10,7 @@
     {{ $header }}
 
     {{--  Include the form submit and cancel buttons if footer is not set  --}}
-    @if($config['buttons']['active'] && (bool) $header === false)
+    @if($config['buttons']['active_top'] && (bool) $header === false)
         @include($buttons)
     @endif
 
@@ -21,7 +21,7 @@
 
 
     {{--  Include the form submit and cancel buttons if footer is not set  --}}
-    @if($config['buttons']['active'] && (bool) $footer === false)
+    @if($config['buttons']['active_bottom'] && (bool) $footer === false)
         @include($buttons)
     @endif
 
