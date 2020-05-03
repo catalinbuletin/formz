@@ -2,6 +2,7 @@
 
 namespace Formz;
 
+use Formz\Console\FormMakeCommand;
 use Formz\View\Components\Form;
 use Formz\View\Components\Section;
 use Formz\View\Components\Field;
@@ -15,16 +16,6 @@ class FormzServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/formz.php' => config_path('formz.php')
         ], 'config');
-
-        /**
-         * Not yet supported
-         */
-//        $this->publishes([
-//            __DIR__.'/View/Components/Form.php' => app_path('View/Components/Form.php'),
-//            __DIR__.'/View/Components/Section.php' => app_path('View/Components/Section.php'),
-//            __DIR__.'/View/Components/Field.php' => app_path('View/Components/Field.php'),
-//        ], 'bladeComponentsClasses');
-
 
         $theme = Config::get('formz.theme');
 
@@ -40,6 +31,13 @@ class FormzServiceProvider extends ServiceProvider
             Section::class,
             Field::class,
         ]);
+
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                FormMakeCommand::class,
+            ]);
+        }
     }
 
     public function register()

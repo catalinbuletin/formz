@@ -8,10 +8,40 @@ use Illuminate\Support\Collection;
 interface IForm extends \JsonSerializable
 {
     /**
+     * @param string $url
+     * @return IForm
+     */
+    public function setAction(string $url): IForm;
+
+    /**
+     * @param string $method
+     * @return IForm
+     */
+    public function setMethod(string $method): IForm;
+
+    /**
      * @param array $data
      * @return IForm
      */
     public function setValues(?array $data): IForm;
+
+    /**
+     * @param ISection $section
+     * @return IForm
+     */
+    public function addSection(ISection $section): IForm;
+
+    /**
+     * @param array|IField[] $fields
+     * @return IForm
+     */
+    public function addFields(array $fields): IForm;
+
+    /**
+     * @param array $array
+     * @return mixed
+     */
+    public function addWorkflows(array $array): IForm;
 
     /**
      * @param Request $request
@@ -26,11 +56,6 @@ interface IForm extends \JsonSerializable
      * @return mixed
      */
     public function setTheme(string $theme);
-
-    /**
-     * @return string
-     */
-    public function getTheme(): string;
 
     /**
      * @param array $only
@@ -88,22 +113,19 @@ interface IForm extends \JsonSerializable
     public function getRules($fieldName = null);
 
     /**
-     * @param array|IField[] $fields
-     * @return IForm
+     * @return string
      */
-    public function addFields(array $fields): IForm;
+    public function getTheme(): string;
 
     /**
-     * @param ISection $section
-     * @return IForm
+     * @return string
      */
-    public function addSection(ISection $section): IForm;
+    public function getAction(): string;
 
     /**
-     * @param array $array
-     * @return mixed
+     * @return string
      */
-    public function addWorkflows(array $array): IForm;
+    public function getMethod(): string;
 
     /**
      * @return array

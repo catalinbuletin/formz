@@ -1,10 +1,110 @@
 <?php
 
 return [
-    'theme' => 'bulma',
+    /*
+    |--------------------------------------------------------------------------
+    | Theme
+    |--------------------------------------------------------------------------
+    |
+    | Control the way you want your forms to look.
+    | The package supports a few css frameworks out of the box. You can
+    | configure them below in the specific theme config section.
+    |
+    | If none of the supported frameworks suit you, there is also a convenient
+    | way to create your own specific theme. Check out the docs at:
+    |
+    | Supported: "bootstrap4", "foundation", "bulma"
+    */
 
-    'error-message' => [
-        'display-all-errors' => true,
+    'theme' => 'foundation',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Buttons
+    |--------------------------------------------------------------------------
+    |
+    | Control the buttons on your form. The package can display the
+    | "submit" and "cancel" buttons for your form out of the box.
+    |
+    */
+
+    'buttons' => [
+        /**
+         * Let the package show the buttons for your form
+         */
+        'active' => true,
+
+        /**
+         * The horizontal placement of the buttons
+         *
+         * Supports: "left", "center", "right"
+         */
+        'placement' => 'center',
+
+        /**
+         * Submit button's label
+         */
+        'submit_label' => 'Submit',
+
+        /**
+         * Cancel button's label
+         */
+        'cancel_label' => 'Cancel'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Validation Errors
+    |--------------------------------------------------------------------------
+    |
+    | Control the way you display the validation errors on your form.
+    | The package supports out of the box a global validation message
+    | and validation errors for each individual field.
+    |
+    */
+
+    'errors' => [
+        /**
+         * Global validation error message
+         */
+        'global' => [
+            /**
+             * Show or hide the global validation message
+             */
+            'active' => true,
+
+            /**
+             * The class the alert box will have
+             */
+            'class' => 'formz-alert alert alert-danger',
+
+            /**
+             * The default message to display
+             */
+            'message' => 'The form has errors!',
+
+            /**
+             * Append to the default message
+             *
+             * Supported: "first", "all", "none"
+             */
+            'display' => 'none'
+        ],
+
+        'input' => [
+            /**
+             * Show or hide the input validation message
+             */
+            'active' => true,
+
+            /**
+             * Display only the first or all the validation errors for the input field
+             *
+             * Supported: "first", "all"
+             */
+            'display' => 'first'
+        ]
     ],
 
     'themes' => [
@@ -60,6 +160,18 @@ return [
                 ],
             ],
 
+            'buttons' => [
+                'wrapper_class' => '',
+                'submit' => [
+                    'class' => 'btn btn-primary',
+                    'icon' => 'fa fa-save'
+                ],
+                'cancel' => [
+                    'class' => 'btn btn-secondary',
+                    'icon' => 'fa fa-return'
+                ],
+            ],
+
             'error-class' => [
                 'input' => 'is-invalid',
                 'wrapper' => '',
@@ -104,6 +216,18 @@ return [
                     'label-class' => '',
                     'input-class' => '',
                     'wrapper-class' => 'cell'
+                ],
+            ],
+
+            'buttons' => [
+                'wrapper_class' => '',
+                'submit' => [
+                    'class' => 'button',
+                    'icon' => 'fa fa-save'
+                ],
+                'cancel' => [
+                    'class' => 'button secondary',
+                    'icon' => 'fa fa-return'
                 ],
             ],
 
@@ -169,6 +293,18 @@ return [
                     'label-class' => 'label',
                     'input-class' => 'file-input',
                     'wrapper-class' => 'field column'
+                ],
+            ],
+
+            'buttons' => [
+                'wrapper_class' => '',
+                'submit' => [
+                    'class' => 'button is-primary',
+                    'icon' => 'fa fa-save'
+                ],
+                'cancel' => [
+                    'class' => 'button is-light',
+                    'icon' => 'fa fa-return'
                 ],
             ],
 

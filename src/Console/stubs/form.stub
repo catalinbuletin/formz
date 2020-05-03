@@ -1,0 +1,28 @@
+<?php
+
+namespace DummyNamespace;
+
+use Formz\AbstractForm;
+use Formz\Contracts\IForm;
+
+class DummyClass extends AbstractForm
+{
+    /**
+     * Create a new form instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    protected function buildForm(): IForm
+    {
+        return
+            $this->build()
+                // add sections and fields here
+                ->get();
+    }
+
+}

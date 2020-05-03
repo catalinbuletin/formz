@@ -18,6 +18,12 @@ class Form extends Component
     public string $footer = '';
 
     /**
+     * Array containing config values for the package
+     * @var array|mixed
+     */
+    public array $config;
+
+    /**
      * Array containing config values for the used theme
      * @var array|mixed
      */
@@ -34,9 +40,10 @@ class Form extends Component
     public function __construct(IForm $form, ?string $action = null, ?string $method = null)
     {
         $this->form = $form;
-        $this->action = $action ?: '';
-        $this->method = $method ?: 'get';
+        $this->action = $action ?: $this->form->getAction();
+        $this->method = $method ?: ($this->form->getMethod() ?: 'post');
         $this->theme = $this->form->getTheme();
+        $this->config = Config::get('formz');
         $this->themeConfig = $this->themeConfig();
     }
 
@@ -50,15 +57,24 @@ class Form extends Component
         return $this->themeConfig['form-class'];
     }
 
+    public function buttons()
+    {
+        $dedicated = sprintf("formz::components.%s.buttons", $this->theme);
+
+        $default = "formz::components.buttons";
+
+        return View::exists($dedicated) ? $dedicated : $default;
+    }
+
     /**
      * @inheritDoc
      */
     public function render()
     {
-        $component = sprintf("formz::components.%s.form", $this->form->getTheme());
-        $default = sprintf("formz::components.%s.form", Config::get('theme'));
+        $dedicated = sprintf("formz::components.%s.form", $this->theme);
+        $default = sprintf("formz::components.%s.form", Config::get('formz.theme'));
 
-        return View::exists($component) ? View::make($component) : View::make($default);
+        return View::exists($dedicated) ? View::make($dedicated) : View::make($default);
     }
 
     private function themeConfig()

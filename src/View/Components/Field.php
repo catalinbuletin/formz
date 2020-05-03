@@ -133,9 +133,13 @@ class Field extends Component
 
     public function errorMessage(): string
     {
+        if (!config('formz.errors.input.active')) {
+            return '';
+        }
+
         $errors = $this->errors();
 
-        if (config('formz.error-message.display-all-errors')) {
+        if (config('formz.errors.input.display') === 'all') {
             return implode("\n", $errors);
         }
 

@@ -20,6 +20,10 @@ class Form implements IForm
 
     protected array $layout;
 
+    protected string $action;
+
+    protected string $method;
+
     protected string $theme;
 
     /**
@@ -67,6 +71,23 @@ class Form implements IForm
         return new static($sections, $config);
     }
 
+    /**
+     * @param string $url
+     * @return IForm
+     */
+    public function setAction(string $url): IForm
+    {
+
+    }
+
+    /**
+     * @param string $method
+     * @return IForm
+     */
+    public function setMethod(string $method): IForm {
+
+    }
+
     public function setTheme(string $theme): IForm
     {
         $this->theme = $theme;
@@ -77,6 +98,16 @@ class Form implements IForm
     public function getTheme(): string
     {
         return $this->theme;
+    }
+
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    public function getMethod(): string
+    {
+        return $this->method;
     }
 
     /**
