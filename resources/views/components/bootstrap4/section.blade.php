@@ -1,4 +1,4 @@
-<div class="formz-section {{ $sectionClass }}">
+<div class="formz-section {{ $themeConfig['section_class'] }}">
     @if($section->getLabel())
         <div class="col-lg-12">
             <div class="formz__section-name">{{ $section->getLabel() }}</div>

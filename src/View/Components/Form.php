@@ -111,18 +111,6 @@ class Form extends Component
     }
 
 
-    public function formClass(): string
-    {
-        return $this->themeConfig['form-class'];
-    }
-
-    public function globalErrorClass(): string
-    {
-        return $this->themeConfig['error-class']['global'];
-    }
-
-
-
     private function getFieldsErrors(): array
     {
         $errors = $this->request->session()->get('errors');

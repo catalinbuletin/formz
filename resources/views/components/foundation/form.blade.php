@@ -1,4 +1,4 @@
-<form action="{{ $action }}" method="{{ $method }}" class="{{ $formClass }}">
+<form action="{{ $action }}" method="{{ $method }}" class="{{ $themeConfig['form_class'] }}">
     @csrf
 
     @if (in_array(strtoupper($method), ['PUT', 'PATCH', 'DELETE']))

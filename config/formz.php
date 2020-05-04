@@ -80,11 +80,6 @@ return [
             'active' => true,
 
             /**
-             * The class the alert box will have
-             */
-            'class' => 'formz-alert alert alert-danger',
-
-            /**
              * The default message to display
              */
             'message' => 'The form has errors!',
@@ -115,11 +110,11 @@ return [
     'themes' => [
         'bootstrap4' => [
 
-            'form-class' => '',
+            'form_class' => '',
 
-            'section-class' => 'form-row',
+            'section_class' => 'form-row',
 
-            'grid-map' => [
+            'grid_map' => [
                 'xs' => 'col-%s',
                 'sm' => 'col-sm-%s',
                 'md' => 'col-md-%s',
@@ -129,39 +124,39 @@ return [
 
             'fields' => [
                 'default' => [
-                    'label-class' => '',
-                    'input-class' => 'form-control',
-                    'wrapper-class' => 'form-group'
+                    'label_class' => '',
+                    'input_class' => 'form-control',
+                    'wrapper_class' => 'form-group'
                 ],
 
                 'select' => [
-                    'label-class' => '',
-                    'input-class' => 'custom-select',
-                    'wrapper-class' => 'form-group'
+                    'label_class' => '',
+                    'input_class' => 'custom-select',
+                    'wrapper_class' => 'form-group'
                 ],
 
                 'multiselect' => [
-                    'label-class' => '',
-                    'input-class' => 'custom-select',
-                    'wrapper-class' => 'form-group'
+                    'label_class' => '',
+                    'input_class' => 'custom-select',
+                    'wrapper_class' => 'form-group'
                 ],
 
                 'radio' => [
-                    'label-class' => '',
-                    'input-class' => 'custom-control-input',
-                    'wrapper-class' => 'form-group'
+                    'label_class' => '',
+                    'input_class' => 'custom-control-input',
+                    'wrapper_class' => 'form-group'
                 ],
 
                 'checkbox' => [
-                    'label-class' => '',
-                    'input-class' => 'custom-control-input',
-                    'wrapper-class' => 'form-group'
+                    'label_class' => '',
+                    'input_class' => 'custom-control-input',
+                    'wrapper_class' => 'form-group'
                 ],
 
                 'file' => [
-                    'label-class' => '',
-                    'input-class' => 'control-file-input',
-                    'wrapper-class' => 'form-group'
+                    'label_class' => '',
+                    'input_class' => 'control-file-input',
+                    'wrapper_class' => 'form-group'
                 ],
             ],
 
@@ -177,7 +172,7 @@ return [
                 ],
             ],
 
-            'error-class' => [
+            'error_class' => [
                 'global' => 'alert alert-danger',
                 'input' => 'is-invalid',
                 'wrapper' => '',
@@ -187,11 +182,11 @@ return [
 
         'foundation' => [
 
-            'form-class' => '',
+            'form_class' => '',
 
-            'section-class' => 'grid-x grid-padding-x',
+            'section_class' => 'grid-x grid-padding-x',
 
-            'grid-map' => [
+            'grid_map' => [
                 'xs' => 'small-%s',
                 'sm' => 'medium-%s',
                 'md' => 'large-%s',
@@ -201,27 +196,27 @@ return [
 
             'fields' => [
                 'default' => [
-                    'label-class' => '',
-                    'input-class' => '',
-                    'wrapper-class' => 'cell'
+                    'label_class' => '',
+                    'input_class' => '',
+                    'wrapper_class' => 'cell'
                 ],
 
                 'radio' => [
-                    'label-class' => '',
-                    'input-class' => '',
-                    'wrapper-class' => 'cell'
+                    'label_class' => '',
+                    'input_class' => '',
+                    'wrapper_class' => 'cell'
                 ],
 
                 'checkbox' => [
-                    'label-class' => '',
-                    'input-class' => '',
-                    'wrapper-class' => 'cell'
+                    'label_class' => '',
+                    'input_class' => '',
+                    'wrapper_class' => 'cell'
                 ],
 
                 'file' => [
-                    'label-class' => '',
-                    'input-class' => '',
-                    'wrapper-class' => 'cell'
+                    'label_class' => '',
+                    'input_class' => '',
+                    'wrapper_class' => 'cell'
                 ],
             ],
 
@@ -237,7 +232,7 @@ return [
                 ],
             ],
 
-            'error-class' => [
+            'error_class' => [
                 'global' => 'callout alert',
                 'input' => 'is-invalid-input',
                 'wrapper' => '',
@@ -247,11 +242,11 @@ return [
 
         'bulma' => [
 
-            'form-class' => '',
+            'form_class' => '',
 
-            'section-class' => 'columns is-multiline is-mobile',
+            'section_class' => 'columns is-multiline is-mobile',
 
-            'grid-map' => [
+            'grid_map' => [
                 'xs' => 'is-%s-mobile',
                 'sm' => 'is-%s-tablet',
                 'md' => 'is-%s-desktop',
@@ -261,45 +256,45 @@ return [
 
             'fields' => [
                 'default' => [
-                    'label-class' => 'label',
-                    'input-class' => 'input',
-                    'wrapper-class' => 'field column'
+                    'label_class' => 'label',
+                    'input_class' => 'input',
+                    'wrapper_class' => 'field column'
                 ],
 
                 'textarea' => [
-                    'label-class' => 'label',
-                    'input-class' => 'textarea',
-                    'wrapper-class' => 'field column'
+                    'label_class' => 'label',
+                    'input_class' => 'textarea',
+                    'wrapper_class' => 'field column'
                 ],
 
                 'select' => [
-                    'label-class' => 'label',
-                    'input-class' => '',
-                    'wrapper-class' => 'field column'
+                    'label_class' => 'label',
+                    'input_class' => '',
+                    'wrapper_class' => 'field column'
                 ],
 
                 'multiselect' => [
-                    'label-class' => 'label',
-                    'input-class' => '',
-                    'wrapper-class' => 'field column'
+                    'label_class' => 'label',
+                    'input_class' => '',
+                    'wrapper_class' => 'field column'
                 ],
 
                 'checkbox' => [
-                    'label-class' => 'label',
-                    'input-class' => '',
-                    'wrapper-class' => 'field column'
+                    'label_class' => 'label',
+                    'input_class' => '',
+                    'wrapper_class' => 'field column'
                 ],
 
                 'radio' => [
-                    'label-class' => 'label',
-                    'input-class' => '',
-                    'wrapper-class' => 'field column'
+                    'label_class' => 'label',
+                    'input_class' => '',
+                    'wrapper_class' => 'field column'
                 ],
 
                 'file' => [
-                    'label-class' => 'label',
-                    'input-class' => 'file-input',
-                    'wrapper-class' => 'field column'
+                    'label_class' => 'label',
+                    'input_class' => 'file-input',
+                    'wrapper_class' => 'field column'
                 ],
             ],
 
@@ -315,7 +310,7 @@ return [
                 ],
             ],
 
-            'error-class' => [
+            'error_class' => [
                 'global' => 'notification is-danger is-light',
                 'input' => 'is-danger',
                 'wrapper' => '',
