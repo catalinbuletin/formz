@@ -31,10 +31,6 @@ class Section extends Component
         return $this->section->getFields();
     }
 
-    public function sectionClass()
-    {
-        return $this->themeConfig['section-class'];
-    }
 
     /**
      * @inheritDoc

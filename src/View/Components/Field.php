@@ -3,11 +3,9 @@
 namespace Formz\View\Components;
 
 use Formz\Contracts\IField;
-use Formz\Rules\Required;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Component;
 
@@ -62,14 +60,14 @@ class Field extends Component
 
     public function inputClass()
     {
-        $classes = [$this->fieldConfig['input-class'] ?? ''];
+        $classes = [$this->fieldConfig['input_class'] ?? ''];
 
         if ($this->hasErrors()) {
             $classes[] = 'is-invalid';
         }
 
         if ($this->hasErrors()) {
-            $classes[] = $this->themeConfig['error-class']['input'];
+            $classes[] = $this->themeConfig['error_class']['input'];
         }
 
         return implode(' ', array_unique($classes));
@@ -77,14 +75,14 @@ class Field extends Component
 
     public function wrapperClass()
     {
-        $classes = [$this->fieldConfig['wrapper-class'] ?? ''];
+        $classes = [$this->fieldConfig['wrapper_class'] ?? ''];
 
-        foreach ($this->themeConfig['grid-map'] as $key => $colClass) {
+        foreach ($this->themeConfig['grid_map'] as $key => $colClass) {
             $classes[] = sprintf($colClass, $this->field->getCols()[$key] ?? 12);
         }
 
         if ($this->hasErrors()) {
-            $classes[] = $this->themeConfig['error-class']['wrapper'];
+            $classes[] = $this->themeConfig['error_class']['wrapper'];
         }
 
         return trim(implode(' ', array_unique($classes)));
@@ -92,10 +90,10 @@ class Field extends Component
 
     public function labelClass()
     {
-        $classes = [$this->fieldConfig['label-class'] ?? ''];
+        $classes = [$this->fieldConfig['label_class'] ?? ''];
 
         if ($this->hasErrors()) {
-            $classes[] = $this->themeConfig['error-class']['label'];
+            $classes[] = $this->themeConfig['error_class']['label'];
         }
 
         return trim(implode(' ', array_unique($classes)));
