@@ -69,14 +69,15 @@ class Form extends Component
             }
             return implode("\n", $errorMessages);
         }
+
         return '';
     }
 
     public function globalErrors()
     {
-        $dedicated = sprintf("formz::components.%s.globalErrors", $this->theme);
+        $dedicated = sprintf("formz::components.%s.global-errors", $this->theme);
 
-        $default = "formz::components.globalErrors";
+        $default = "formz::components.global-errors";
 
         return View::exists($dedicated) ? $dedicated : $default;
     }
@@ -96,6 +97,7 @@ class Form extends Component
     public function render()
     {
         $dedicated = sprintf("formz::components.%s.form", $this->theme);
+
         $default = sprintf("formz::components.%s.form", Config::get('formz.theme'));
 
         return View::exists($dedicated) ? View::make($dedicated) : View::make($default);
@@ -114,30 +116,30 @@ class Form extends Component
     private function getFieldsErrors(): array
     {
         $errors = $this->request->session()->get('errors');
+
         $errorMessages = [];
         if ($errors instanceof ViewErrorBag) {
-            foreach ($this->sections() as $section) {
-                foreach ($section->getFields() as $field) {
-                    if ($errors->has($field->getName())) {
-                        switch ($this->config['errors']['global']['display']) {
-                            case 'first':
-                                $fieldErrors = $errors->get($field->getName());
-                                $errorMessages[] = reset($fieldErrors);
-                                break;
+            foreach ($this->form->getFields() as $field) {
+                if ($errors->has($field->getName())) {
+                    switch ($this->config['errors']['global']['display']) {
+                        case 'first':
+                            $fieldErrors = $errors->get($field->getName());
+                            $errorMessages[] = reset($fieldErrors);
+                            break;
 
-                            case 'all':
-                                $errorMessages = array_merge($errorMessages, $errors);
-                                break;
+                        case 'all':
+                            $errorMessages = array_merge($errorMessages, $errors);
+                            break;
 
-                            case 'none':
-                            default:
-                                return $this->config['errors']['global']['message'];
-                                break;
-                        }
+                        case 'none':
+                        default:
+                            return $this->config['errors']['global']['message'];
+                            break;
                     }
                 }
             }
         }
+
         return $errorMessages;
     }
 }

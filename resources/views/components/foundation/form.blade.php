@@ -14,7 +14,7 @@
             @include($buttons)
         @endif
 
-        @if($errorMessage())
+        @if($errorMessage)
             @include($globalErrors)
         @endif
 
