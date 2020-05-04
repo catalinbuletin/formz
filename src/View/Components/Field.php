@@ -35,6 +35,13 @@ class Field extends Component
 
     private string $theme;
 
+
+    public bool $isRequired;
+
+    public bool $hasErrors;
+
+    public string $errorMessage;
+
     public function __construct(Request $request, $field)
     {
         $this->request = $request;
@@ -42,6 +49,10 @@ class Field extends Component
         $this->theme = $this->field->getFormContext()->getTheme();
         $this->fieldConfig = $this->fieldConfig();
         $this->themeConfig = $this->themeConfig();
+
+        $this->isRequired = $this->isRequired();
+        $this->hasErrors = $this->hasErrors();
+        $this->errorMessage = $this->errorMessage();
     }
 
     public function attributes()
@@ -99,12 +110,12 @@ class Field extends Component
         return trim(implode(' ', array_unique($classes)));
     }
 
-    public function isRequired(): bool
+    private function isRequired(): bool
     {
         return $this->field->isRequired();
     }
 
-    public function hasErrors(): bool
+    private function hasErrors(): bool
     {
         if ($this->request->getSession()) {
             /** @var ViewErrorBag $errors */
@@ -116,7 +127,7 @@ class Field extends Component
         return false;
     }
 
-    public function errors(): array
+    private function errors(): array
     {
         /** @var ViewErrorBag $errors */
         $errors = $this->request->session()->get('errors');
@@ -124,7 +135,7 @@ class Field extends Component
         return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
     }
 
-    public function errorMessage(): string
+    private function errorMessage(): string
     {
         if (!config('formz.errors.input.active')) {
             return '';

@@ -38,6 +38,9 @@ class Form extends Component
      */
     private Request $request;
 
+
+    public string $errorMessage;
+
     /**
      * Form constructor.
      * @param IForm $form
@@ -53,6 +56,8 @@ class Form extends Component
         $this->theme = $this->form->getTheme();
         $this->config = Config::get('formz');
         $this->themeConfig = $this->themeConfig();
+
+        $this->errorMessage = $this->errorMessage();
     }
 
     public function sections()
@@ -60,7 +65,7 @@ class Form extends Component
         return $this->form->getSections();
     }
 
-    public function errorMessage(): string
+    private function errorMessage(): string
     {
         if ($this->config['errors']['global']['active']) {
             $errorMessages = $this->getFieldsErrors();
