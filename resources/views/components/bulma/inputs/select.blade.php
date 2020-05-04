@@ -1,4 +1,4 @@
-<div class="select">
+<div class="select is-fullwidth">
     <select class="{{ $inputClass }}"
             name="{{ $field->getName() }}"
             id="{{ $field->getId() }}"

@@ -16,7 +16,7 @@ return [
     | Supported: "bootstrap4", "foundation", "bulma"
     */
 
-    'theme' => 'foundation',
+    'theme' => 'bulma',
 
 
     /*
@@ -45,7 +45,7 @@ return [
          *
          * Supports: "left", "center", "right"
          */
-        'placement' => 'center',
+        'placement' => 'left',
 
         /**
          * Submit button's label
@@ -299,13 +299,13 @@ return [
             ],
 
             'buttons' => [
-                'wrapper_class' => '',
+                'wrapper_class' => 'control',
                 'submit' => [
-                    'class' => 'button is-primary',
+                    'class' => 'button is-link',
                     'icon' => 'fa fa-save'
                 ],
                 'cancel' => [
-                    'class' => 'button is-light',
+                    'class' => 'button is-link is-light',
                     'icon' => 'fa fa-return'
                 ],
             ],
