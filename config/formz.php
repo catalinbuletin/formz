@@ -94,7 +94,7 @@ return [
              *
              * Supported: "first", "all", "none"
              */
-            'display' => 'none'
+            'display' => 'first'
         ],
 
         'input' => [
@@ -178,6 +178,7 @@ return [
             ],
 
             'error-class' => [
+                'global' => 'alert alert-danger',
                 'input' => 'is-invalid',
                 'wrapper' => '',
                 'label' => ''
@@ -237,6 +238,7 @@ return [
             ],
 
             'error-class' => [
+                'global' => 'callout alert',
                 'input' => 'is-invalid-input',
                 'wrapper' => '',
                 'label' => 'is-invalid-label'
@@ -314,6 +316,7 @@ return [
             ],
 
             'error-class' => [
+                'global' => 'notification is-danger is-light',
                 'input' => 'is-danger',
                 'wrapper' => '',
                 'label' => ''

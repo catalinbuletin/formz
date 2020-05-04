@@ -14,11 +14,13 @@
             @include($buttons)
         @endif
 
+        @if($errorMessage())
+            @include($globalErrors)
+        @endif
 
         @foreach($form->getSections() as $section)
             <x-formz-section :section="$section"></x-formz-section>
         @endforeach
-
 
         {{--  Include the form submit and cancel buttons if footer is not set  --}}
         @if($config['buttons']['active_bottom'] && (bool) $footer === false)

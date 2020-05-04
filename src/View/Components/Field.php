@@ -3,11 +3,9 @@
 namespace Formz\View\Components;
 
 use Formz\Contracts\IField;
-use Formz\Rules\Required;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Component;
 

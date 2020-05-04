@@ -4,6 +4,7 @@ namespace Unit;
 
 use Formz\View\Components\Form;
 use Formz\Contracts\IForm;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Mockery;
 
@@ -17,7 +18,7 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
     /** @test */
     public function a_form_component_has_action_and_method()
     {
-        $formComponent = new Form($this->mockForm(), '/action', 'post');
+        $formComponent = new Form($this->app->make(Request::class), $this->mockForm(), '/action', 'post');
 
         $this->assertEquals('/action', $formComponent->action);
         $this->assertEquals('post', $formComponent->method);
@@ -26,20 +27,15 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
     /** @test */
     public function a_form_component_has_form_class()
     {
-        Config::shouldReceive('get')->with('formz.themes.bootstrap4')
-                ->andReturn([
-                    'form-class' => 'form-class-assigned'
-                ]);
+        $formComponent = new Form($this->app->make(Request::class), $this->mockForm('bulma'));
 
-        $formComponent = new Form($this->mockForm());
-
-        $this->assertEquals('form-class-assigned', $formComponent->formClass());
+        $this->assertEquals('', $formComponent->formClass());
     }
 
     /** @test */
     public function a_form_component_has_collection_of_sections()
     {
-        $formComponent = new Form($this->mockForm());
+        $formComponent = new Form($this->app->make(Request::class), $this->mockForm());
 
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $formComponent->sections());
         $this->assertEquals(2, $formComponent->sections()->count());
@@ -56,6 +52,10 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
             ->andReturn($theme);
         $form->shouldReceive('getSections')
             ->andReturn(collect(['section1', 'section2']));
+        $form->shouldReceive('getAction')
+            ->andReturn('/');
+        $form->shouldReceive('getMethod')
+            ->andReturn('post');
         return $form;
     }
 
