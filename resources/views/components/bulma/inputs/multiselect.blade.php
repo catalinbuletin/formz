@@ -1,4 +1,4 @@
-<div class="select is-multiple">
+<div class="select is-multiple is-fullwidth">
     <select multiple
             class="{{ $inputClass }}"
             name="{{ $field->getName() }}[]"
