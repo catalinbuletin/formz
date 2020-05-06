@@ -2,7 +2,7 @@
 
 The package provides a nice and easy way to generate and manage forms in your Laravel application.
 
-It has already implemented some CSS frameworks (Bootstratp 4, Bulma, Foundation) so you can skip directly to what matters to you.
+It has already implemented some CSS frameworks (Bootstrap 4, Bulma, Foundation) so you can skip directly to what matters to you.
 
 
 Creating forms is just as easy as ABC.
@@ -56,7 +56,7 @@ The package will automatically register itself.
 
 ## How to use
 
-1. Set the theme
+1. **Set the theme**
 
     If you want to change the default theme, you have to publish the package's config file
     
@@ -65,7 +65,7 @@ The package will automatically register itself.
     ```
     The config file published under `/config` is named `formz.php`. Here you can change 
 
-1. Create a custom form using the builder
+1. **Create a custom form using the builder**
 
     ```html
    php artisan formz:make CustomForm 
@@ -105,7 +105,7 @@ The package will automatically register itself.
    You can now start add sections and fields inside your form.
    You can check the entire API documentation here.
 
-1. Load the custom form from a controller into your view
+1. **Load the custom form from a controller into your view**
 
     ```php
     /**
@@ -120,7 +120,7 @@ The package will automatically register itself.
     }
     ```
    
-1. Display the blade component inside your view
+1. **Display the blade component inside your view**
 
     ```html
     <x-formz-form :form="$form"></x-formz-form>
