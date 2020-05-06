@@ -83,6 +83,13 @@ interface IField extends \JsonSerializable
     public function setCols($xs, $sm = null, $md = null, $lg = null, $xlg = null): IField;
 
     /**
+     * @param int $tabindex
+     *
+     * @return IField
+     */
+    public function setTabindex(int $tabindex): IField;
+
+    /**
      * @param ISection $section
      *
      * @return IField
@@ -127,6 +134,11 @@ interface IField extends \JsonSerializable
      * @return array
      */
     public function getCols();
+
+    /**
+     * @return int|null
+     */
+    public function getTabindex();
 
     /**
      * @return mixed

@@ -31,6 +31,8 @@ class AbstractField implements IField
 
     protected bool $hidden = false;
 
+    protected ?int $tabindex = null;
+
     protected array $rules = [];
 
     // @todo - cleanups
@@ -243,6 +245,17 @@ class AbstractField implements IField
     }
 
     /**
+     * @param int $tabindex
+     * @return IField
+     */
+    public function setTabindex(int $tabindex): IField
+    {
+        $this->tabindex = $tabindex;
+
+        return $this;
+    }
+
+    /**
      * @inheritDoc
      */
     public function setContext(ISection $section): IField
@@ -332,6 +345,14 @@ class AbstractField implements IField
     public function getCols(): array
     {
         return $this->cols;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTabindex(): ?int
+    {
+        return $this->tabindex;
     }
 
     public function jsonSerialize()

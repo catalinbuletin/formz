@@ -35,23 +35,30 @@ class FluentField
         return $this;
     }
 
-    public function cols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null, ?int $xlg = null)
+    public function cols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null, ?int $xlg = null): self
     {
         $this->field->setCols($xs, $sm, $md, $lg, $xlg);
 
         return $this;
     }
 
-    public function placeholder($value)
+    public function placeholder($value): self
     {
         $this->field->setAttributes(['placeholder' => $value]);
 
         return $this;
     }
 
-    public function required()
+    public function required(): self
     {
         $this->field->required();
+
+        return $this;
+    }
+
+    public function tabindex(int $tabindex): self
+    {
+        $this->field->setTabindex($tabindex);
 
         return $this;
     }
