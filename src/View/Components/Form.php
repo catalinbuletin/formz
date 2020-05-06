@@ -15,6 +15,7 @@ class Form extends Component
 
     public string $action = '';
     public string $method = '';
+    public string $enctype = '';
 
     public string $header = '';
     public string $footer = '';
@@ -46,13 +47,15 @@ class Form extends Component
      * @param IForm $form
      * @param string|null $action
      * @param string|null $method
+     * @param string|null $enctype
      */
-    public function __construct(Request $request, IForm $form, ?string $action = null, ?string $method = null)
+    public function __construct(Request $request, IForm $form, ?string $action = null, ?string $method = null, ?string $enctype = null)
     {
         $this->request = $request;
         $this->form = $form;
         $this->action = $action ?: $this->form->getAction();
         $this->method = $method ?: $this->form->getMethod() ?: 'post';
+        $this->enctype = $enctype ?: $this->form->getEnctype() ?: '';
         $this->theme = $this->form->getTheme();
         $this->config = Config::get('formz');
         $this->themeConfig = $this->themeConfig();

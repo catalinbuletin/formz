@@ -25,6 +25,14 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
     }
 
     /** @test */
+    public function a_form_component_has_enctype()
+    {
+        $formComponent = new Form($this->app->make(Request::class), $this->mockForm(), '/action', 'post', 'application/x-www-form-urlencoded');
+
+        $this->assertEquals('application/x-www-form-urlencoded', $formComponent->enctype);
+    }
+
+    /** @test */
     public function a_form_component_has_theme_config()
     {
         $formComponent = new Form($this->app->make(Request::class), $this->mockForm('bulma'));
@@ -63,6 +71,8 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
             ->andReturn('/');
         $form->shouldReceive('getMethod')
             ->andReturn('post');
+        $form->shouldReceive('getEnctype')
+            ->andReturn('application/x-www-form-urlencoded');
         return $form;
     }
 

@@ -20,6 +20,12 @@ interface IForm extends \JsonSerializable
     public function setMethod(string $method): IForm;
 
     /**
+     * @param string $enctype
+     * @return IForm
+     */
+    public function setEnctype(string $enctype): IForm;
+
+    /**
      * @param array $data
      * @return IForm
      */
@@ -126,6 +132,11 @@ interface IForm extends \JsonSerializable
      * @return string
      */
     public function getMethod(): string;
+
+    /**
+     * @return string
+     */
+    public function getEnctype(): string;
 
     /**
      * @return array

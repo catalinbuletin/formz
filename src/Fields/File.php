@@ -6,7 +6,8 @@ use Illuminate\Support\Arr;
 
 class File extends AbstractField
 {
-    private $fileCategory = null;
+    // @todo - cleanup
+    //private $fileCategory = null;
     private string $theme = 'list';
     private int $maxSize = 3;
     private ?int $maxFiles = null;
@@ -17,7 +18,8 @@ class File extends AbstractField
         parent::__construct('file', $name, $label, $value);
     }
 
-    public static function makeFromArray(array $fieldData)
+    // @todo - cleanup
+    /*public static function makeFromArray(array $fieldData)
     {
         $field = new static(
             $fieldData['name'],
@@ -31,16 +33,17 @@ class File extends AbstractField
         $field->workflows($fieldData['workflows']);
 
         return $field;
-    }
+    }*/
 
-    private function setFileConfig($config)
+    // @todo - cleanup
+    /*private function setFileConfig($config)
     {
         $this->fileCategory = Arr::get($config, 'fileCategory', null);
         $this->maxSize = Arr::get($config, 'maxSize', $this->maxSize);
         $this->maxFiles = Arr::get($config, 'maxFiles', $this->maxFiles);
         $this->helpText = Arr::get($config, 'helpText', $this->helpText);
         $this->theme = Arr::get($config, 'theme', $this->theme);
-    }
+    }*/
 
     public function maxSize(int $value): File
     {

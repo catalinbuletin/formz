@@ -26,6 +26,8 @@ class Form implements IForm
 
     protected string $theme;
 
+    protected string $enctype = '';
+
     /**
      * @var Collection|ISection[]
      */
@@ -95,6 +97,13 @@ class Form implements IForm
         return $this;
     }
 
+    public function setEnctype(string $enctype): IForm
+    {
+        $this->enctype = $enctype;
+
+        return $this;
+    }
+
     public function getTheme(): string
     {
         return $this->theme;
@@ -108,6 +117,11 @@ class Form implements IForm
     public function getMethod(): string
     {
         return $this->method;
+    }
+
+    public function getEnctype(): string
+    {
+        return $this->enctype;
     }
 
     /**
@@ -167,14 +181,15 @@ class Form implements IForm
         return $this;
     }
 
-    public function addWorkflow(IWorkflow $workflow)
+    // @todo - cleanup
+    /*public function addWorkflow(IWorkflow $workflow)
     {
         $workflow->setContext($this);
 
         $this->getField($workflow->getFieldName())->workflows([
             $workflow
         ]);
-    }
+    }*/
 
     /**
      * @param array $formData
@@ -190,9 +205,13 @@ class Form implements IForm
 
     public function validate(Request $request)
     {
-        return $request->validate(
-            $this->getValidationRules()
-        );
+        try {
+            return $request->validate(
+                $this->getValidationRules()
+            );
+        } catch (\ReflectionException $e) {
+            // @todo - handle exception
+        }
     }
 
     /**

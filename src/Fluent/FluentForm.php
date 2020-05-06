@@ -31,17 +31,18 @@ class FluentForm
         return $instance;
     }
 
+    // @todo - cleanup
     /**
      * @return FluentForm
      */
-    public static function for(Model $model): FluentForm
+    /*public static function for(Model $model): FluentForm
     {
         $instance = new static();
 
         $instance->form = new Form();
 
         return $instance;
-    }
+    }*/
 //
 //    public function model(Model $model)
 //    {
@@ -79,6 +80,18 @@ class FluentForm
         $this->form->setTheme($theme);
 
         return $this;
+    }
+
+    public function enctype(string $enctype): self
+    {
+        $this->form->setEnctype($enctype);
+
+        return $this;
+    }
+
+    public function multipart(): self
+    {
+        return $this->enctype('multipart/form-data');
     }
 
     public function get(): IForm

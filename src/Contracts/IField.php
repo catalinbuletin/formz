@@ -35,11 +35,12 @@ interface IField extends \JsonSerializable
      */
     public function rules(array $rules): IField;
 
+    // @todo - cleanup
     /**
      * @param array $workflows
      * @return IField
      */
-    public function workflows(array $workflows): IField;
+    //public function workflows(array $workflows): IField;
 
     /**
      * Sets the field as disabled

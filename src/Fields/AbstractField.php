@@ -5,11 +5,11 @@ namespace Formz\Fields;
 use Dflydev\DotAccessData\Data;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
-use Formz\Rules\Required;
+//use Formz\Rules\Required;
 use Illuminate\Support\Str;
 use Formz\Contracts\IField;
-use Formz\Contracts\IRule;
-use Formz\Contracts\IWorkflow;
+//use Formz\Contracts\IRule;
+//use Formz\Contracts\IWorkflow;
 
 class AbstractField implements IField
 {
@@ -33,7 +33,8 @@ class AbstractField implements IField
 
     protected array $rules = [];
 
-    protected array $workflows = [];
+    // @todo - cleanups
+    //protected array $workflows = [];
 
     protected string $width = 'wFull';
 
@@ -45,7 +46,8 @@ class AbstractField implements IField
         'xlg' => 12
     ];
 
-    protected array $listeners = [];
+    // @todo - cleanup
+    //protected array $listeners = [];
 
     protected Data $attributes;
 
@@ -119,7 +121,7 @@ class AbstractField implements IField
     }
 
     /**
-     * @param array|IRule[] $rules
+     * @param array $rules
      *
      * @return AbstractField
      */
@@ -136,17 +138,18 @@ class AbstractField implements IField
         return $this;
     }
 
+    // @todo - cleanup
     /**
      * @param array|IWorkflow[] $workflows
      *
      * @return AbstractField
      */
-    public function workflows(array $workflows): IField
+    /*public function workflows(array $workflows): IField
     {
         $this->workflows = array_merge($this->workflows, $workflows);
 
         return $this;
-    }
+    }*/
 
     /**
      * Sets the field as disabled
@@ -245,6 +248,13 @@ class AbstractField implements IField
     public function setContext(ISection $section): IField
     {
         $this->context = $section;
+
+        if ($this->isFile()) {
+            /**
+             * We have a file input, let's set the enctype of the form to multipart/form-data
+             */
+            $this->getFormContext()->setEnctype('multipart/form-data');
+        }
 
         return $this;
     }
