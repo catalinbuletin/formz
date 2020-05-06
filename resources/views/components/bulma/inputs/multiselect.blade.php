@@ -3,6 +3,7 @@
             class="{{ $inputClass }}"
             name="{{ $field->getName() }}[]"
             id="{{ $field->getId() }}"
+            {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
     >
             @foreach($field->getOptions() as $option)
                     <option

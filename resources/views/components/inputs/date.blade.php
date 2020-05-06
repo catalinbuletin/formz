@@ -7,4 +7,5 @@
         placeholder="{{ $attributes->get('placeholder') }}"
         min="{{ Carbon\Carbon::parse($attributes->get('min'))->format('Y-m-d') }}"
         max="{{ Carbon\Carbon::parse($attributes->get('max'))->format('Y-m-d') }}"
+        {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
 >

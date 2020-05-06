@@ -8,4 +8,5 @@
         min="{{ $attributes->get('min') }}"
         max="{{ $attributes->get('max') }}"
         step="{{ $attributes->get('step') }}"
+        {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
     >

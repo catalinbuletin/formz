@@ -7,4 +7,5 @@
         placeholder="{{ $attributes->get('placeholder') }}"
         minlength="{{ $attributes->get('min') }}"
         maxlength="{{ $attributes->get('max') }}"
+        {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
 >

@@ -5,7 +5,9 @@
             class="{{ $inputClass }}"
             name="{{ $field->getName() }}"
             id="{{ $field->getId() }}"
-            value="{{ $field->getValue() }}">
+            value="{{ $field->getValue() }}"
+            {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
+        >
         <span class="file-cta">
             <span class="file-icon">
                 <i class="fas fa-upload"></i>
