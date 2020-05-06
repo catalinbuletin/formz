@@ -2,7 +2,7 @@
 
 The package provides a nice and easy way to generate and manage forms in your Laravel application.
 
-It has already implemented some CSS frameworks (Bootstrap 4, Bulma, Foundation) so you can skip directly to what matters to you.
+It supports out of the box a few CSS frameworks (Bootstrap 4, Bulma, Foundation) so you can skip directly to what matters to you.
 
 
 Creating forms is just as easy as ABC.
@@ -12,8 +12,9 @@ A. Create your custom form
 ```php
 $formBuilder = $this->build()
             ->section()
-                ->text('my_first_text_input')
-                ->textarea('my_first_textarea')
+                ->text('name')->required()
+                ->text('email')->rules(['required', 'email'])
+                ->textarea('description')
             ->get();
 ```
 
