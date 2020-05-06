@@ -87,6 +87,8 @@ class FieldComponentTest extends \Orchestra\Testbench\TestCase
             ->andReturn(['xs' => 12, 'sm' => 12, 'md' => 12, 'lg' => 12, 'xlg' => 12]);
         $field->shouldReceive('getAttributes')
             ->andReturn(new \Dflydev\DotAccessData\Data([]));
+        $field->shouldReceive('isRequired')
+            ->andReturn(true);
 
         return $field;
     }

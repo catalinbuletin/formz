@@ -126,9 +126,9 @@ class AbstractField implements IField
     public function rules(array $rules): IField
     {
         foreach ($rules as $rule) {
-            $brokenRules = explode('|', $rule);
-            foreach ($brokenRules as $brokenRule) {
-                $this->rules[] = $brokenRule;
+            $rulesToBeAdded = explode('|', $rule);
+            foreach ($rulesToBeAdded as $ruleToBeAdded) {
+                $this->rules[] = $ruleToBeAdded;
             }
         }
         $this->rules = array_unique($this->rules);

@@ -120,26 +120,28 @@ class Form extends Component
 
     private function getFieldsErrors(): array
     {
-        $errors = $this->request->session()->get('errors');
-
         $errorMessages = [];
-        if ($errors instanceof ViewErrorBag) {
-            foreach ($this->form->getFields() as $field) {
-                if ($errors->has($field->getName())) {
-                    switch ($this->config['errors']['global']['display']) {
-                        case 'first':
-                            $fieldErrors = $errors->get($field->getName());
-                            $errorMessages[] = reset($fieldErrors);
-                            break;
 
-                        case 'all':
-                            $errorMessages = array_merge($errorMessages, $errors);
-                            break;
+        if ($this->request->getSession()) {
+            $errors = $this->request->session()->get('errors');
+            if ($errors instanceof ViewErrorBag) {
+                foreach ($this->form->getFields() as $field) {
+                    if ($errors->has($field->getName())) {
+                        switch ($this->config['errors']['global']['display']) {
+                            case 'first':
+                                $fieldErrors = $errors->get($field->getName());
+                                $errorMessages[] = reset($fieldErrors);
+                                break;
 
-                        case 'none':
-                        default:
-                            return $this->config['errors']['global']['message'];
-                            break;
+                            case 'all':
+                                $errorMessages = array_merge($errorMessages, $errors);
+                                break;
+
+                            case 'none':
+                            default:
+                                return $this->config['errors']['global']['message'];
+                                break;
+                        }
                     }
                 }
             }

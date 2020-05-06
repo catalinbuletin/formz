@@ -25,11 +25,18 @@ class FormComponentTest extends \Orchestra\Testbench\TestCase
     }
 
     /** @test */
-    public function a_form_component_has_form_class()
+    public function a_form_component_has_theme_config()
     {
         $formComponent = new Form($this->app->make(Request::class), $this->mockForm('bulma'));
 
-        $this->assertEquals('', $formComponent->formClass());
+        $this->assertIsArray($formComponent->themeConfig);
+
+        $this->assertArrayHasKey('form_class', $formComponent->themeConfig);
+        $this->assertArrayHasKey('section_class', $formComponent->themeConfig);
+        $this->assertArrayHasKey('grid_map', $formComponent->themeConfig);
+        $this->assertArrayHasKey('fields', $formComponent->themeConfig);
+        $this->assertArrayHasKey('buttons', $formComponent->themeConfig);
+        $this->assertArrayHasKey('error_class', $formComponent->themeConfig);
     }
 
     /** @test */

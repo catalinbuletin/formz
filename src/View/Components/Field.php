@@ -129,10 +129,14 @@ class Field extends Component
 
     private function errors(): array
     {
-        /** @var ViewErrorBag $errors */
-        $errors = $this->request->session()->get('errors');
+        if ($this->request->getSession()) {
+            /** @var ViewErrorBag $errors */
+            $errors = $this->request->session()->get('errors');
 
-        return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
+            return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
+        }
+
+        return [];
     }
 
     private function errorMessage(): string

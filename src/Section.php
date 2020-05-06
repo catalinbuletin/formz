@@ -20,7 +20,6 @@ use Formz\Fields\Text;
 
 class Section implements ISection
 {
-    use AddsFieldsTrait;
 
     private string $uuid;
     private string $label;
