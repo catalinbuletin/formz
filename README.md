@@ -37,7 +37,7 @@ C. Use the Laravel blade component in your view
 - PHP 7.4
 
 
-## CSS Frameworks implemented
+## CSS Frameworks supported out of the box
 
 1. Bootstrap 4
 1. Bulma
@@ -62,7 +62,7 @@ The package will automatically register itself.
     If you want to change the default theme, you have to publish the package's config file
     
     ```
-    php artisan vendor:publish --provider="catalinbuletin\formz\FormzServiceProvider" --tag=config
+    php artisan vendor:publish --provider="Formz\FormzServiceProvider" --tag=config
     ```
     The config file published under `/config` is named `formz.php`. Here you can change 
 
