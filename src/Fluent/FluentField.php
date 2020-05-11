@@ -63,6 +63,13 @@ class FluentField
         return $this;
     }
 
+    public function helpText(string $helpText): self
+    {
+        $this->field->setHelpText($helpText);
+
+        return $this;
+    }
+
     public function text(string $name, string $label = null, $value = null): FluentText
     {
         return $this->context->text($name, $label, $value);

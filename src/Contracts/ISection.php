@@ -6,11 +6,8 @@ use Illuminate\Support\Collection;
 
 interface ISection extends \JsonSerializable
 {
-    /**
-     * @param IField $field
-     * @return $this
-     */
-    public function addField(IField $field);
+
+    public function addField(IField $field): self;
 
     /**
      * @param string|IField $field
@@ -27,18 +24,10 @@ interface ISection extends \JsonSerializable
      *
      * @return $this
      */
-    public function setLabel($name = null);
+    public function setLabel($name = null): self;
 
-    /**
-     * @param IForm $context
-     *
-     * @return $this
-     */
-    public function setContext(IForm $context);
+    public function setContext(IForm $context): self;
 
-    /**
-     * @return IForm
-     */
     public function getContext(): IForm;
 
     /**
@@ -47,4 +36,8 @@ interface ISection extends \JsonSerializable
      */
     public function getFields($only = []);
 
+
+    public function setHelpText(string $helpText): self;
+
+    public function getHelpText(): string;
 }

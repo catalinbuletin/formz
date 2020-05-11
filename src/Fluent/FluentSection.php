@@ -229,6 +229,14 @@ class FluentSection
         return $field;
     }
 
+
+    public function helpText(string $helpText): FluentSection
+    {
+        $this->section->setHelpText($helpText);
+
+        return $this;
+    }
+
     public function setContext(FluentForm $context)
     {
         $this->context = $context;

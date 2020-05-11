@@ -1,7 +1,14 @@
-<div class="formz-section {{ $themeConfig['section_class'] }}">
+<h4 class="formz-section {{ $themeConfig['section_class'] }}">
     @if($section->getLabel())
         <div class="column is-12">
-            <div class="formz__section-name">{{ $section->getLabel() }}</div>
+            <h4>
+                {{ $section->getLabel() }}
+            </h4>
+            @if ($section->getHelpText())
+                <p class="help">
+                    {!! $section->getHelpText() !!}
+                </p>
+            @endif
         </div>
     @endif
 

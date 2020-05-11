@@ -33,6 +33,8 @@ class AbstractField implements IField
 
     protected ?int $tabindex = null;
 
+    protected string $helpText;
+
     protected array $rules = [];
 
     // @todo - cleanups
@@ -255,6 +257,13 @@ class AbstractField implements IField
         return $this;
     }
 
+    public function setHelpText(string $helpText): IField
+    {
+        $this->helpText = $helpText;
+
+        return $this;
+    }
+
     /**
      * @inheritDoc
      */
@@ -353,6 +362,11 @@ class AbstractField implements IField
     public function getTabindex(): ?int
     {
         return $this->tabindex;
+    }
+
+    public function getHelpText(): string
+    {
+        return $this->helpText ?? '';
     }
 
     public function jsonSerialize()

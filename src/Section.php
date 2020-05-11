@@ -25,6 +25,8 @@ class Section implements ISection
     private string $label;
     private Collection $fields;
 
+    private string $helpText;
+
     protected IForm $context;
 
     /**
@@ -140,6 +142,19 @@ class Section implements ISection
     public function getContext(): IForm
     {
         return $this->context;
+    }
+
+
+    public function setHelpText(string $helpText): ISection
+    {
+        $this->helpText = $helpText;
+
+        return $this;
+    }
+
+    public function getHelpText(): string
+    {
+        return $this->helpText ?? '';
     }
 
 

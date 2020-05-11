@@ -11,6 +11,12 @@
 
     @include($input)
 
+    @if ($field->getHelpText())
+        <small id="emailHelp" class="form-text text-muted">
+            {!! nl2br($field->getHelpText()) !!}
+        </small>
+    @endif
+
     @if ($hasErrors)
         <div class="invalid-feedback">
             {!! nl2br($errorMessage) !!}

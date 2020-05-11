@@ -21,6 +21,12 @@
 
     </div>
 
+    @if ($field->getHelpText())
+        <p class="help">
+            {!! nl2br($field->getHelpText()) !!}
+        </p>
+    @endif
+
     @if ($hasErrors === true)
         <p class="help is-danger">
             {!! nl2br($errorMessage) !!}

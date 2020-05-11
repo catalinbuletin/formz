@@ -11,7 +11,7 @@ class File extends AbstractField
     private string $theme = 'list';
     private int $maxSize = 3;
     private ?int $maxFiles = null;
-    private string $helpText = 'Upload file or drag & drop';
+    //private string $helpText = 'Upload file or drag & drop'; @todo -> cleanup
 
     public function __construct(string $name, string $label = null, $value = null)
     {
@@ -66,12 +66,13 @@ class File extends AbstractField
         return $this;
     }
 
-    public function helpText(string $value): File
+    // @todo -> cleanup
+    /*public function helpText(string $value): File
     {
         $this->helpText = $value;
 
         return $this;
-    }
+    }*/
 
     public function fileCategory($value): File
     {
@@ -101,7 +102,7 @@ class File extends AbstractField
                 'maxSize' => $this->maxSize,
                 'theme' => $this->theme,
                 'maxFiles' => $this->maxFiles,
-                'helpText' => $this->helpText,
+                //'helpText' => $this->helpText, @todo -> cleanup
             ]
         ]);
     }

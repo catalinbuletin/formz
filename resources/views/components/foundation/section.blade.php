@@ -1,7 +1,15 @@
 <div class="formz-section {{ $themeConfig['section_class'] }}">
     @if($section->getLabel())
+        <h4 class="small-12 cell">
+            {{ $section->getLabel() }}
+        </h4>
+    @endif
+
+    @if ($section->getHelpText())
         <div class="small-12 cell">
-            <div class="formz__section-name">{{ $section->getLabel() }}</div>
+            <p class="help-text">
+                {!! $section->getHelpText() !!}
+            </p>
         </div>
     @endif
 

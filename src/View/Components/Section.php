@@ -11,6 +11,8 @@ class Section extends Component
 {
     public ISection $section;
 
+    public string $helpText;
+
     /**
      * Array containing config values for the used theme
      * @var array|mixed
@@ -24,6 +26,7 @@ class Section extends Component
         $this->section = $section;
         $this->theme = $this->section->getContext()->getTheme();
         $this->themeConfig = $this->themeConfig();
+        $this->helpText = $this->section->getHelpText();
     }
 
     public function fields()

@@ -1,7 +1,8 @@
 <div class="formz-section {{ $themeConfig['section_class'] }}">
     @if($section->getLabel())
-        <div class="col-lg-12">
-            <div class="formz__section-name">{{ $section->getLabel() }}</div>
+        <div class="col-xs-12">
+            <h4>{{ $section->getLabel() }}</h4>
+            <small class="form-text text-muted mb-3">{!! $section->getHelpText() !!}</small>
         </div>
     @endif
 

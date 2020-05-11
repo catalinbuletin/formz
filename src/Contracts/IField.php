@@ -90,6 +90,13 @@ interface IField extends \JsonSerializable
     public function setTabindex(int $tabindex): IField;
 
     /**
+     * @param string $helpText
+     *
+     * @return IField
+     */
+    public function setHelpText(string $helpText): IField;
+
+    /**
      * @param ISection $section
      *
      * @return IField
@@ -139,6 +146,11 @@ interface IField extends \JsonSerializable
      * @return int|null
      */
     public function getTabindex();
+
+    /**
+     * @return string
+     */
+    public function getHelpText(): string;
 
     /**
      * @return mixed

@@ -15,4 +15,10 @@
             </span>
         @endif
     </label>
+
+    @if ($field->getHelpText())
+        <p class="help-text">
+            {!! nl2br($field->getHelpText()) !!}
+        </p>
+    @endif
 </div>
