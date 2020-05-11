@@ -17,7 +17,7 @@
         </small>
     @endif
 
-    @if ($hasErrors)
+    @if ($errorMessage)
         <div class="invalid-feedback">
             {!! nl2br($errorMessage) !!}
         </div>

@@ -1,4 +1,4 @@
-<h4 class="formz-section {{ $themeConfig['section_class'] }}">
+<div class="formz-section {{ $themeConfig['section_class'] }}">
     @if($section->getLabel())
         <div class="column is-12">
             <h4>

@@ -9,7 +9,7 @@
 
         @include($input)
 
-        @if ($hasErrors)
+        @if ($errorMessage)
             <span class="form-error is-visible">
                 {!! nl2br($errorMessage) !!}
             </span>

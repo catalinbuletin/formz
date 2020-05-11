@@ -5,11 +5,8 @@ namespace Formz\Fields;
 use Dflydev\DotAccessData\Data;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
-//use Formz\Rules\Required;
 use Illuminate\Support\Str;
 use Formz\Contracts\IField;
-//use Formz\Contracts\IRule;
-//use Formz\Contracts\IWorkflow;
 
 class AbstractField implements IField
 {
@@ -406,15 +403,18 @@ class AbstractField implements IField
     protected function defaultAttributes()
     {
         return [
-            'placeholder' => null,
-            'class' => 'form-control input-md',
-            'required' => $this->isRequired(),
+            'input' => [
+                'placeholder' => null,
+                'class' => 'form-control input-md',
+                'required' => $this->isRequired(),
+                'id' => $this->customId ?? $this->id
+            ],
             'container' => [
-                'class' => 'form-group col-xs-12 col-sm-12 col-md-12 col-lg-12'
+                'class' => null
             ],
             'label' => [
                 'value' => $this->guessLabel(),
-                'class' => 'control-label'
+                'class' => null,
             ]
         ];
     }

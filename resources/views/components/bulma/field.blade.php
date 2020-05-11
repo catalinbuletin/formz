@@ -9,11 +9,11 @@
 
     </label>
 
-    <div class="control {{ $hasErrors === true ? 'has-icons-right' : '' }}">
+    <div class="control {{ $errorMessage ? 'has-icons-right' : '' }}">
 
         @include($input)
 
-        @if ($hasErrors === true)
+        @if ($errorMessage)
             <span class="icon is-small is-right">
                 <i class="fas fa-exclamation-triangle"></i>
             </span>
@@ -27,7 +27,7 @@
         </p>
     @endif
 
-    @if ($hasErrors === true)
+    @if ($errorMessage)
         <p class="help is-danger">
             {!! nl2br($errorMessage) !!}
         </p>

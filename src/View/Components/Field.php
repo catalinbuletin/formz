@@ -38,8 +38,6 @@ class Field extends Component
 
     public bool $isRequired;
 
-    public bool $hasErrors;
-
     public string $errorMessage;
 
     public function __construct(Request $request, $field)
@@ -51,7 +49,6 @@ class Field extends Component
         $this->themeConfig = $this->themeConfig();
 
         $this->isRequired = $this->isRequired();
-        $this->hasErrors = $this->hasErrors();
         $this->errorMessage = $this->errorMessage();
     }
 
@@ -73,11 +70,11 @@ class Field extends Component
     {
         $classes = [$this->fieldConfig['input_class'] ?? ''];
 
-        if ($this->hasErrors()) {
+        if ($this->errorMessage) {
             $classes[] = 'is-invalid';
         }
 
-        if ($this->hasErrors()) {
+        if ($this->errorMessage) {
             $classes[] = $this->themeConfig['error_class']['input'];
         }
 
@@ -92,7 +89,7 @@ class Field extends Component
             $classes[] = sprintf($colClass, $this->field->getCols()[$key] ?? 12);
         }
 
-        if ($this->hasErrors()) {
+        if ($this->errorMessage) {
             $classes[] = $this->themeConfig['error_class']['wrapper'];
         }
 
@@ -103,7 +100,7 @@ class Field extends Component
     {
         $classes = [$this->fieldConfig['label_class'] ?? ''];
 
-        if ($this->hasErrors()) {
+        if ($this->errorMessage) {
             $classes[] = $this->themeConfig['error_class']['label'];
         }
 
@@ -113,30 +110,6 @@ class Field extends Component
     private function isRequired(): bool
     {
         return $this->field->isRequired();
-    }
-
-    private function hasErrors(): bool
-    {
-        if ($this->request->getSession()) {
-            /** @var ViewErrorBag $errors */
-            $errors = $this->request->session()->get('errors');
-
-            return $errors instanceof ViewErrorBag && $errors->has($this->field->getName());
-        }
-
-        return false;
-    }
-
-    private function errors(): array
-    {
-        if ($this->request->getSession()) {
-            /** @var ViewErrorBag $errors */
-            $errors = $this->request->session()->get('errors');
-
-            return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
-        }
-
-        return [];
     }
 
     private function errorMessage(): string
@@ -152,6 +125,18 @@ class Field extends Component
         }
 
         return reset($errors) ?: '';
+    }
+
+    private function errors(): array
+    {
+        if ($this->request->getSession()) {
+            /** @var ViewErrorBag $errors */
+            $errors = $this->request->session()->get('errors');
+
+            return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
+        }
+
+        return [];
     }
 
     /**
