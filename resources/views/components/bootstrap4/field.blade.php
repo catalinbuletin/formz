@@ -4,7 +4,7 @@
         {{ $field->getLabel() }}
 
         @if($isRequired)
-            <span class="required">*</span>
+            <span class="{{ $themeConfig['required_asterisk_class'] }}">*</span>
         @endif
 
     </label>

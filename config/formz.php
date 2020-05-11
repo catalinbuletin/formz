@@ -114,6 +114,8 @@ return [
 
             'section_class' => 'form-row',
 
+            'required_asterisk_class' => 'text-danger',
+
             'grid_map' => [
                 'xs' => 'col-%s',
                 'sm' => 'col-sm-%s',
@@ -186,6 +188,8 @@ return [
 
             'section_class' => 'grid-x grid-padding-x',
 
+            'required_asterisk_class' => '',
+
             'grid_map' => [
                 'xs' => 'small-%s',
                 'sm' => 'medium-%s',
@@ -245,6 +249,8 @@ return [
             'form_class' => '',
 
             'section_class' => 'columns is-multiline is-mobile',
+
+            'required_asterisk_class' => 'has-text-danger',
 
             'grid_map' => [
                 'xs' => 'is-%s-mobile',
