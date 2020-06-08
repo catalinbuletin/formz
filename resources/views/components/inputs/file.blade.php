@@ -3,6 +3,6 @@
         class="{{ $inputClass }}"
         name="{{ $field->getName() }}"
         id="{{ $field->getId() }}"
-        value="{{ $field->getValue() }}"
+        value="{{ $request->old($field->getName(), $field->getValue()) }}"
         {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
 >

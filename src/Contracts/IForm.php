@@ -43,11 +43,12 @@ interface IForm extends \JsonSerializable
      */
     public function addFields(array $fields): IForm;
 
+    // @todo -> cleanup
     /**
      * @param array $array
      * @return mixed
      */
-    public function addWorkflows(array $array): IForm;
+    //public function addWorkflows(array $array): IForm;
 
     /**
      * @param Request $request

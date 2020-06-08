@@ -3,6 +3,7 @@
 namespace Formz\Fields;
 
 use Dflydev\DotAccessData\Data;
+use Formz\AttributesTrait;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
 use Illuminate\Support\Str;
@@ -10,6 +11,8 @@ use Formz\Contracts\IField;
 
 class AbstractField implements IField
 {
+    use AttributesTrait;
+
     protected string $id;
 
     protected string $type;
@@ -49,8 +52,6 @@ class AbstractField implements IField
 
     // @todo - cleanup
     //protected array $listeners = [];
-
-    protected Data $attributes;
 
     protected ISection $context;
 
@@ -99,29 +100,6 @@ class AbstractField implements IField
     }
 
     /**
-     * Set Field attributes
-     *
-     * @param array $attributes
-     * @return static
-     */
-    public function setAttributes(array $attributes): IField
-    {
-        foreach ($attributes as $key => $value) {
-            $this->attributes->set($key, $value);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Data
-     */
-    public function getAttributes(): Data
-    {
-        return $this->attributes;
-    }
-
-    /**
      * @param array $rules
      *
      * @return AbstractField
@@ -138,19 +116,6 @@ class AbstractField implements IField
 
         return $this;
     }
-
-    // @todo - cleanup
-    /**
-     * @param array|IWorkflow[] $workflows
-     *
-     * @return AbstractField
-     */
-    /*public function workflows(array $workflows): IField
-    {
-        $this->workflows = array_merge($this->workflows, $workflows);
-
-        return $this;
-    }*/
 
     /**
      * Sets the field as disabled
@@ -391,16 +356,11 @@ class AbstractField implements IField
             'readonly' => $this->readonly,
             'hidden' => $this->hidden,
             'rules' => $this->rulesArray(),
-            'workflows' => $this->workflows,
-            'attributes' => $this->attributes->export()
+            'attributes' => $this->attributes->export(),
         ];
     }
 
-
-    /**
-     * @return array
-     */
-    protected function defaultAttributes()
+    protected function defaultAttributes(): array
     {
         return [
             'input' => [

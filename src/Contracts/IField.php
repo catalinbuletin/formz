@@ -20,7 +20,7 @@ interface IField extends \JsonSerializable
      * @param array $attributes
      * @return static
      */
-    public function setAttributes(array $attributes): IField;
+    public function setAttributes(array $attributes): self;
 
     /**
      * Set Field attributes

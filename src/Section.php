@@ -20,6 +20,7 @@ use Formz\Fields\Text;
 
 class Section implements ISection
 {
+    use AttributesTrait;
 
     private string $uuid;
     private string $label;
@@ -157,6 +158,12 @@ class Section implements ISection
         return $this->helpText ?? '';
     }
 
+    protected function defaultAttributes(): array
+    {
+        return [
+            // @todo -> set default section attributes
+        ];
+    }
 
     public function toArray()
     {

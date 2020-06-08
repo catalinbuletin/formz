@@ -70,6 +70,21 @@ class FluentField
         return $this;
     }
 
+    public function attributes(array $attributes): self
+    {
+        $this->field->setAttributes($attributes);
+
+        return $this;
+    }
+
+    public function id(string $id): self
+    {
+        $this->field->setAttributes(['id' => $id]);
+
+        return $this;
+    }
+
+
     public function text(string $name, string $label = null, $value = null): FluentText
     {
         return $this->context->text($name, $label, $value);

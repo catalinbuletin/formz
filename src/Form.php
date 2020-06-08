@@ -2,6 +2,7 @@
 
 namespace Formz;
 
+use Dflydev\DotAccessData\Data;
 use Formz\Contracts\IField;
 use Formz\Contracts\IRule;
 use Formz\Contracts\ISection;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Config;
 
 class Form implements IForm
 {
+    use AttributesTrait;
+
     protected ?string $name;
 
     protected array $layout;
@@ -32,6 +35,8 @@ class Form implements IForm
      * @var Collection|ISection[]
      */
     protected $sections = [];
+
+    protected Data $attributes;
 
     /**
      * Form constructor.
@@ -60,6 +65,8 @@ class Form implements IForm
 
             $this->addSection(Section::hydrate($section));
         }
+
+        $this->attributes = new Data($this->defaultAttributes());
     }
 
     /**
@@ -86,7 +93,8 @@ class Form implements IForm
      * @param string $method
      * @return IForm
      */
-    public function setMethod(string $method): IForm {
+    public function setMethod(string $method): IForm
+    {
 
     }
 
@@ -124,6 +132,13 @@ class Form implements IForm
         return $this->enctype;
     }
 
+    protected function defaultAttributes(): array
+    {
+        return [
+            // @todo -> set default form attributes
+        ];
+    }
+
     /**
      * Shortcut for adding an array of fields. The sections will be created automatically
      *
@@ -151,15 +166,6 @@ class Form implements IForm
         return $this;
     }
 
-    public function addWorkflows(array $workflows): IForm
-    {
-        foreach ($workflows as $workflow) {
-            $this->addWorkflow($workflow);
-        }
-
-        return $this;
-    }
-
     /**
      * @param array $data
      * @return IForm
@@ -180,16 +186,6 @@ class Form implements IForm
 
         return $this;
     }
-
-    // @todo - cleanup
-    /*public function addWorkflow(IWorkflow $workflow)
-    {
-        $workflow->setContext($this);
-
-        $this->getField($workflow->getFieldName())->workflows([
-            $workflow
-        ]);
-    }*/
 
     /**
      * @param array $formData
@@ -402,7 +398,8 @@ class Form implements IForm
             'name' => $this->name,
             'theme' => $this->theme,
             'sections' => $this->sections,
-            'layout' => $this->layout
+            'layout' => $this->layout,
+            'attributes' => $this->attributes->export(),
         ];
     }
 
