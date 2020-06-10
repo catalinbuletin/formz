@@ -7,7 +7,7 @@ use Webmozart\Assert\Assert;
 
 class Checkbox extends Choice
 {
-    const INLINE_OPTIONS = false;
+    public const INLINE_OPTIONS = false;
 
     /**
      * Checkbox constructor.
@@ -44,7 +44,7 @@ class Checkbox extends Choice
     {
         Assert::boolean($value);
 
-        $this->attributes->set('inlineOptions', $value);
+        $this->setAttributes(['inlineOptions' => $value]);
 
         return $this;
     }

@@ -60,8 +60,6 @@ class Form implements IForm
 
             $this->addSection(Section::hydrate($section));
         }
-
-        $this->attributes = new Data();
     }
 
     /**
@@ -96,6 +94,8 @@ class Form implements IForm
     public function setTheme(string $theme): IForm
     {
         $this->theme = $theme;
+
+        $this->setDefaultAttributesOnce();
 
         return $this;
     }
@@ -394,7 +394,7 @@ class Form implements IForm
             'theme' => $this->theme,
             'sections' => $this->sections,
             'layout' => $this->layout,
-            'attributes' => AttributesHelper::merge($this->attributes, $this->defaultAttributes())->export(),
+            'attributes' => $this->attributes->export(),
         ];
     }
 

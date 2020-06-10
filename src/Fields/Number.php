@@ -6,9 +6,9 @@ use Webmozart\Assert\Assert;
 
 class Number extends AbstractField
 {
-    const MIN = 0;
-    const MAX = null;
-    const STEP = 1;
+    public const MIN = 0;
+    public const MAX = null;
+    public const STEP = 1;
 
     public function __construct(string $name, string $label = null, $value = null)
     {
@@ -19,7 +19,7 @@ class Number extends AbstractField
     {
         Assert::integer($length);
 
-        $this->attributes->set('min', $length);
+        $this->setAttributes(['min' => $length]);
 
         return $this;
     }
@@ -28,7 +28,7 @@ class Number extends AbstractField
     {
         Assert::integer($length);
 
-        $this->attributes->set('max', $length);
+        $this->setAttributes(['max' => $length]);
 
         return $this;
     }
@@ -37,7 +37,7 @@ class Number extends AbstractField
     {
         Assert::integer($step);
 
-        $this->attributes->set('step', $step);
+        $this->setAttributes(['step' => $step]);
 
         return $this;
     }

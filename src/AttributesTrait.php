@@ -54,6 +54,13 @@ trait AttributesTrait
         return $this;
     }
 
+    protected function setDefaultAttributesOnce()
+    {
+        if (!isset($this->attributes)) {
+            $this->attributes = new Data($this->defaultAttributes());
+        }
+    }
+
     public function getAttributes(): Data
     {
         return $this->attributes;

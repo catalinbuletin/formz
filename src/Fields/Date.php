@@ -44,14 +44,14 @@ class Date extends AbstractField
 
     public function min($value): self
     {
-        $this->attributes->set('min', $value);
+        $this->setAttributes(['min' => $value]);
 
         return $this;
     }
 
     public function max($value): self
     {
-        $this->attributes->set('max', $value);
+        $this->setAttributes(['max' => $value]);
 
         return $this;
     }

@@ -6,7 +6,7 @@ use Webmozart\Assert\Assert;
 
 class Textarea extends AbstractField
 {
-    const ROWS = 3;
+    public const ROWS = 3;
 
     public function __construct(string $name, string $label = null, $value = null)
     {
@@ -17,7 +17,7 @@ class Textarea extends AbstractField
     {
         Assert::integer($value);
 
-        $this->attributes->set('rows', $value);
+        $this->setAttributes(['rows' => $value]);
 
         return $this;
     }

@@ -3,7 +3,6 @@
 namespace Formz\Fields;
 
 use Dflydev\DotAccessData\Data;
-use Formz\AttributesHelper;
 use Formz\AttributesTrait;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
@@ -71,7 +70,6 @@ class AbstractField implements IField
         $this->name = $name;
         $this->value = $value;
         $this->label = $label;
-        $this->attributes = new Data();
     }
 
     public function setId($id)
@@ -241,6 +239,8 @@ class AbstractField implements IField
             $this->getFormContext()->setEnctype('multipart/form-data');
         }
 
+        $this->setDefaultAttributesOnce();
+
         return $this;
     }
 
@@ -357,7 +357,7 @@ class AbstractField implements IField
             'readonly' => $this->readonly,
             'hidden' => $this->hidden,
             'rules' => $this->rulesArray(),
-            'attributes' => AttributesHelper::merge($this->attributes, $this->defaultAttributes())->export(),
+            'attributes' => $this->attributes->export(),
         ];
     }
 
@@ -365,17 +365,16 @@ class AbstractField implements IField
     {
         return [
             'input' => [
+                'id' => $this->id,
                 'placeholder' => null,
-                'class' => 'form-control input-md',
-                'required' => $this->isRequired(),
-                'id' => $this->id
+                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.input_class'),
+                'error_class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.input'),
             ],
             'container' => [
-                'class' => null
+                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.wrapper_class'),
             ],
             'label' => [
-                'value' => $this->guessLabel(),
-                'class' => null,
+                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.label_class'),
             ]
         ];
     }

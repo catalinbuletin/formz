@@ -7,7 +7,7 @@ use Webmozart\Assert\Assert;
 
 class Radio extends Choice
 {
-    const INLINE_OPTIONS = false;
+    public const INLINE_OPTIONS = false;
 
     /**
      * Radio constructor.
@@ -30,7 +30,7 @@ class Radio extends Choice
     {
         Assert::boolean($value);
 
-        $this->attributes->set('inlineOptions', $value);
+        $this->setAttributes(['inlineOptions' => $value]);
 
         return $this;
     }

@@ -43,8 +43,6 @@ class Section implements ISection
         $this->fields = new Collection();
 
         $this->addFields($fields);
-
-        $this->attributes = new Data();
     }
 
     public static function make(?string $label = null, ?array $fields = [])
@@ -57,6 +55,8 @@ class Section implements ISection
     public function setContext(IForm $context): ISection
     {
         $this->context = $context;
+
+        $this->setDefaultAttributesOnce();
 
         return $this;
     }
@@ -172,7 +172,7 @@ class Section implements ISection
             'id' => $this->uuid,
             'fields' => $this->fields,
             'name' => $this->label,
-            'attributes' => AttributesHelper::merge($this->attributes, $this->defaultAttributes())->export(),
+            'attributes' => $this->attributes->export(),
         ];
     }
 
