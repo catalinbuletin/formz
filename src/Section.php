@@ -44,7 +44,7 @@ class Section implements ISection
 
         $this->addFields($fields);
 
-        $this->attributes = new Data($this->defaultAttributes());
+        $this->attributes = new Data();
     }
 
     public static function make(?string $label = null, ?array $fields = [])
@@ -172,7 +172,7 @@ class Section implements ISection
             'id' => $this->uuid,
             'fields' => $this->fields,
             'name' => $this->label,
-            'attributes' => $this->attributes->export(),
+            'attributes' => AttributesHelper::merge($this->attributes, $this->defaultAttributes())->export(),
         ];
     }
 

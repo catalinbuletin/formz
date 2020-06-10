@@ -42,13 +42,6 @@ class FluentField
         return $this;
     }
 
-    public function placeholder($value): self
-    {
-        $this->field->setAttributes(['placeholder' => $value]);
-
-        return $this;
-    }
-
     public function required(): self
     {
         $this->field->required();
@@ -86,12 +79,38 @@ class FluentField
 
     public function id(string $id): self
     {
-        $this->field->setAttributes(['id' => $id]);
+        $this->field->setAttributes(['input.id' => $id]);
 
         return $this;
     }
 
+    public function class(string $class): self
+    {
+        $this->field->setAttributes(['input.class' => $class]);
 
+        return $this;
+    }
+
+    public function addClass(string $class): self
+    {
+        $this->field->mergeAttributes(['input.class' => $class]);
+
+        return $this;
+    }
+
+    public function placeholder(string $placeholder): self
+    {
+        $this->field->setAttributes(['input.placeholder' => $placeholder]);
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param string|null $label
+     * @param null $value
+     * @return FluentText
+     */
     public function text(string $name, string $label = null, $value = null): FluentText
     {
         return $this->context->text($name, $label, $value);

@@ -3,6 +3,7 @@
 namespace Formz\Fields;
 
 use Dflydev\DotAccessData\Data;
+use Formz\AttributesHelper;
 use Formz\AttributesTrait;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
@@ -70,7 +71,7 @@ class AbstractField implements IField
         $this->name = $name;
         $this->value = $value;
         $this->label = $label;
-        $this->attributes = new Data($this->defaultAttributes());
+        $this->attributes = new Data();
     }
 
     public function setId($id)
@@ -356,7 +357,7 @@ class AbstractField implements IField
             'readonly' => $this->readonly,
             'hidden' => $this->hidden,
             'rules' => $this->rulesArray(),
-            'attributes' => $this->attributes->export(),
+            'attributes' => AttributesHelper::merge($this->attributes, $this->defaultAttributes())->export(),
         ];
     }
 
@@ -367,7 +368,7 @@ class AbstractField implements IField
                 'placeholder' => null,
                 'class' => 'form-control input-md',
                 'required' => $this->isRequired(),
-                'id' => $this->customId ?? $this->id
+                'id' => $this->id
             ],
             'container' => [
                 'class' => null
