@@ -237,6 +237,20 @@ class FluentSection
         return $this;
     }
 
+    public function attr(array $attributes): self
+    {
+        $this->section->setAttributes($attributes);
+
+        return $this;
+    }
+
+    public function mergeAttr(array $attributes, string $glue): self
+    {
+        $this->section->mergeAttributes($attributes, $glue);
+
+        return $this;
+    }
+
     public function setContext(FluentForm $context)
     {
         $this->context = $context;

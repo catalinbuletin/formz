@@ -70,8 +70,17 @@ class FluentForm
         return $this;
     }
 
-    public function config(): self
+    public function attr(array $attributes): self
     {
+        $this->form->setAttributes($attributes);
+
+        return $this;
+    }
+
+    public function mergeAttr(array $attributes, string $glue): self
+    {
+        $this->form->mergeAttributes($attributes, $glue);
+
         return $this;
     }
 

@@ -36,7 +36,7 @@ class Section implements ISection
      * @param null|string $label
      * @param AbstractField[] $fields
      */
-    private function __construct(string $uuid, string $label = null, array $fields = [])
+    private function __construct(?string $uuid = null, ?string $label = null, array $fields = [])
     {
         $this->uuid = $uuid;
         $this->label = $label;

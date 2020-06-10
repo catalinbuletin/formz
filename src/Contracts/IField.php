@@ -23,6 +23,15 @@ interface IField extends \JsonSerializable
     public function setAttributes(array $attributes): self;
 
     /**
+     * Merge Field attributes
+     *
+     * @param array $attributes
+     * @param string $glue
+     * @return static
+     */
+    public function mergeAttributes(array $attributes, string $glue = ' '): self;
+
+    /**
      * Set Field attributes
      *
      * @return Data

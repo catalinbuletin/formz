@@ -24,6 +24,18 @@ trait AttributesTrait
         return $this;
     }
 
+    public function mergeAttributes(array $attributes, string $glue = ' '): self
+    {
+        foreach ($attributes as $key => $value) {
+            $this->attributes->set(
+                $key,
+                $this->attributes->get('key') ? $this->attributes->get('key') . $glue . $value : $value,
+            );
+        }
+
+        return $this;
+    }
+
     public function getAttributes(): Data
     {
         return $this->attributes;

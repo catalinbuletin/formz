@@ -70,9 +70,16 @@ class FluentField
         return $this;
     }
 
-    public function attributes(array $attributes): self
+    public function attr(array $attributes): self
     {
         $this->field->setAttributes($attributes);
+
+        return $this;
+    }
+
+    public function mergeAttr(array $attributes, string $glue): self
+    {
+        $this->field->mergeAttributes($attributes, $glue);
 
         return $this;
     }

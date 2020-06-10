@@ -37,6 +37,15 @@ interface ISection extends \JsonSerializable
      */
     public function setAttributes(array $attributes): self;
 
+    /**
+     * Merge Form attributes
+     *
+     * @param array $attributes
+     * @param string $glue
+     * @return static
+     */
+    public function mergeAttributes(array $attributes, string $glue = ' '): self;
+
     public function getContext(): IForm;
 
     /**
