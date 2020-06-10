@@ -14,7 +14,6 @@ abstract class AbstractForm implements \JsonSerializable
 
     abstract protected function buildForm(): IForm;
 
-
     public function __construct()
     {
         $this->form = $this->buildForm();

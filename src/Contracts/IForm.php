@@ -2,6 +2,7 @@
 
 namespace Formz\Contracts;
 
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -30,6 +31,14 @@ interface IForm extends \JsonSerializable
      * @return IForm
      */
     public function setValues(?array $data): IForm;
+
+    /**
+     * Set Form attributes
+     *
+     * @param array $attributes
+     * @return static
+     */
+    public function setAttributes(array $attributes): self;
 
     /**
      * @param ISection $section
@@ -89,6 +98,13 @@ interface IForm extends \JsonSerializable
      * @return IField|null
      */
     public function getField($fieldName);
+
+    /**
+     * Set Form attributes
+     *
+     * @return Data
+     */
+    public function getAttributes(): Data;
 
     /**
      * @param array $fields

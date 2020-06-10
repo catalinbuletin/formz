@@ -111,7 +111,7 @@ class Date extends AbstractField
     /**
      * @return array
      */
-    protected function defaultAttributes()
+    protected function defaultAttributes(): array
     {
         $attributes = [
             'min' => null,

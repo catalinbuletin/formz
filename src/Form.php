@@ -20,15 +20,10 @@ class Form implements IForm
     use AttributesTrait;
 
     protected ?string $name;
-
     protected array $layout;
-
     protected string $action;
-
     protected string $method;
-
     protected string $theme;
-
     protected string $enctype = '';
 
     /**

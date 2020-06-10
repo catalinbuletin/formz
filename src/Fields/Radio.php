@@ -38,7 +38,7 @@ class Radio extends Choice
     /**
      * @return array
      */
-    protected function defaultAttributes()
+    protected function defaultAttributes(): array
     {
         $attributes = [
             'inlineOptions' => self::INLINE_OPTIONS,

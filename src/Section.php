@@ -2,6 +2,7 @@
 
 namespace Formz;
 
+use Dflydev\DotAccessData\Data;
 use Formz\Contracts\IField;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
@@ -25,9 +26,7 @@ class Section implements ISection
     private string $uuid;
     private string $label;
     private Collection $fields;
-
     private string $helpText;
-
     protected IForm $context;
 
     /**
@@ -44,6 +43,8 @@ class Section implements ISection
         $this->fields = new Collection();
 
         $this->addFields($fields);
+
+        $this->attributes = new Data($this->defaultAttributes());
     }
 
     public static function make(?string $label = null, ?array $fields = [])
@@ -171,6 +172,7 @@ class Section implements ISection
             'id' => $this->uuid,
             'fields' => $this->fields,
             'name' => $this->label,
+            'attributes' => $this->attributes->export(),
         ];
     }
 
