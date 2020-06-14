@@ -180,4 +180,6 @@ interface IField extends \JsonSerializable
      * @return array
      */
     public function toArray(): array;
+
+    public function resolve(): void;
 }

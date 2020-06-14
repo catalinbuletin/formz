@@ -11,9 +11,9 @@
 
         @include($input)
 
-        @if ($errorMessage)
+        @if ($field->errorMessage())
             <span class="form-error is-visible">
-                {!! nl2br($errorMessage) !!}
+                {!! nl2br($field->errorMessage()) !!}
             </span>
         @endif
     </label>

@@ -105,6 +105,7 @@ class FluentForm
 
     public function get(): IForm
     {
+        $this->form->resolve();
         return $this->form;
     }
 }

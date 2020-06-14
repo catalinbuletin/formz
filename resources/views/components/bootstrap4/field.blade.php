@@ -19,9 +19,9 @@
         </small>
     @endif
 
-    @if ($errorMessage)
+    @if ($field->errorMessage())
         <div class="invalid-feedback">
-            {!! nl2br($errorMessage) !!}
+            {!! nl2br($field->errorMessage()) !!}
         </div>
     @endif
 </div>

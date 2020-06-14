@@ -54,7 +54,7 @@ trait AttributesTrait
         return $this;
     }
 
-    protected function setDefaultAttributesOnce()
+    protected function setDefaultAttributes()
     {
         if (!isset($this->attributes)) {
             $this->attributes = new Data($this->defaultAttributes());

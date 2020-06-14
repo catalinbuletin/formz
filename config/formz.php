@@ -176,9 +176,11 @@ return [
 
             'error_class' => [
                 'global' => 'alert alert-danger',
+                'form' => '',
+                'section' => '',
                 'input' => 'is-invalid',
                 'wrapper' => '',
-                'label' => ''
+                'label' => '',
             ]
         ],
 
@@ -238,6 +240,8 @@ return [
 
             'error_class' => [
                 'global' => 'callout alert',
+                'form' => '',
+                'section' => '',
                 'input' => 'is-invalid-input',
                 'wrapper' => '',
                 'label' => 'is-invalid-label'
@@ -318,6 +322,8 @@ return [
 
             'error_class' => [
                 'global' => 'notification is-danger is-light',
+                'form' => '',
+                'section' => '',
                 'input' => 'is-danger',
                 'wrapper' => '',
                 'label' => ''

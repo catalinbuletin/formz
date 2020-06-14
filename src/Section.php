@@ -29,6 +29,7 @@ class Section implements ISection
     private Collection $fields;
     private string $helpText;
     protected IForm $context;
+    protected bool $resolved = false;
 
     /**
      * Section constructor.
@@ -56,9 +57,7 @@ class Section implements ISection
     public function setContext(IForm $context): ISection
     {
         $this->context = $context;
-
-        $this->setDefaultAttributesOnce();
-
+        $this->setDefaultAttributes();
         return $this;
     }
 
@@ -223,5 +222,21 @@ class Section implements ISection
         }
 
         return $section;
+    }
+
+    private function addErrorClasses()
+    {
+        // @todo -> add class on section if fields have errors
+    }
+
+    public function resolve(): void
+    {
+        if (!$this->resolved) {
+            $this->addErrorClasses();
+            foreach ($this->getFields() as $field) {
+                $field->resolve();
+            }
+            $this->resolved = true;
+        }
     }
 }

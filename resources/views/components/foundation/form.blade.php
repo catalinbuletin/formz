@@ -18,7 +18,7 @@
             @include($buttons)
         @endif
 
-        @if($errorMessage)
+        @if($form->errorMessage())
             @include($globalErrors)
         @endif
 

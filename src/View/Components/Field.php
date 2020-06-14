@@ -3,9 +3,7 @@
 namespace Formz\View\Components;
 
 use Formz\Contracts\IField;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Component;
 
 class Field extends Component
@@ -15,19 +13,12 @@ class Field extends Component
      */
     public IField $field;
 
-    /**
-     * @var Request
-     */
-    public Request $request;
+    public $request;
 
-    public string $errorMessage;
-
-    public function __construct(Request $request, $field)
+    public function __construct($field)
     {
-        $this->request = $request;
+        $this->request = app()->get('request');
         $this->field = $field;
-
-        $this->errorMessage = $this->errorMessage();
     }
 
     public function input()
@@ -41,33 +32,6 @@ class Field extends Component
         $default = sprintf("formz::components.inputs.%s", $this->field->getType());
 
         return View::exists($dedicated) ? $dedicated : $default;
-    }
-
-    private function errorMessage(): string
-    {
-        if (!config('formz.errors.input.active')) {
-            return '';
-        }
-
-        $errors = $this->errors();
-
-        if (config('formz.errors.input.display') === 'all') {
-            return implode("\n", $errors);
-        }
-
-        return reset($errors) ?: '';
-    }
-
-    private function errors(): array
-    {
-        if ($this->request->getSession()) {
-            /** @var ViewErrorBag $errors */
-            $errors = $this->request->session()->get('errors');
-
-            return $errors instanceof ViewErrorBag && $errors->has($this->field->getName()) ? $errors->get($this->field->getName()) : [];
-        }
-
-        return [];
     }
 
     /**

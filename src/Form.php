@@ -14,6 +14,8 @@ use Illuminate\Support\Collection;
 use Formz\Contracts\IForm;
 use Formz\WorkflowFactory;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\ViewErrorBag;
 
 class Form implements IForm
 {
@@ -26,6 +28,7 @@ class Form implements IForm
     protected string $theme;
     protected string $enctype = '';
     protected array $config;
+    protected bool $resolved = false;
 
     /**
      * @var Collection|ISection[]
@@ -104,8 +107,7 @@ class Form implements IForm
     public function setTheme(string $theme): IForm
     {
         $this->theme = $theme;
-
-        $this->setDefaultAttributesOnce();
+        $this->setDefaultAttributes();
 
         return $this;
     }
@@ -145,7 +147,8 @@ class Form implements IForm
     protected function defaultAttributes(): array
     {
         return [
-            'class' => Config::get('formz.themes.' . $this->getTheme() . '.form_class')
+            'class' => Config::get('formz.themes.' . $this->getTheme() . '.form_class'),
+            'global_error_class' => Config::get('formz.themes.' . $this->getTheme() . '.error_class.global'),
         ];
     }
 
@@ -365,6 +368,51 @@ class Form implements IForm
         return $rules;
     }
 
+    public function errorMessage(): string
+    {
+        if ($this->getConfig()['errors']['global']['active']) {
+            $errorMessages = $this->getFieldsErrors();
+            if ($errorMessages) {
+                $errorMessages = array_merge([$this->getConfig()['errors']['global']['message'], ''], $errorMessages);
+            }
+            return implode("\n", $errorMessages);
+        }
+
+        return '';
+    }
+
+    private function getFieldsErrors(): array
+    {
+        $errorMessages = [];
+
+        if (Session::has('errors')) {
+            $errors = Session::get('errors');
+            if ($errors instanceof ViewErrorBag) {
+                foreach ($this->getFields() as $field) {
+                    if ($errors->has($field->getName())) {
+                        switch ($this->getConfig()['errors']['global']['display']) {
+                            case 'first':
+                                $fieldErrors = $errors->get($field->getName());
+                                $errorMessages[] = reset($fieldErrors);
+                                break;
+
+                            case 'all':
+                                $errorMessages = array_merge($errorMessages, $errors);
+                                break;
+
+                            case 'none':
+                            default:
+                                return $this->getConfig()['errors']['global']['message'];
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $errorMessages;
+    }
+
     /**
      * The prefix argument is used to prefix all fields with it so laravel validator can validate groups of data
      *
@@ -416,5 +464,25 @@ class Form implements IForm
     public function jsonSerialize()
     {
         return $this->toArray();
+    }
+
+    private function addErrorClasses()
+    {
+        if ($this->getFieldsErrors()) {
+            $this->mergeAttributes([
+                'class' => Config::get('formz.themes.' . $this->getTheme() . '.error_class.input'),
+            ]);
+        }
+    }
+
+    public function resolve(): void
+    {
+        if (!$this->resolved) {
+            $this->addErrorClasses();
+            foreach ($this->getSections() as $section) {
+                $section->resolve();
+            }
+            $this->resolved = true;
+        }
     }
 }

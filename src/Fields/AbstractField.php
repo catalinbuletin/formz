@@ -6,43 +6,30 @@ use Dflydev\DotAccessData\Data;
 use Formz\AttributesTrait;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Formz\Contracts\IField;
+use Illuminate\Support\ViewErrorBag;
 
 class AbstractField implements IField
 {
     use AttributesTrait;
 
     protected string $id;
-
     protected string $type;
-
     protected string $name;
-
     protected $value;
-
     protected string $namespace;
-
     protected ?string $label = null;
-
     protected bool $readonly = false;
-
     protected bool $disabled = false;
-
     protected bool $hidden = false;
-
     protected ?int $tabindex = null;
-
     protected string $helpText;
-
     protected array $rules = [];
-
-    // @todo - cleanups
-    //protected array $workflows = [];
-
     protected string $width = 'wFull';
-
     protected array $cols = [
         'xs' => 12,
         'sm' => 12,
@@ -50,11 +37,8 @@ class AbstractField implements IField
         'lg' => 12,
         'xlg' => 12
     ];
-
-    // @todo - cleanup
-    //protected array $listeners = [];
-
     protected ISection $context;
+    protected bool $resolved = false;
 
     /**
      * Field constructor.
@@ -198,13 +182,6 @@ class AbstractField implements IField
             'xlg' => $xlg
         ];
 
-//        $this->cols['xs'] = $xs;
-//
-//        if ($sm) $this->cols['sm'] = $sm;
-//        if ($md) $this->cols['md'] = $md;
-//        if ($lg) $this->cols['lg'] = $lg;
-//        if ($xlg) $this->cols['xlg'] = $xlg;
-
         return $this;
     }
 
@@ -240,7 +217,7 @@ class AbstractField implements IField
             $this->getFormContext()->setEnctype('multipart/form-data');
         }
 
-        $this->setDefaultAttributesOnce();
+        $this->setDefaultAttributes();
 
         return $this;
     }
@@ -358,6 +335,8 @@ class AbstractField implements IField
             'readonly' => $this->readonly,
             'hidden' => $this->hidden,
             'rules' => $this->rulesArray(),
+            'errors' => $this->errors(),
+            'errorMessage' => $this->errorMessage(),
             'attributes' => $this->attributes->export(),
         ];
     }
@@ -371,18 +350,14 @@ class AbstractField implements IField
                 'class' =>
                     Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.input_class') ?:
                     Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.input_class'),
-                'error_class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.input'),
             ],
             'container' => [
-                'class' => trim($this->getContainerGridClass() . ' ' .
-                (Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.wrapper_class') ?:
-                    Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.wrapper_class'))),
-                'error_class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.wrapper'),
+                'class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.wrapper_class') ?:
+                    Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.wrapper_class'),
             ],
             'label' => [
                 'class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.label_class') ?:
                     Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.label_class'),
-                'error_class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.label'),
                 'required_asterisk_class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.required_asterisk_class'),
             ]
         ];
@@ -426,14 +401,60 @@ class AbstractField implements IField
         }, $this->rules);
     }
 
-    private function getContainerGridClass(): string
+    public function errors(): array
     {
-        $classes = [];
+        if (Session::has('errors')) {
+            /** @var ViewErrorBag $errors */
+            $errors = Session::get('errors');
+            return $errors instanceof ViewErrorBag && $errors->has($this->getName()) ? $errors->get($this->getName()) : [];
+        }
 
+        return [];
+    }
+
+    public function errorMessage(): string
+    {
+        if (!Config::get('formz.errors.input.active')) {
+            return '';
+        }
+
+        $errors = $this->errors();
+
+        if (Config::get('formz.errors.input.display') === 'all') {
+            return implode("\n", $errors);
+        }
+
+        return reset($errors) ?: '';
+    }
+
+
+
+    private function mergeContainerGridClass(): void
+    {
         foreach (Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.grid_map') as $key => $colClass) {
             $classes[] = sprintf($colClass, $this->getCols()[$key] ?? 12);
         }
 
-        return implode(' ', $classes);
+        $this->mergeAttributes(['container.class' => implode(' ', $classes)]);
+    }
+
+    private function addErrorClasses()
+    {
+        if ($this->errors()) {
+            $this->mergeAttributes([
+                'input.class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.input'),
+                'label.class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.label'),
+                'container.class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.container'),
+            ]);
+        }
+    }
+
+    public function resolve(): void
+    {
+        if (!$this->resolved) {
+            $this->mergeContainerGridClass();
+            $this->addErrorClasses();
+            $this->resolved = true;
+        }
     }
 }

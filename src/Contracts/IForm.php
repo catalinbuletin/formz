@@ -164,6 +164,8 @@ interface IForm extends \JsonSerializable
      */
     public function getEnctype(): string;
 
+    public function resolve(): void;
+
     /**
      * @return array
      */

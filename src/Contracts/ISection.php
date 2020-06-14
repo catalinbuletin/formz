@@ -65,4 +65,6 @@ interface ISection extends \JsonSerializable
      * @return Data
      */
     public function getAttributes(): Data;
+
+    public function resolve(): void;
 }
