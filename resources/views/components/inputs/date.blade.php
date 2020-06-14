@@ -1,11 +1,11 @@
 <input
         type="date"
-        class="{{ $inputClass }}"
+        class="{{ $field->getAttributes()->get('input.class') }}"
         name="{{ $field->getName() }}"
-        id="{{ $field->getId() }}"
+        id="{{ $field->getAttributes()->get('input.id') }}"
         value="{{ $request->old($field->getName(), $field->getValue()) }}"
-        placeholder="{{ $attributes->get('placeholder') }}"
-        min="{{ Carbon\Carbon::parse($attributes->get('min'))->format('Y-m-d') }}"
-        max="{{ Carbon\Carbon::parse($attributes->get('max'))->format('Y-m-d') }}"
+        placeholder="{{ $field->getAttributes()->get('placeholder') }}"
+        min="{{ Carbon\Carbon::parse($field->getAttributes()->get('min'))->format('Y-m-d') }}"
+        max="{{ Carbon\Carbon::parse($field->getAttributes()->get('max'))->format('Y-m-d') }}"
         {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
 >

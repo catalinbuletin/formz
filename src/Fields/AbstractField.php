@@ -6,6 +6,7 @@ use Dflydev\DotAccessData\Data;
 use Formz\AttributesTrait;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Formz\Contracts\IField;
 
@@ -368,19 +369,21 @@ class AbstractField implements IField
                 'id' => $this->id,
                 'placeholder' => null,
                 'class' =>
-                    config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.input_class') ?:
-                    config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.input_class'),
-                'error_class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.input'),
+                    Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.input_class') ?:
+                    Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.input_class'),
+                'error_class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.input'),
             ],
             'container' => [
-                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.wrapper_class') ?:
-                    config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.wrapper_class'),
-                'error_class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.wrapper'),
+                'class' => trim($this->getContainerGridClass() . ' ' .
+                (Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.wrapper_class') ?:
+                    Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.wrapper_class'))),
+                'error_class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.wrapper'),
             ],
             'label' => [
-                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.label_class') ?:
-                    config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.label_class'),
-                'error_class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.label'),
+                'class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.label_class') ?:
+                    Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.label_class'),
+                'error_class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.label'),
+                'required_asterisk_class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.required_asterisk_class'),
             ]
         ];
     }
@@ -421,5 +424,16 @@ class AbstractField implements IField
                 'params' => $rule['params']
             ];
         }, $this->rules);
+    }
+
+    private function getContainerGridClass(): string
+    {
+        $classes = [];
+
+        foreach (Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.grid_map') as $key => $colClass) {
+            $classes[] = sprintf($colClass, $this->getCols()[$key] ?? 12);
+        }
+
+        return implode(' ', $classes);
     }
 }

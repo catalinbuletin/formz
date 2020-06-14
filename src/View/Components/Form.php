@@ -21,20 +21,6 @@ class Form extends Component
     public string $footer = '';
 
     /**
-     * Array containing config values for the package
-     * @var array|mixed
-     */
-    public array $config;
-
-    /**
-     * Array containing config values for the used theme
-     * @var array|mixed
-     */
-    public array $themeConfig;
-
-    private string $theme;
-
-    /**
      * @var Request
      */
     private Request $request;
@@ -56,9 +42,6 @@ class Form extends Component
         $this->action = $action ?: $this->form->getAction();
         $this->method = $method ?: $this->form->getMethod() ?: 'post';
         $this->enctype = $enctype ?: $this->form->getEnctype() ?: '';
-        $this->theme = $this->form->getTheme();
-        $this->config = Config::get('formz');
-        $this->themeConfig = $this->themeConfig();
 
         $this->errorMessage = $this->errorMessage();
     }
@@ -70,10 +53,10 @@ class Form extends Component
 
     private function errorMessage(): string
     {
-        if ($this->config['errors']['global']['active']) {
+        if ($this->form->getConfig()['errors']['global']['active']) {
             $errorMessages = $this->getFieldsErrors();
             if ($errorMessages) {
-                $errorMessages = array_merge([$this->config['errors']['global']['message'], ''], $errorMessages);
+                $errorMessages = array_merge([$this->form->getConfig()['errors']['global']['message'], ''], $errorMessages);
             }
             return implode("\n", $errorMessages);
         }
@@ -83,7 +66,7 @@ class Form extends Component
 
     public function globalErrors()
     {
-        $dedicated = sprintf("formz::components.%s.global-errors", $this->theme);
+        $dedicated = sprintf("formz::components.%s.global-errors", $this->form->getTheme());
 
         $default = "formz::components.global-errors";
 
@@ -92,7 +75,7 @@ class Form extends Component
 
     public function buttons()
     {
-        $dedicated = sprintf("formz::components.%s.buttons", $this->theme);
+        $dedicated = sprintf("formz::components.%s.buttons", $this->form->getTheme());
 
         $default = "formz::components.buttons";
 
@@ -104,22 +87,12 @@ class Form extends Component
      */
     public function render()
     {
-        $dedicated = sprintf("formz::components.%s.form", $this->theme);
+        $dedicated = sprintf("formz::components.%s.form", $this->form->getTheme());
 
         $default = sprintf("formz::components.%s.form", Config::get('formz.theme'));
 
         return View::exists($dedicated) ? View::make($dedicated) : View::make($default);
     }
-
-
-    private function themeConfig()
-    {
-        $path = sprintf('formz.themes.%s', $this->theme);
-
-        // @todo - throw exception if the theme is not found
-        return Config::get($path);
-    }
-
 
     private function getFieldsErrors(): array
     {
@@ -130,7 +103,7 @@ class Form extends Component
             if ($errors instanceof ViewErrorBag) {
                 foreach ($this->form->getFields() as $field) {
                     if ($errors->has($field->getName())) {
-                        switch ($this->config['errors']['global']['display']) {
+                        switch ($this->form->getConfig()['errors']['global']['display']) {
                             case 'first':
                                 $fieldErrors = $errors->get($field->getName());
                                 $errorMessages[] = reset($fieldErrors);
@@ -142,7 +115,7 @@ class Form extends Component
 
                             case 'none':
                             default:
-                                return $this->config['errors']['global']['message'];
+                                return $this->form->getConfig()['errors']['global']['message'];
                                 break;
                         }
                     }

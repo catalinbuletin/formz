@@ -1,8 +1,8 @@
 <div class="select is-multiple is-fullwidth">
     <select multiple
-            class="{{ $inputClass }}"
+            class="{{ $field->getAttributes()->get('input.class') }}"
             name="{{ $field->getName() }}[]"
-            id="{{ $field->getId() }}"
+            id="{{ $field->getAttributes()->get('input.id') }}"
             {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
     >
             @foreach($field->getOptions() as $option)

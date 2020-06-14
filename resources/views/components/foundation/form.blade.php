@@ -1,4 +1,8 @@
-<form action="{{ $action }}" method="{{ $method }}" {{ $enctype ? 'enctype="'.$enctype.'"' : '' }} class="{{ $themeConfig['form_class'] }}">
+<form action="{{ $action }}"
+      method="{{ $method }}"
+      {{ $enctype ? 'enctype="'.$enctype.'"' : '' }}
+      class="{{ $form->getAttributes()->get('class') }}"
+>
     @csrf
 
     @if (in_array(strtoupper($method), ['PUT', 'PATCH', 'DELETE']))
@@ -10,7 +14,7 @@
         {{ $header }}
 
         {{--  Include the form submit and cancel buttons if footer is not set  --}}
-        @if($config['buttons']['active_top'] && (bool) $header === false)
+        @if($form->getConfig()['buttons']['active_top'] && (bool) $header === false)
             @include($buttons)
         @endif
 
@@ -23,7 +27,7 @@
         @endforeach
 
         {{--  Include the form submit and cancel buttons if footer is not set  --}}
-        @if($config['buttons']['active_bottom'] && (bool) $footer === false)
+        @if($form->getConfig()['buttons']['active_bottom'] && (bool) $footer === false)
             @include($buttons)
         @endif
 

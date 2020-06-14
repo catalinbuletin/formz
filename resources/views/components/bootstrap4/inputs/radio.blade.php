@@ -1,6 +1,6 @@
 @foreach($field->getOptions() as $option)
     <div class="custom-control custom-radio">
-        <input class="{{ $inputClass }}"
+        <input class="{{ $field->getAttributes()->get('input.class') }}"
                type="radio"
                name="{{ $field->getName() }}"
                id="{{ $field->getName() . '-' . $option->getValue() }}"

@@ -1,11 +1,11 @@
 <input
         type="password"
-        class="{{ $inputClass }}"
+        class="{{ $field->getAttributes()->get('input.class') }}"
         name="{{ $field->getName() }}"
-        id="{{ $field->getId() }}"
+        id="{{ $field->getAttributes()->get('input.id') }}"
         value=""
-        placeholder="{{ $attributes->get('placeholder') }}"
-        minlength="{{ $attributes->get('min') }}"
-        maxlength="{{ $attributes->get('max') }}"
+        placeholder="{{ $field->getAttributes()->get('placeholder') }}"
+        minlength="{{ $field->getAttributes()->get('min') }}"
+        maxlength="{{ $field->getAttributes()->get('max') }}"
         {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
 >

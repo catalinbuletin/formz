@@ -11,26 +11,15 @@ class Section extends Component
 {
     public ISection $section;
 
-    /**
-     * Array containing config values for the used theme
-     * @var array|mixed
-     */
-    public array $themeConfig;
-
-    private string $theme;
-
     public function __construct(ISection $section)
     {
         $this->section = $section;
-        $this->theme = $this->section->getContext()->getTheme();
-        $this->themeConfig = $this->themeConfig();
     }
 
     public function fields()
     {
         return $this->section->getFields();
     }
-
 
     /**
      * @inheritDoc
@@ -41,12 +30,5 @@ class Section extends Component
         $default = sprintf("formz::components.%s.section", Config::get('theme'));
 
         return View::exists($component) ? View::make($component) : View::make($default);
-    }
-
-    private function themeConfig()
-    {
-        $path = sprintf('formz.themes.%s', $this->theme);
-
-        return Config::get($path);
     }
 }

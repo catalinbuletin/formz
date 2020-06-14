@@ -1,4 +1,4 @@
-<div class="formz-section {{ $themeConfig['section_class'] }}">
+<div class="{{ $section->getAttributes()->get('class') }}">
     @if($section->getLabel())
         <div class="col-xs-12">
             <h4>{{ $section->getLabel() }}</h4>

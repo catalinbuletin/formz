@@ -2,9 +2,9 @@
     <label class="file-label">
         <input
             type="file"
-            class="{{ $inputClass }}"
+            class="{{ $field->getAttributes()->get('input.class') }}"
             name="{{ $field->getName() }}"
-            id="{{ $field->getId() }}"
+            id="{{ $field->getAttributes()->get('input.id') }}"
             value="{{ $field->getValue() }}"
             {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
         >

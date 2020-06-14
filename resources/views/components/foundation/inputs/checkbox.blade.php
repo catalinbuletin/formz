@@ -1,6 +1,6 @@
 @foreach($field->getOptions() as $option)
     <div class="form-check">
-        <input class="{{ $inputClass }}"
+        <input class="{{ $field->getAttributes()->get('input.class') }}"
                type="checkbox"
                name="{{ $field->getName() }}[]"
                id="{{ $field->getName() . '-' . $option->getValue() }}"

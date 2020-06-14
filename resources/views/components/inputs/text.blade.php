@@ -1,9 +1,9 @@
 <input
         type="text"
-        class="{{ $inputClass }}"
+        class="{{ $field->getAttributes()->get('input.class') }}"
         name="{{ $field->getName() }}"
-        id="{{ $field->getId() }}"
+        id="{{ $field->getAttributes()->get('input.id') }}"
         value="{{ $request->old($field->getName(), $field->getValue()) }}"
-        placeholder="{{ $attributes->get('placeholder') }}"
+        placeholder="{{ $field->getAttributes()->get('placeholder') }}"
         {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
 >

@@ -1,7 +1,7 @@
 <div class="select is-fullwidth">
-    <select class="{{ $inputClass }}"
+    <select class="{{ $field->getAttributes()->get('input.class') }}"
             name="{{ $field->getName() }}"
-            id="{{ $field->getId() }}"
+            id="{{ $field->getAttributes()->get('input.id') }}"
             {{ $field->getTabindex() ? 'tabindex='.$field->getTabindex() : '' }}
     >
         @foreach($field->getOptions() as $option)

@@ -1,10 +1,12 @@
-<div class="{{ $wrapperClass }}">
-    <label class="{{ $labelClass }}" for="{{ $field->getId() }}">
+<div class="{{ $field->getAttributes()->get('container.class') }}">
+    <label class="{{ $field->getAttributes()->get('label.class') }}"
+           for="{{ $field->getAttributes()->get('input.id') }}"
+    >
 
         {{ $field->getLabel() }}
 
-        @if($isRequired)
-            <span class="{{ $themeConfig['required_asterisk_class'] }}">*</span>
+        @if($field->isRequired())
+            <span class="{{ $field->getAttributes()->get('required_asterisk_class') }}">*</span>
         @endif
 
         @include($input)

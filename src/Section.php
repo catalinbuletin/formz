@@ -7,6 +7,7 @@ use Formz\Contracts\IField;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Formz\Fields\Checkbox;
 use Formz\Fields\Choice;
@@ -162,7 +163,7 @@ class Section implements ISection
     protected function defaultAttributes(): array
     {
         return [
-            'class' => config('formz.themes.' . $this->getContext()->getTheme() . '.section_class')
+            'class' => Config::get('formz.themes.' . $this->getContext()->getTheme() . '.section_class')
         ];
     }
 

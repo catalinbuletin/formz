@@ -25,6 +25,7 @@ class Form implements IForm
     protected string $method;
     protected string $theme;
     protected string $enctype = '';
+    protected array $config;
 
     /**
      * @var Collection|ISection[]
@@ -49,6 +50,11 @@ class Form implements IForm
         ]);
 
         $this->theme = Arr::get($config, 'theme', Config::get('formz.theme'));
+
+        $this->config = [
+            'buttons' => Config::get('formz.buttons'),
+            'errors' => Config::get('formz.errors'),
+        ];
 
         $this->sections = new Collection();
 
@@ -79,7 +85,9 @@ class Form implements IForm
      */
     public function setAction(string $url): IForm
     {
+        $this->action = $url;
 
+        return $this;
     }
 
     /**
@@ -88,7 +96,9 @@ class Form implements IForm
      */
     public function setMethod(string $method): IForm
     {
+        $this->method = $method;
 
+        return $this;
     }
 
     public function setTheme(string $theme): IForm
@@ -112,6 +122,11 @@ class Form implements IForm
         return $this->theme;
     }
 
+    public function getConfig(): array
+    {
+        return $this->config;
+    }
+
     public function getAction(): string
     {
         return $this->action;
@@ -130,7 +145,7 @@ class Form implements IForm
     protected function defaultAttributes(): array
     {
         return [
-            'class' => config('formz.themes.' . $this->getTheme() . '.form_class')
+            'class' => Config::get('formz.themes.' . $this->getTheme() . '.form_class')
         ];
     }
 
