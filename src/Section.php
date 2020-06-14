@@ -162,7 +162,7 @@ class Section implements ISection
     protected function defaultAttributes(): array
     {
         return [
-            // @todo -> set default section attributes
+            'class' => config('formz.themes.' . $this->getContext()->getTheme() . '.section_class')
         ];
     }
 

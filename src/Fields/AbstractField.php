@@ -375,10 +375,12 @@ class AbstractField implements IField
             'container' => [
                 'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.wrapper_class') ?:
                     config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.wrapper_class'),
+                'error_class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.wrapper'),
             ],
             'label' => [
                 'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.label_class') ?:
                     config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.label_class'),
+                'error_class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.label'),
             ]
         ];
     }

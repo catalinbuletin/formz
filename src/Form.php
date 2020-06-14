@@ -130,7 +130,7 @@ class Form implements IForm
     protected function defaultAttributes(): array
     {
         return [
-            // @todo -> set default form attributes
+            'class' => config('formz.themes.' . $this->getTheme() . '.form_class')
         ];
     }
 
