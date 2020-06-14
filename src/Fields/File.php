@@ -86,12 +86,12 @@ class File extends AbstractField
      */
     protected function defaultAttributes(): array
     {
-        $attributes = [
+        $defaultAttributes = [
             'min' => null,
-            'max' => null
+            'max' => null,
         ];
 
-        return array_merge(parent::defaultAttributes(), $attributes);
+        return array_merge_recursive(parent::defaultAttributes(), $defaultAttributes);
     }
 
     public function toArray(): array

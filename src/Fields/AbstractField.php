@@ -367,14 +367,18 @@ class AbstractField implements IField
             'input' => [
                 'id' => $this->id,
                 'placeholder' => null,
-                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.input_class'),
+                'class' =>
+                    config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.input_class') ?:
+                    config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.input_class'),
                 'error_class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.input'),
             ],
             'container' => [
-                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.wrapper_class'),
+                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.wrapper_class') ?:
+                    config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.wrapper_class'),
             ],
             'label' => [
-                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.label_class'),
+                'class' => config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.' . $this->type . '.label_class') ?:
+                    config('formz.themes.' . $this->getFormContext()->getTheme() . '.fields.default.label_class'),
             ]
         ];
     }

@@ -40,10 +40,10 @@ class Radio extends Choice
      */
     protected function defaultAttributes(): array
     {
-        $attributes = [
+        $defaultAttributes = [
             'inlineOptions' => self::INLINE_OPTIONS,
         ];
 
-        return array_merge(parent::defaultAttributes(), $attributes);
+        return array_merge_recursive(parent::defaultAttributes(), $defaultAttributes);
     }
 }

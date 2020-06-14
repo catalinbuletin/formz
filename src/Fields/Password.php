@@ -37,11 +37,11 @@ class Password extends AbstractField
      */
     protected function defaultAttributes(): array
     {
-        $attributes = [
+        $defaultAttributes = [
             'min' => self::MIN,
             'max' => self::MAX,
         ];
 
-        return array_merge(parent::defaultAttributes(), $attributes);
+        return array_merge_recursive(parent::defaultAttributes(), $defaultAttributes);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Formz\Fields;
 
+use parallel\Error;
+
 class Text extends AbstractField
 {
     public function __construct(string $name, string $label = null, $value = null)
