@@ -9,12 +9,6 @@ trait AttributesTrait
 {
     protected Data $attributes;
 
-    /**
-     * Set Form attributes
-     *
-     * @param array $attributes
-     * @return static
-     */
     public function setAttributes(array $attributes): self
     {
         foreach ($attributes as $key => $value) {
@@ -24,11 +18,6 @@ trait AttributesTrait
         return $this;
     }
 
-    /**
-     * @param array $attributes
-     * @param string $glue Used only for string and numeric values
-     * @return $this
-     */
     public function mergeAttributes(array $attributes, string $glue = ' '): self
     {
         foreach ($attributes as $key => $value) {

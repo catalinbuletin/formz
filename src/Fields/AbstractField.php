@@ -38,14 +38,30 @@ class AbstractField implements IField
     protected ISection $context;
     protected bool $resolved = false;
 
-    /**
-     * Field constructor.
-     * @param string $type
-     * @param string $name
-     * @param string $label
-     * @param $value
-     * @internal param array $attributes
-     */
+    public const TEXT = 'text';
+    public const PASSWORD = 'password';
+    public const NUMBER = 'number';
+    public const TEXTAREA = 'textarea';
+    public const SELECT = 'select';
+    public const MULTISELECT = 'multiselect';
+    public const CHECKBOX = 'checkbox';
+    public const RADIO = 'radio';
+    public const DATE = 'date';
+    public const FILE = 'file';
+
+    public const FIELDS_MAPPER = [
+        self::TEXT => Text::class,
+        self::PASSWORD => Password::class,
+        self::NUMBER => Number::class,
+        self::TEXTAREA => Textarea::class,
+        self::SELECT => Choice::class,
+        self::MULTISELECT => Choice::class,
+        self::CHECKBOX => Checkbox::class,
+        self::RADIO => Radio::class,
+        self::DATE => Date::class,
+        self::FILE => File::class,
+    ];
+
     public function __construct(string $type, string $name, string $label = null, $value = null)
     {
         $this->id = Str::random(10);
@@ -60,14 +76,7 @@ class AbstractField implements IField
         $this->id = $id;
     }
 
-    /**
-     * Sets the value of the field
-     *
-     * @param $value
-     *
-     * @return AbstractField
-     */
-    public function setValue($value)
+    public function setValue($value): IField
     {
         // @todo - refactor this. number should be int
         if (in_array($this->type, ['text', 'textarea', 'number', 'date'])) {
@@ -81,11 +90,6 @@ class AbstractField implements IField
         return $this;
     }
 
-    /**
-     * @param array $rules
-     *
-     * @return AbstractField
-     */
     public function rules(array $rules): IField
     {
         foreach ($rules as $rule) {
@@ -99,27 +103,13 @@ class AbstractField implements IField
         return $this;
     }
 
-    /**
-     * Sets the field as disabled
-     *
-     * @param bool $value
-     *
-     * @return AbstractField
-     */
-    public function setDisabled($value = true)
+    public function setDisabled($value = true): IField
     {
         $this->disabled = $value;
 
         return $this;
     }
 
-    /**
-     * Sets the field as readonly
-     *
-     * @param bool $value
-     *
-     * @return AbstractField
-     */
     public function setReadonly($value = true): IField
     {
         $this->readonly = $value;
@@ -127,13 +117,6 @@ class AbstractField implements IField
         return $this;
     }
 
-    /**
-     * Sets the field as hidden
-     *
-     * @param bool $value
-     *
-     * @return AbstractField
-     */
     public function setHidden($value = true): IField
     {
         $this->hidden = $value;
@@ -141,10 +124,6 @@ class AbstractField implements IField
         return $this;
     }
 
-    /**
-     * Sets the field as hidden
-     * @return AbstractField
-     */
     public function required(): IField
     {
         //$this->rules([new Required()]);
@@ -163,7 +142,7 @@ class AbstractField implements IField
      * @param int|string|null $lg
      * @param int|string|null $xlg
      *
-     * @return AbstractField
+     * @return IField
      */
     public function setCols($xs, $sm = null, $md = null, $lg = null, $xlg = null): IField
     {
@@ -183,10 +162,6 @@ class AbstractField implements IField
         return $this;
     }
 
-    /**
-     * @param int $tabindex
-     * @return IField
-     */
     public function setTabindex(int $tabindex): IField
     {
         $this->tabindex = $tabindex;
@@ -201,9 +176,6 @@ class AbstractField implements IField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function setContext(ISection $section): IField
     {
         $this->context = $section;
@@ -218,42 +190,27 @@ class AbstractField implements IField
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getContext(): ISection
     {
         return $this->context;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getFormContext(): IForm
     {
         return $this->context->getContext();
     }
 
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getLabel(): string
     {
         return $this->guessLabel();
@@ -280,9 +237,6 @@ class AbstractField implements IField
         return $this->getType() === 'file';
     }
 
-    /**
-     * @return array
-     */
     public function getRules(): array
     {
         return $this->rules;
@@ -293,9 +247,6 @@ class AbstractField implements IField
         return $this->cols;
     }
 
-    /**
-     * @return int|null
-     */
     public function getTabindex(): ?int
     {
         return $this->tabindex;
@@ -372,9 +323,6 @@ class AbstractField implements IField
         return trans("fields.{$transString}");
     }
 
-    /**
-     * @return bool
-     */
     public function isRequired(): bool
     {
         return in_array('required', $this->rules);

@@ -3,81 +3,41 @@
 namespace Formz\Contracts;
 
 use Dflydev\DotAccessData\Data;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-interface IForm extends \JsonSerializable
+interface IForm extends \JsonSerializable, Arrayable
 {
-    /**
-     * @param string $url
-     * @return IForm
-     */
-    public function setAction(string $url): IForm;
+    public function setAction(string $url): self;
 
-    /**
-     * @param string $method
-     * @return IForm
-     */
-    public function setMethod(string $method): IForm;
+    public function setMethod(string $method): self;
 
-    /**
-     * @param string $enctype
-     * @return IForm
-     */
-    public function setEnctype(string $enctype): IForm;
+    public function setEnctype(string $enctype): self;
 
-    /**
-     * @param array $data
-     * @return IForm
-     */
-    public function setValues(?array $data): IForm;
+    public function setValues(?array $data = null): self;
 
-    /**
-     * Set Form attributes
-     *
-     * @param array $attributes
-     * @return static
-     */
     public function setAttributes(array $attributes): self;
 
-    /**
-     * Merge Form attributes
-     *
-     * @param array $attributes
-     * @param string $glue
-     * @return static
-     */
     public function mergeAttributes(array $attributes, string $glue = ' '): self;
 
-    /**
-     * @param ISection $section
-     * @return IForm
-     */
-    public function addSection(ISection $section): IForm;
+    public function addSection(ISection $section): self;
 
     /**
      * @param array|IField[] $fields
-     * @return IForm
+     * @return self
      */
-    public function addFields(array $fields): IForm;
-
-    // @todo -> cleanup
-    /**
-     * @param array $array
-     * @return mixed
-     */
-    //public function addWorkflows(array $array): IForm;
+    public function addFields(array $fields): self;
 
     /**
      * @param Request $request
-     *
      * @return mixed
      */
     public function validate(Request $request);
 
     /**
      * @param string $theme
-     *
      * @return mixed
      */
     public function setTheme(string $theme);
@@ -93,39 +53,22 @@ interface IForm extends \JsonSerializable
      * @param null $prefix - if assoc is true and prefix has a value, it prefixes the key
      * @return array
      */
-    public function getFieldNames($assoc = false, $prefix = null);
+    public function getFieldNames($assoc = false, $prefix = null): array;
 
     /**
      * @param bool $assoc - if true, returns a key-value array where key is the name of the field and value an array: ['label' => "Label", 'value' => 123]
-     * @param null $prefix - if assoc is true and prefix has a value, it prefixes the key
+     * @param string|null $prefix - if assoc is true and prefix has a value, it prefixes the key
      * @return array
      */
-    public function getFormValues($assoc = false, $prefix = null);
+    public function getFormValues(bool $assoc = false, ?string $prefix = null): array;
 
-    /**
-     * @param $fieldName
-     * @return IField|null
-     */
-    public function getField($fieldName);
+    public function getField(string $fieldName): ?IField;
 
-    /**
-     * Set Form attributes
-     *
-     * @return Data
-     */
     public function getAttributes(): Data;
 
-    /**
-     * @param array $fields
-     * @return IField|null
-     */
-    public function except(array $fields);
+    public function except(array $fields): self;
 
-    /**
-     * @param array $fields
-     * @return IField|null
-     */
-    public function only(array $fields);
+    public function only(array $fields): self;
 
     /**
      * @return Collection|ISection[]
@@ -133,41 +76,29 @@ interface IForm extends \JsonSerializable
     public function getSections();
 
     /**
-     * @param string $prefix
-     * @return array
+     * The prefix argument is used to prefix all fields with it so laravel validator can validate groups of data
      */
-    public function getValidationRules($prefix = '');
+    public function getValidationRules(string $prefix = ''): array;
 
-    /**
-     * @param null $fieldName
-     * @return mixed
-     */
-    public function getRules($fieldName = null);
+    public function getRules(?string $fieldName = null): array;
 
-    /**
-     * @return string
-     */
     public function getTheme(): string;
 
-    /**
-     * @return string
-     */
     public function getAction(): string;
 
-    /**
-     * @return string
-     */
     public function getMethod(): string;
 
-    /**
-     * @return string
-     */
     public function getEnctype(): string;
 
     public function resolve(): void;
 
+    public function hasErrors(): bool;
+
+    public function errorMessage(): string;
+
     /**
-     * @return array
+     * @param array|Collection|Model $formData
+     * @return bool
      */
-    public function toArray(): array;
+    public static function bind(array $formData): bool;
 }

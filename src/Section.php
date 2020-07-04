@@ -63,21 +63,20 @@ class Section implements ISection
         return $this;
     }
 
-    public function setLabel($label = null): ISection
+    public function setLabel(?string $label = null): ISection
     {
         $this->label = $label;
 
         return $this;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
 
     /**
      * @param IField[] $fields
-     *
      * @return ISection
      */
     public function addFields(array $fields): ISection
@@ -92,11 +91,6 @@ class Section implements ISection
     }
 
 
-    /**
-     * @param IField $field
-     *
-     * @return ISection
-     */
     public function addField(IField $field): ISection
     {
         $field->setContext($this);
@@ -132,7 +126,7 @@ class Section implements ISection
      *
      * @return Collection|AbstractField[]
      */
-    public function getFields($only = [])
+    public function getFields(array $only = [])
     {
         if (!$only) {
             return $this->fields;
@@ -195,6 +189,7 @@ class Section implements ISection
      * @param array $data
      *
      * @return Section
+     * @throws FormzException
      */
     public static function hydrate(array $data)
     {
@@ -202,23 +197,12 @@ class Section implements ISection
 
         $section->setLabel($data['name'] ?? null);
 
-        // @todo move to config file
-        $fieldsMapper = [
-            'text' => Text::class,
-            'password' => Password::class,
-            'number' => Number::class,
-            'textarea' => Textarea::class,
-            'select' => Choice::class,
-            'multiselect' => Choice::class,
-            'checkbox' => Checkbox::class,
-            'radio' => Radio::class,
-            'date' => Date::class,
-            'file' => File::class,
-        ];
-
         foreach ($data['fields'] as $field) {
+            if (!isset(AbstractField::FIELDS_MAPPER[$field['type']])) {
+                throw new FormzException($field['type'] . ' field type does not exist.');
+            }
             // @ todo throw exception if type does not exist
-            $fieldClass = $fieldsMapper[$field['type']];
+            $fieldClass = AbstractField::FIELDS_MAPPER[$field['type']];
 
             $section->addField($fieldClass::makeFromArray($field));
         }
@@ -226,7 +210,7 @@ class Section implements ISection
         return $section;
     }
 
-    private function hasErrors(): bool
+    public function hasErrors(): bool
     {
         if (Session::has('errors')) {
             $errors = Session::get('errors');
@@ -241,7 +225,7 @@ class Section implements ISection
         return false;
     }
 
-    private function getFieldsErrors(): array
+    public function getFieldsErrors(): array
     {
         $errorMessages = [];
 

@@ -8,6 +8,7 @@ use Formz\Contracts\IRule;
 use Formz\Contracts\ISection;
 use Formz\Contracts\IWorkflow;
 use Formz\RulesLibrary;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -37,12 +38,6 @@ class Form implements IForm
 
     protected Data $attributes;
 
-    /**
-     * Form constructor.
-     *
-     * @param array $sections
-     * @param array $config
-     */
     public function __construct(array $sections = [], array $config = [])
     {
         $this->name = Arr::get($config, 'name');
@@ -71,21 +66,11 @@ class Form implements IForm
         }
     }
 
-    /**
-     * @param null|array $sections
-     * @param null|array $config
-     *
-     * @return Form
-     */
-    public static function make(?array $sections = [], ?array $config = [])
+    public static function make(?array $sections = [], ?array $config = []): IForm
     {
         return new static($sections, $config);
     }
 
-    /**
-     * @param string $url
-     * @return IForm
-     */
     public function setAction(string $url): IForm
     {
         $this->action = $url;
@@ -93,10 +78,6 @@ class Form implements IForm
         return $this;
     }
 
-    /**
-     * @param string $method
-     * @return IForm
-     */
     public function setMethod(string $method): IForm
     {
         $this->method = $method;
@@ -178,11 +159,7 @@ class Form implements IForm
         return $this;
     }
 
-    /**
-     * @param array $data
-     * @return IForm
-     */
-    public function setValues(?array $data): IForm
+    public function setValues(?array $data = null): IForm
     {
         if (empty($data)) {
             return $this;
@@ -200,15 +177,17 @@ class Form implements IForm
     }
 
     /**
-     * @param array $formData
-     * @return Form
+     * @param array|Model|Collection $formData
+     * @return bool
      */
-    public static function hydrate(array $formData)
+    public static function bind($formData): bool
     {
-        $sections = $formData['sections'];
+        return true;
+
+        /*$sections = $formData['sections'];
         unset($formData['sections']);
 
-        return new static($sections, $formData);
+        return new static($sections, $formData);*/
     }
 
     public function validate(Request $request)
@@ -237,12 +216,7 @@ class Form implements IForm
         return $fields;
     }
 
-    /**
-     * @param array $fields
-     *
-     * @return $this|IField|null
-     */
-    public function except(array $fields)
+    public function except(array $fields): IForm
     {
         foreach ($this->sections as $section) {
             $fieldsToRemove = $section->getFields()->filter(
@@ -255,12 +229,7 @@ class Form implements IForm
         return $this;
     }
 
-    /**
-     * @param array $fields
-     *
-     * @return $this|IField|null
-     */
-    public function only(array $fields)
+    public function only(array $fields): IForm
     {
         foreach ($this->sections as $section) {
             $fieldsToRemove = $section->getFields()->filter(
@@ -274,14 +243,7 @@ class Form implements IForm
     }
 
 
-    /**
-     * Returns an array of field names
-     *
-     * @param bool $assoc
-     * @param null $prefix
-     * @return array
-     */
-    public function getFieldNames($assoc = false, $prefix = null)
+    public function getFieldNames($assoc = false, $prefix = null): array
     {
         if (!$assoc) {
             return $this->getFields()->map(function (IField $field) {
@@ -299,14 +261,7 @@ class Form implements IForm
         return $fields;
     }
 
-    /**
-     * Returns an array of field values
-     *
-     * @param bool $assoc
-     * @param null $prefix
-     * @return array
-     */
-    public function getFormValues($assoc = false, $prefix = null)
+    public function getFormValues(bool $assoc = false, ?string $prefix = null): array
     {
         if (!$assoc) {
             return $this->getFields()->map(function (IField $field) {
@@ -327,11 +282,7 @@ class Form implements IForm
         return $fields;
     }
 
-    /**
-     * @param $fieldName
-     * @return IField|null
-     */
-    public function getField($fieldName)
+    public function getField($fieldName): ?IField
     {
         return $this->getFields()->first(function (IField $field) use ($fieldName) {
             return $field->getName() === $fieldName;
@@ -347,11 +298,7 @@ class Form implements IForm
         return $this->sections;
     }
 
-    /**
-     * @param null|string $fieldName
-     * @return array
-     */
-    public function getRules($fieldName = null)
+    public function getRules(?string $fieldName = null): array
     {
         $rules = [];
 
@@ -367,7 +314,7 @@ class Form implements IForm
         return $rules;
     }
 
-    private function hasErrors(): bool
+    public function hasErrors(): bool
     {
         if (Session::has('errors')) {
             $errors = Session::get('errors');
@@ -427,38 +374,9 @@ class Form implements IForm
         return $errorMessages;
     }
 
-    /**
-     * The prefix argument is used to prefix all fields with it so laravel validator can validate groups of data
-     *
-     * @param string $prefix
-     * @return array
-     * @throws \ReflectionException
-     */
-    public function getValidationRules($prefix = '')
+    public function getValidationRules(string $prefix = ''): array
     {
-        $validationArray = [];
-        $fields = $this->getRules();
-
         return $this->getRules();
-
-        /**
-         *
-         * @todo - used with the UI Designer
-         */
-//        foreach ($fields as $fieldName => $rules) {
-//            $prefixedFieldName = $prefix ? "{$prefix}.{$fieldName}" : $fieldName;
-//            $validationArray[$prefixedFieldName] = [];
-//            foreach ($rules as $rule) {
-//                // check if the rule is an array and if so, create a rule object out of it
-//                if (!$rule instanceof IRule) {
-//                    $rule = RulesLibrary::makeRule($rule['name'], $rule['params'] ?: []);
-//                }
-//
-//                $validationArray[$prefixedFieldName][] = $rule->__toString();
-//            }
-//        }
-//
-//        return $validationArray;
     }
 
     /**

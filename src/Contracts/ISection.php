@@ -3,9 +3,10 @@
 namespace Formz\Contracts;
 
 use Dflydev\DotAccessData\Data;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
-interface ISection extends \JsonSerializable
+interface ISection extends \JsonSerializable, Arrayable
 {
 
     public function addField(IField $field): self;
@@ -16,34 +17,24 @@ interface ISection extends \JsonSerializable
     public function removeField($field);
 
     /**
-     * @param array |IField[] $field
+     * @param array|IField[] $field
      */
     public function removeFields(array $field);
 
+    public function setLabel(?string $name = null): self;
+
+    public function getLabel(): string;
+
     /**
-     * @param null $name
-     *
-     * @return $this
+     * @param IField[] $fields
+     * @return ISection
      */
-    public function setLabel($name = null): self;
+    public function addFields(array $fields): self;
 
     public function setContext(IForm $context): self;
 
-    /**
-     * Set Section attributes
-     *
-     * @param array $attributes
-     * @return static
-     */
     public function setAttributes(array $attributes): self;
 
-    /**
-     * Merge Form attributes
-     *
-     * @param array $attributes
-     * @param string $glue
-     * @return static
-     */
     public function mergeAttributes(array $attributes, string $glue = ' '): self;
 
     public function getContext(): IForm;
@@ -52,19 +43,18 @@ interface ISection extends \JsonSerializable
      * @param array $only
      * @return Collection|IField[]
      */
-    public function getFields($only = []);
+    public function getFields(array $only = []);
 
 
     public function setHelpText(string $helpText): self;
 
     public function getHelpText(): string;
 
-    /**
-     * Set Section attributes
-     *
-     * @return Data
-     */
     public function getAttributes(): Data;
 
     public function resolve(): void;
+
+    public function hasErrors(): bool;
+
+    public function getFieldsErrors(): array;
 }
