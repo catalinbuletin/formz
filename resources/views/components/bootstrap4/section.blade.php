@@ -1,4 +1,6 @@
-<div class="{{ $section->getAttributes()->get('class') }}">
+<div class="{{ $section->getAttributes()->get('class') }}"
+     id="{{ $section->getAttributes()->get('id') }}"
+>
     @if($section->getLabel())
         <div class="col-xs-12">
             <h4>{{ $section->getLabel() }}</h4>

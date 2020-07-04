@@ -1,4 +1,6 @@
-<div class="{{ $field->getAttributes()->get('container.class') }}">
+<div class="{{ $field->getAttributes()->get('container.class') }}"
+     id="{{ $field->getAttributes()->get('container.id') }}"
+>
     <label class="{{ $field->getAttributes()->get('label.class') }}"
            for="{{ $field->getAttributes()->get('input.id') }}"
     >

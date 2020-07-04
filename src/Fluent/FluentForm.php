@@ -84,6 +84,27 @@ class FluentForm
         return $this;
     }
 
+    public function id(string $id): self
+    {
+        $this->form->setAttributes(['id' => $id]);
+
+        return $this;
+    }
+
+    public function class(string $class): self
+    {
+        $this->form->setAttributes(['class' => $class]);
+
+        return $this;
+    }
+
+    public function addClass(string $class): self
+    {
+        $this->form->mergeAttributes(['class' => $class]);
+
+        return $this;
+    }
+
     public function theme(string $theme): self
     {
         $this->form->setTheme($theme);

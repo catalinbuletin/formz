@@ -2,11 +2,9 @@
 
 namespace Formz\Fields;
 
-use Dflydev\DotAccessData\Data;
 use Formz\AttributesTrait;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;

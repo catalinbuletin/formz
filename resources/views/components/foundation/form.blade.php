@@ -2,6 +2,7 @@
       method="{{ $method }}"
       {{ $enctype ? 'enctype="'.$enctype.'"' : '' }}
       class="{{ $form->getAttributes()->get('class') }}"
+      id="{{ $form->getAttributes()->get('id') }}"
 >
     @csrf
 

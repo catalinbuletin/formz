@@ -251,6 +251,27 @@ class FluentSection
         return $this;
     }
 
+    public function id(string $id): self
+    {
+        $this->section->setAttributes(['id' => $id]);
+
+        return $this;
+    }
+
+    public function class(string $class): self
+    {
+        $this->section->setAttributes(['class' => $class]);
+
+        return $this;
+    }
+
+    public function addClass(string $class): self
+    {
+        $this->section->mergeAttributes(['class' => $class]);
+
+        return $this;
+    }
+
     public function setContext(FluentForm $context)
     {
         $this->context = $context;
