@@ -209,9 +209,7 @@ class AbstractField implements IField
         $this->context = $section;
 
         if ($this->isFile()) {
-            /**
-             * We have a file input, let's set the enctype of the form to multipart/form-data
-             */
+            /** We have a file input, let's set the enctype of the form to multipart/form-data */
             $this->getFormContext()->setEnctype('multipart/form-data');
         }
 

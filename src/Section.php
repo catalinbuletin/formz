@@ -8,6 +8,7 @@ use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Formz\Fields\Checkbox;
 use Formz\Fields\Choice;
@@ -19,6 +20,7 @@ use Formz\Fields\Password;
 use Formz\Fields\Radio;
 use Formz\Fields\Textarea;
 use Formz\Fields\Text;
+use Illuminate\Support\ViewErrorBag;
 
 class Section implements ISection
 {
@@ -224,9 +226,59 @@ class Section implements ISection
         return $section;
     }
 
+    private function hasErrors(): bool
+    {
+        if (Session::has('errors')) {
+            $errors = Session::get('errors');
+            if ($errors instanceof ViewErrorBag) {
+                foreach ($this->getFields() as $field) {
+                    if ($errors->has($field->getName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private function getFieldsErrors(): array
+    {
+        $errorMessages = [];
+
+        if (Session::has('errors')) {
+            $errors = Session::get('errors');
+            if ($errors instanceof ViewErrorBag) {
+                foreach ($this->getFields() as $field) {
+                    if ($errors->has($field->getName())) {
+                        switch ($this->getContext()->getConfig()['errors']['global']['display']) {
+                            case 'first':
+                                $fieldErrors = $errors->get($field->getName());
+                                $errorMessages[] = reset($fieldErrors);
+                                break;
+
+                            case 'all':
+                                $errorMessages = array_merge($errorMessages, $errors);
+                                break;
+
+                            case 'none':
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $errorMessages;
+    }
+
     private function addErrorClasses()
     {
-        // @todo -> add class on section if fields have errors
+        if ($this->hasErrors()) {
+            $this->mergeAttributes([
+                'class' => Config::get('formz.themes.' . $this->getContext()->getTheme() . '.error_class.section'),
+            ]);
+        }
     }
 
     public function resolve(): void

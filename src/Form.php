@@ -148,7 +148,6 @@ class Form implements IForm
     {
         return [
             'class' => Config::get('formz.themes.' . $this->getTheme() . '.form_class'),
-            'global_error_class' => Config::get('formz.themes.' . $this->getTheme() . '.error_class.global'),
         ];
     }
 
@@ -368,6 +367,21 @@ class Form implements IForm
         return $rules;
     }
 
+    private function hasErrors(): bool
+    {
+        if (Session::has('errors')) {
+            $errors = Session::get('errors');
+            if ($errors instanceof ViewErrorBag) {
+                foreach ($this->getFields() as $field) {
+                    if ($errors->has($field->getName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public function errorMessage(): string
     {
         if ($this->getConfig()['errors']['global']['active']) {
@@ -468,9 +482,14 @@ class Form implements IForm
 
     private function addErrorClasses()
     {
+        if ($this->hasErrors()) {
+            $this->mergeAttributes([
+                'class' => Config::get('formz.themes.' . $this->getTheme() . '.error_class.form'),
+            ]);
+        }
         if ($this->getFieldsErrors()) {
             $this->mergeAttributes([
-                'class' => Config::get('formz.themes.' . $this->getTheme() . '.error_class.input'),
+                'global_error_class' => Config::get('formz.themes.' . $this->getTheme() . '.error_class.global'),
             ]);
         }
     }
