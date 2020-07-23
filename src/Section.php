@@ -201,7 +201,6 @@ class Section implements ISection
             if (!isset(AbstractField::FIELDS_MAPPER[$field['type']])) {
                 throw new FormzException($field['type'] . ' field type does not exist.');
             }
-            // @ todo throw exception if type does not exist
             $fieldClass = AbstractField::FIELDS_MAPPER[$field['type']];
 
             $section->addField($fieldClass::makeFromArray($field));

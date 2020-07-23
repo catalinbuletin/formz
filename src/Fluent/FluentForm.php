@@ -19,9 +19,6 @@ class FluentForm
 
     private function __construct() {}
 
-    /**
-     * @return FluentForm
-     */
     public static function make(): FluentForm
     {
         $instance = new static();
@@ -31,31 +28,6 @@ class FluentForm
         return $instance;
     }
 
-    // @todo - cleanup
-    /**
-     * @return FluentForm
-     */
-    /*public static function for(Model $model): FluentForm
-    {
-        $instance = new static();
-
-        $instance->form = new Form();
-
-        return $instance;
-    }*/
-//
-//    public function model(Model $model)
-//    {
-//        $this->model = $model;
-//
-//        return $this;
-//    }
-
-    /**
-     * @param string|null $label
-     *
-     * @return FluentSection
-     */
     public function section(?string $label = null): FluentSection
     {
         $fluentSection = FluentSection::make($label)->setContext($this);

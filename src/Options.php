@@ -65,6 +65,7 @@ class Options implements \JsonSerializable, \IteratorAggregate, \Countable, \Arr
 
     /**
      * @return Options
+     * @throws FormzException
      */
     public function resolve(): Options
     {
@@ -75,8 +76,7 @@ class Options implements \JsonSerializable, \IteratorAggregate, \Countable, \Arr
         if ($this->resolver instanceof \Closure) {
             $options = ($this->resolver)();
             if (! is_iterable($options)) {
-                // @todo -> throw custom exception
-                throw new \InvalidArgumentException('Closure must return an iterable');
+                throw new FormzException('Closure must return an iterable');
             }
         } elseif ($this->resolver instanceof Options) {
             $options = $this->resolver->toArray();
