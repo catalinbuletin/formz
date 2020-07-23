@@ -4,16 +4,12 @@ namespace Formz;
 
 use Dflydev\DotAccessData\Data;
 use Formz\Contracts\IField;
-use Formz\Contracts\IRule;
 use Formz\Contracts\ISection;
-use Formz\Contracts\IWorkflow;
-use Formz\RulesLibrary;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Formz\Contracts\IForm;
-use Formz\WorkflowFactory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ViewErrorBag;
@@ -29,6 +25,8 @@ class Form implements IForm
     protected string $theme;
     protected string $enctype = '';
     protected array $config;
+    /** @var Model|Collection|array */
+    protected $formData;
     protected bool $resolved = false;
 
     /**
@@ -100,6 +98,14 @@ class Form implements IForm
         return $this;
     }
 
+    /** @param Model|Collection|array $formData */
+    public function setFormData($formData): IForm
+    {
+        $this->formData = $formData;
+
+        return $this;
+    }
+
     public function getTheme(): string
     {
         return $this->theme;
@@ -123,6 +129,14 @@ class Form implements IForm
     public function getEnctype(): string
     {
         return $this->enctype;
+    }
+
+    /**
+     * @return Model|Collection|array
+     */
+    public function getFormData()
+    {
+        return $this->formData;
     }
 
     protected function defaultAttributes(): array
@@ -176,18 +190,19 @@ class Form implements IForm
         return $this;
     }
 
-    /**
-     * @param array|Model|Collection $formData
-     * @return bool
-     */
-    public static function bind($formData): bool
+    public function hydrate(): void
     {
-        return true;
+        if (is_array($this->formData)) {
+            $this->formData = collect($this->formData);
+        }
 
-        /*$sections = $formData['sections'];
-        unset($formData['sections']);
+        if ($this->formData instanceof Collection) {
+            $this->hydrateFromCollection();
+        }
 
-        return new static($sections, $formData);*/
+        if ($this->formData instanceof Model) {
+            $this->hydrateFromModel();
+        }
     }
 
     public function validate(Request $request)
@@ -415,11 +430,42 @@ class Form implements IForm
     public function resolve(): void
     {
         if (!$this->resolved) {
+            $this->hydrate();
             $this->addErrorClasses();
             foreach ($this->getSections() as $section) {
                 $section->resolve();
             }
             $this->resolved = true;
+        }
+    }
+
+    protected function hydrateFromCollection()
+    {
+        if (! $this->formData instanceof Collection) {
+            throw new FormzException('formData is not a Collection.');
+        }
+
+        foreach ($this->getFields() as $field) {
+            if ($value = $this->formData->get($field->getName())) {
+                $field->setValue($value);
+            }
+        }
+    }
+
+    protected function hydrateFromModel()
+    {
+        if (! $this->formData instanceof Collection) {
+            throw new FormzException('formData is not a Collection.');
+        }
+
+        foreach ($this->getFields() as $field) {
+            if (isset($this->formData->{$field->getName()})) {
+                $field->setValue((string) $this->formData->{$field->getName()});
+                continue;
+            }
+            if (method_exists($this->formData, $field->getName())) {
+                $field->setValue((string) $this->formData->{$field->getName}());
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ namespace Formz\Fluent;
 use Formz\Contracts\IForm;
 use Formz\Form;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 //FormBuilder::build()
 //    ->form()
@@ -26,6 +27,17 @@ class FluentForm
         $instance->form = new Form();
 
         return $instance;
+    }
+
+    /**
+     * @param Model|Collection|array $data
+     * @return FluentForm
+     */
+    public function hydrate($data): FluentForm
+    {
+        $this->form->setFormData($data);
+
+        return $this;
     }
 
     public function section(?string $label = null): FluentSection

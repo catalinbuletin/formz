@@ -128,4 +128,26 @@ class BuildFormTest extends \Orchestra\Testbench\TestCase
         $this->assertArrayNotHasKey('username', $form->getFieldNames(true));
         $this->assertArrayNotHasKey('password', $form->getFieldNames(true));
     }
+
+    public function testHydrateFromCollection()
+    {
+        $form = Form::make()
+            ->addFields([
+                Field::text('name', 'Name'),
+                Field::text('username', 'Username'),
+                Field::password('password', 'Password')
+            ])->addFields([
+                Field::text('hobbies', 'Hobbies'),
+                Field::text('interests', 'Interests'),
+            ])->setFormData(collect([
+                'name' => 'John Doe',
+                'username' => 'johndoe',
+            ]));
+
+        $form->hydrate();
+
+        $this->assertEquals('John doe', $form->getField('name')->getValue());
+        $this->assertEquals('johndoe', $form->getField('username')->getValue());
+        $this->assertEquals('', $form->getField('hobbies')->getValue());
+    }
 }

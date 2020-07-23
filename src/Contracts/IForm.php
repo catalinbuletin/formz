@@ -16,6 +16,9 @@ interface IForm extends \JsonSerializable, Arrayable
 
     public function setEnctype(string $enctype): self;
 
+    /** @param Model|Collection|array $formData */
+    public function setFormData($formData): self;
+
     public function setValues(?array $data = null): self;
 
     public function setAttributes(array $attributes): self;
@@ -90,15 +93,14 @@ interface IForm extends \JsonSerializable, Arrayable
 
     public function getEnctype(): string;
 
+    /** @return Model|Collection|array */
+    public function getFormData();
+
     public function resolve(): void;
 
     public function hasErrors(): bool;
 
     public function errorMessage(): string;
 
-    /**
-     * @param array|Collection|Model $formData
-     * @return bool
-     */
-    public static function bind(array $formData): bool;
+    public function hydrate(): void;
 }
