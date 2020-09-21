@@ -35,7 +35,7 @@ interface ISection extends \JsonSerializable, Arrayable
 
     public function setAttributes(array $attributes): self;
 
-    public function mergeAttributes(array $attributes, string $glue = ' '): self;
+    public function addAttributes(array $attributes, string $glue = ' '): self;
 
     public function getContext(): IForm;
 

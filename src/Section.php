@@ -24,13 +24,13 @@ use Illuminate\Support\ViewErrorBag;
 
 class Section implements ISection
 {
-    use AttributesTrait;
+    use HasAttributes;
 
     private string $uuid;
     private string $label;
     private Collection $fields;
     private string $helpText;
-    protected IForm $context;
+    protected ?IForm $context;
     protected bool $resolved = false;
 
     /**
@@ -60,6 +60,7 @@ class Section implements ISection
     {
         $this->context = $context;
         $this->setDefaultAttributes();
+
         return $this;
     }
 
@@ -258,7 +259,7 @@ class Section implements ISection
     private function addErrorClasses()
     {
         if ($this->hasErrors()) {
-            $this->mergeAttributes([
+            $this->addAttributes([
                 'class' => Config::get('formz.themes.' . $this->getContext()->getTheme() . '.error_class.section'),
             ]);
         }
@@ -266,12 +267,16 @@ class Section implements ISection
 
     public function resolve(): void
     {
-        if (!$this->resolved) {
-            $this->addErrorClasses();
-            foreach ($this->getFields() as $field) {
-                $field->resolve();
-            }
-            $this->resolved = true;
+        if ($this->resolved) {
+            return;
         }
+
+        $this->addErrorClasses();
+
+        foreach ($this->getFields() as $field) {
+            $field->resolve();
+        }
+
+        $this->resolved = true;
     }
 }

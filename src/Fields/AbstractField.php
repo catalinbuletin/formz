@@ -2,7 +2,7 @@
 
 namespace Formz\Fields;
 
-use Formz\AttributesTrait;
+use Formz\HasAttributes;
 use Formz\Contracts\IForm;
 use Formz\Contracts\ISection;
 use Illuminate\Support\Facades\Config;
@@ -13,7 +13,7 @@ use Illuminate\Support\ViewErrorBag;
 
 class AbstractField implements IField
 {
-    use AttributesTrait;
+    use HasAttributes;
 
     protected string $id;
     protected string $type;
@@ -350,6 +350,7 @@ class AbstractField implements IField
         if (Session::has('errors')) {
             /** @var ViewErrorBag $errors */
             $errors = Session::get('errors');
+
             return $errors instanceof ViewErrorBag && $errors->has($this->getName()) ? $errors->get($this->getName()) : [];
         }
 
@@ -375,17 +376,19 @@ class AbstractField implements IField
 
     private function mergeContainerGridClass(): void
     {
+        $classes = [];
+
         foreach (Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.grid_map') as $key => $colClass) {
             $classes[] = sprintf($colClass, $this->getCols()[$key] ?? 12);
         }
 
-        $this->mergeAttributes(['container.class' => implode(' ', $classes)]);
+        $this->addAttributes(['container.class' => implode(' ', $classes)]);
     }
 
     private function addErrorClasses()
     {
         if ($this->errors()) {
-            $this->mergeAttributes([
+            $this->addAttributes([
                 'input.class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.input'),
                 'label.class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.label'),
                 'container.class' => Config::get('formz.themes.' . $this->getFormContext()->getTheme() . '.error_class.container'),

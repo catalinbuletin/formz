@@ -21,11 +21,21 @@ class FluentField
     protected IField $field;
     protected FluentSection $context;
 
+    /**
+     * @param string|null $label
+     *
+     * @return FluentSection
+     */
     public function section(?string $label = null): FluentSection
     {
         return $this->context->section($label);
     }
 
+    /**
+     * @param $rules
+     *
+     * @return $this
+     */
     public function rules($rules): self
     {
         $rules = is_array($rules) ? $rules : func_get_args();
@@ -35,6 +45,15 @@ class FluentField
         return $this;
     }
 
+    /**
+     * @param int $xs
+     * @param int|null $sm
+     * @param int|null $md
+     * @param int|null $lg
+     * @param int|null $xlg
+     *
+     * @return $this
+     */
     public function cols(int $xs, ?int $sm = null, ?int $md = null, ?int $lg = null, ?int $xlg = null): self
     {
         $this->field->setCols($xs, $sm, $md, $lg, $xlg);
@@ -42,6 +61,9 @@ class FluentField
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function required(): self
     {
         $this->field->required();
@@ -49,6 +71,11 @@ class FluentField
         return $this;
     }
 
+    /**
+     * @param int $tabindex
+     *
+     * @return $this
+     */
     public function tabindex(int $tabindex): self
     {
         $this->field->setTabindex($tabindex);
@@ -56,6 +83,11 @@ class FluentField
         return $this;
     }
 
+    /**
+     * @param string $helpText
+     *
+     * @return $this
+     */
     public function helpText(string $helpText): self
     {
         $this->field->setHelpText($helpText);
@@ -72,7 +104,7 @@ class FluentField
 
     public function mergeAttr(array $attributes, string $glue): self
     {
-        $this->field->mergeAttributes($attributes, $glue);
+        $this->field->addAttributes($attributes, $glue);
 
         return $this;
     }
@@ -93,7 +125,7 @@ class FluentField
 
     public function addClass(string $class): self
     {
-        $this->field->mergeAttributes(['input.class' => $class]);
+        $this->field->addAttributes(['input.class' => $class]);
 
         return $this;
     }
@@ -109,6 +141,7 @@ class FluentField
      * @param string $name
      * @param string|null $label
      * @param null $value
+     *
      * @return FluentText
      */
     public function text(string $name, string $label = null, $value = null): FluentText
@@ -242,6 +275,11 @@ class FluentField
         return $this->context->file($name, $label, $value);
     }
 
+    /**
+     * @param FluentSection $context
+     *
+     * @return $this
+     */
     public function setContext(FluentSection $context)
     {
         $this->context = $context;
@@ -249,11 +287,22 @@ class FluentField
         return $this;
     }
 
+    /**
+     * @return IField
+     */
     public function getField(): IField
     {
         return $this->field;
     }
 
+    public function fill($data)
+    {
+        $this->context->fill($data);
+    }
+
+    /**
+     * @return IForm
+     */
     public function get(): IForm
     {
         return $this->context->get();

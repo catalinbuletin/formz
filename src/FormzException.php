@@ -10,4 +10,9 @@ class FormzException extends \Exception
     {
         parent::__construct($message, $code, $previous);
     }
+
+    public static function couldNotResolveOptions($field)
+    {
+        return new static("Could not resolve options for the '{$field}' field");
+    }
 }

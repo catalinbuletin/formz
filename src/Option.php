@@ -14,6 +14,7 @@ class Option
 
     /**
      * Option constructor.
+     *
      * @param string $value
      * @param string $label
      */
@@ -75,6 +76,7 @@ class Option
     /**
      * @param string|int $key
      * @param mixed $value
+     *
      * @return static
      */
     public static function makeFromKeyValue($key, $value): self
@@ -94,6 +96,14 @@ class Option
                 $key = $value->getId();
             }
 
+            if (method_exists($value, 'getOptionName')) {
+                return new static((string)$key, (string)$value->getOptionName());
+            }
+
+            if (method_exists($value, 'getName')) {
+                return new static((string)$key, (string)$value->getName());
+            }
+
             if (isset($value->name)) {
                 return new static((string)$key, (string)$value->name);
             }
@@ -102,14 +112,10 @@ class Option
                 return new static((string)$key, (string)$value->label);
             }
 
-            if (method_exists($value, 'getName')) {
-                return new static((string)$key, (string)$value->getName());
-            }
 
-            if (method_exists($value, 'getLabel')) {
-                return new static((string)$key, (string)$value->getLabel());
-            }
         }
+
+        return new static((string)$key, 'Could not resolve options');
     }
 
 }

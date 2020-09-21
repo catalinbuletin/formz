@@ -10,21 +10,59 @@ use Illuminate\Support\Collection;
 
 interface IForm extends \JsonSerializable, Arrayable
 {
+    /**
+     * @param string $url
+     *
+     * @return $this
+     */
     public function setAction(string $url): self;
 
+    /**
+     * @param string $method
+     *
+     * @return $this
+     */
     public function setMethod(string $method): self;
 
+    /**
+     * @param string $enctype
+     *
+     * @return $this
+     */
     public function setEnctype(string $enctype): self;
 
-    /** @param Model|Collection|array $formData */
+    /**
+     * @param Model|Collection|array $formData
+     */
     public function setFormData($formData): self;
 
+    /**
+     * @param array|null $data
+     *
+     * @return $this
+     */
     public function setValues(?array $data = null): self;
 
+    /**
+     * @param array $attributes
+     *
+     * @return $this
+     */
     public function setAttributes(array $attributes): self;
 
-    public function mergeAttributes(array $attributes, string $glue = ' '): self;
+    /**
+     * @param array $attributes
+     * @param string $glue
+     *
+     * @return $this
+     */
+    public function addAttributes(array $attributes, string $glue = ' '): self;
 
+    /**
+     * @param ISection $section
+     *
+     * @return $this
+     */
     public function addSection(ISection $section): self;
 
     /**
@@ -65,12 +103,30 @@ interface IForm extends \JsonSerializable, Arrayable
      */
     public function getFormValues(bool $assoc = false, ?string $prefix = null): array;
 
+    /**
+     * @param string $fieldName
+     *
+     * @return IField|null
+     */
     public function getField(string $fieldName): ?IField;
 
+    /**
+     * @return Data
+     */
     public function getAttributes(): Data;
 
+    /**
+     * @param array $fields
+     *
+     * @return $this
+     */
     public function except(array $fields): self;
 
+    /**
+     * @param array $fields
+     *
+     * @return $this
+     */
     public function only(array $fields): self;
 
     /**
@@ -83,24 +139,53 @@ interface IForm extends \JsonSerializable, Arrayable
      */
     public function getValidationRules(string $prefix = ''): array;
 
+    /**
+     * @param string|null $fieldName
+     *
+     * @return array
+     */
     public function getRules(?string $fieldName = null): array;
 
+    /**
+     * @return string
+     */
     public function getTheme(): string;
 
+    /**
+     * @return string
+     */
     public function getAction(): string;
 
+    /**
+     * @return string
+     */
     public function getMethod(): string;
 
+    /**
+     * @return string
+     */
     public function getEnctype(): string;
 
     /** @return Model|Collection|array */
     public function getFormData();
 
+    /**
+     *
+     */
     public function resolve(): void;
 
+    /**
+     * @return bool
+     */
     public function hasErrors(): bool;
 
+    /**
+     * @return string
+     */
     public function errorMessage(): string;
 
-    public function hydrate(): void;
+    /**
+     *
+     */
+    public function fill(): void;
 }

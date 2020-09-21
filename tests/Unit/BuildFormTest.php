@@ -144,7 +144,7 @@ class BuildFormTest extends \Orchestra\Testbench\TestCase
                 'username' => 'johndoe',
             ]));
 
-        $form->hydrate();
+        $form->fill();
 
         $this->assertEquals('John doe', $form->getField('name')->getValue());
         $this->assertEquals('johndoe', $form->getField('username')->getValue());

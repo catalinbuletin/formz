@@ -3,6 +3,7 @@
 namespace Formz\View\Components;
 
 use Formz\Contracts\IField;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 
@@ -13,12 +14,18 @@ class Field extends Component
      */
     public IField $field;
 
-    public $request;
+    public Request $request;
+
+    public bool $isRequired = false;
+
+    public bool $hasErrors = false;
+
+    public string $errorMessage = '';
 
     public function __construct($field)
     {
-        $this->request = app()->get('request');
         $this->field = $field;
+        $this->request = app()->get('request');
     }
 
     public function input()

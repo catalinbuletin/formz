@@ -1,3 +1,13 @@
-<div class="{{ $form->getAttributes()->get('global_error_class') }}">
-    {!! nl2br($form->errorMessage()) !!}
-</div>
+@if ($errorMessage || count($fieldErrors))
+    <div class="{{ $themeConfig['error_class']['global'] }}">
+        <div>{{ $errorMessage }}</div>
+        @if(count($fieldErrors))
+            <br>
+            <ul>
+                @foreach($fieldErrors as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+    </div>
+@endif

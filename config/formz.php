@@ -77,7 +77,7 @@ return [
             /**
              * Show or hide the global validation message
              */
-            'active' => true,
+            'active' => false,
 
             /**
              * The default message to display

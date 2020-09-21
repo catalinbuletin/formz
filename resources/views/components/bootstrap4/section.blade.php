@@ -2,9 +2,11 @@
      id="{{ $section->getAttributes()->get('id') }}"
 >
     @if($section->getLabel())
-        <div class="col-xs-12">
-            <h4>{{ $section->getLabel() }}</h4>
-            <small class="form-text text-muted mb-3">{!! $section->getHelpText() !!}</small>
+        <div class="col-12">
+            <h4 class="formz__section-name">{{ $section->getLabel() }}</h4>
+            @if ($section->getHelpText())
+                <div class="formz__section-description">{!! $section->getHelpText() !!}</div>
+            @endif
         </div>
     @endif
 

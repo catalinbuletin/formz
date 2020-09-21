@@ -5,9 +5,9 @@ namespace Formz;
 
 use Dflydev\DotAccessData\Data;
 
-trait AttributesTrait
+trait HasAttributes
 {
-    protected Data $attributes;
+    protected Attributes $attributes;
 
     public function setAttributes(array $attributes): self
     {
@@ -18,7 +18,7 @@ trait AttributesTrait
         return $this;
     }
 
-    public function mergeAttributes(array $attributes, string $glue = ' '): self
+    public function addAttributes(array $attributes, string $glue = ' '): self
     {
         foreach ($attributes as $key => $value) {
             if ($this->attributes->has($key)) {
@@ -28,7 +28,7 @@ trait AttributesTrait
                     case 'double':
                         $this->attributes->set(
                             $key,
-                            $this->attributes->get('key') . $glue . $value,
+                            $this->attributes->get($key) . $glue . $value,
                         );
                         break;
                     default:
@@ -46,7 +46,7 @@ trait AttributesTrait
     protected function setDefaultAttributes()
     {
         if (!isset($this->attributes)) {
-            $this->attributes = new Data($this->defaultAttributes());
+            $this->attributes = new Attributes($this->defaultAttributes());
         }
     }
 

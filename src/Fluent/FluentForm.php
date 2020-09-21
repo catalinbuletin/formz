@@ -7,13 +7,6 @@ use Formz\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-//FormBuilder::build()
-//    ->form()
-//    ->section()->name('Personal details')
-//    ->text('firstName', 'First Name')->required()
-//    ->text('lastName', 'First Name')->required()
-//    ->section();
-
 class FluentForm
 {
     private \Formz\Contracts\IForm $form;
@@ -33,7 +26,7 @@ class FluentForm
      * @param Model|Collection|array $data
      * @return FluentForm
      */
-    public function hydrate($data): FluentForm
+    public function fill($data): FluentForm
     {
         $this->form->setFormData($data);
 
@@ -63,7 +56,7 @@ class FluentForm
 
     public function mergeAttr(array $attributes, string $glue): self
     {
-        $this->form->mergeAttributes($attributes, $glue);
+        $this->form->addAttributes($attributes, $glue);
 
         return $this;
     }
@@ -84,7 +77,7 @@ class FluentForm
 
     public function addClass(string $class): self
     {
-        $this->form->mergeAttributes(['class' => $class]);
+        $this->form->addAttributes(['class' => $class]);
 
         return $this;
     }
@@ -111,6 +104,7 @@ class FluentForm
     public function get(): IForm
     {
         $this->form->resolve();
+
         return $this->form;
     }
 }

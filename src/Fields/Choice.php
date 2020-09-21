@@ -36,42 +36,6 @@ class Choice extends AbstractField
         $this->setOptions(new Options($options));
     }
 
-    /*public static function makeFromArray(array $fieldData)
-    {
-        $options = self::makeOptionsFromArray($fieldData);
-
-        $field = new static(
-            $fieldData['type'],
-            $fieldData['name'],
-            $options,
-            $fieldData['label'] ?? null,
-            $fieldData['value'] ?? null
-        );
-
-        $field->setId($fieldData['id']);
-        $field->setAttributes($fieldData['attributes']);
-        $field->rules($fieldData['rules']);
-        $field->workflows($fieldData['workflows']);
-
-        return $field;
-    }*/
-
-    /**
-     * @param array $fieldData
-     * @return Options
-     */
-    /*protected static function makeOptionsFromArray(array $fieldData)
-    {
-        switch ($fieldData['optionSource']) {
-            case 'manual':
-                return Options::fromDatabase($fieldData['options']);
-            case 'resource':
-                return Options::resource(
-                    ResourceOptions::makeFromArray($fieldData['resource'])
-                );
-        }
-    }*/
-
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [

@@ -246,7 +246,7 @@ class FluentSection
 
     public function mergeAttr(array $attributes, string $glue): self
     {
-        $this->section->mergeAttributes($attributes, $glue);
+        $this->section->addAttributes($attributes, $glue);
 
         return $this;
     }
@@ -267,7 +267,7 @@ class FluentSection
 
     public function addClass(string $class): self
     {
-        $this->section->mergeAttributes(['class' => $class]);
+        $this->section->addAttributes(['class' => $class]);
 
         return $this;
     }
@@ -282,6 +282,11 @@ class FluentSection
     public function getSection(): \Formz\Contracts\ISection
     {
         return $this->section;
+    }
+
+    public function fill($data)
+    {
+        $this->context->fill($data);
     }
 
     public function get(): \Formz\Contracts\IForm

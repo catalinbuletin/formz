@@ -16,17 +16,43 @@ use Illuminate\Support\ViewErrorBag;
 
 class Form implements IForm
 {
-    use AttributesTrait;
+    use HasAttributes;
 
+    /**
+     * @var mixed|string|null
+     */
     protected ?string $name;
+    /**
+     * @var array|mixed
+     */
     protected array $layout;
+    /**
+     * @var string
+     */
     protected string $action;
+    /**
+     * @var string
+     */
     protected string $method;
+    /**
+     * @var mixed|string
+     */
     protected string $theme;
+    /**
+     * @var string
+     */
     protected string $enctype = '';
+    /**
+     * @var array
+     */
     protected array $config;
-    /** @var Model|Collection|array */
+    /**
+     * @var Model|Collection|array
+     */
     protected $formData;
+    /**
+     * @var bool
+     */
     protected bool $resolved = false;
 
     /**
@@ -34,8 +60,14 @@ class Form implements IForm
      */
     protected $sections = [];
 
-    protected Data $attributes;
-
+    /**
+     * Form constructor.
+     *
+     * @param array $sections
+     * @param array $config
+     *
+     * @throws FormzException
+     */
     public function __construct(array $sections = [], array $config = [])
     {
         $this->name = Arr::get($config, 'name');
@@ -52,6 +84,8 @@ class Form implements IForm
             'errors' => Config::get('formz.errors'),
         ];
 
+        $this->setDefaultAttributes();
+
         $this->sections = new Collection();
 
         foreach ($sections as $section) {
@@ -64,11 +98,23 @@ class Form implements IForm
         }
     }
 
+    /**
+     * @param array|null $sections
+     * @param array|null $config
+     *
+     * @return IForm
+     * @throws FormzException
+     */
     public static function make(?array $sections = [], ?array $config = []): IForm
     {
         return new static($sections, $config);
     }
 
+    /**
+     * @param string $url
+     *
+     * @return IForm
+     */
     public function setAction(string $url): IForm
     {
         $this->action = $url;
@@ -76,6 +122,11 @@ class Form implements IForm
         return $this;
     }
 
+    /**
+     * @param string $method
+     *
+     * @return IForm
+     */
     public function setMethod(string $method): IForm
     {
         $this->method = $method;
@@ -83,6 +134,11 @@ class Form implements IForm
         return $this;
     }
 
+    /**
+     * @param string $theme
+     *
+     * @return IForm
+     */
     public function setTheme(string $theme): IForm
     {
         $this->theme = $theme;
@@ -91,6 +147,11 @@ class Form implements IForm
         return $this;
     }
 
+    /**
+     * @param string $enctype
+     *
+     * @return IForm
+     */
     public function setEnctype(string $enctype): IForm
     {
         $this->enctype = $enctype;
@@ -98,7 +159,11 @@ class Form implements IForm
         return $this;
     }
 
-    /** @param Model|Collection|array $formData */
+    /**
+     * @param Model|Collection|array $formData
+     *
+     * @return IForm
+     */
     public function setFormData($formData): IForm
     {
         $this->formData = $formData;
@@ -106,26 +171,41 @@ class Form implements IForm
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getTheme(): string
     {
         return $this->theme;
     }
 
+    /**
+     * @return array
+     */
     public function getConfig(): array
     {
         return $this->config;
     }
 
+    /**
+     * @return string
+     */
     public function getAction(): string
     {
         return $this->action;
     }
 
+    /**
+     * @return string
+     */
     public function getMethod(): string
     {
         return $this->method;
     }
 
+    /**
+     * @return string
+     */
     public function getEnctype(): string
     {
         return $this->enctype;
@@ -139,6 +219,9 @@ class Form implements IForm
         return $this->formData;
     }
 
+    /**
+     * @return array
+     */
     protected function defaultAttributes(): array
     {
         return [
@@ -150,18 +233,19 @@ class Form implements IForm
      * Shortcut for adding an array of fields. The sections will be created automatically
      *
      * @param IField[]|array $fields
+     *
      * @return IForm
      */
     public function addFields(array $fields): IForm
     {
-        $section = Section::make(null, $fields);
-        $section->setContext($this);
+        $section = Section::make(null, $fields)->setContext($this);
 
         return $this->addSection($section);
     }
 
     /**
      * @param ISection $section
+     *
      * @return IForm
      */
     public function addSection(ISection $section): IForm
@@ -173,6 +257,11 @@ class Form implements IForm
         return $this;
     }
 
+    /**
+     * @param array|null $data
+     *
+     * @return IForm
+     */
     public function setValues(?array $data = null): IForm
     {
         if (empty($data)) {
@@ -190,34 +279,39 @@ class Form implements IForm
         return $this;
     }
 
-    public function hydrate(): void
+    /**
+     * @throws FormzException
+     */
+    public function fill(): void
     {
         if (is_array($this->formData)) {
             $this->formData = collect($this->formData);
         }
 
         if ($this->formData instanceof Collection) {
-            $this->hydrateFromCollection();
+            $this->fillUsingCollection();
         }
 
         if ($this->formData instanceof Model) {
-            $this->hydrateFromModel();
-        }
-    }
-
-    public function validate(Request $request)
-    {
-        try {
-            return $request->validate(
-                $this->getValidationRules()
-            );
-        } catch (\ReflectionException $e) {
-            // @todo - handle exception
+            $this->fillUsingModel();
         }
     }
 
     /**
+     * @param Request $request
+     *
+     * @return array|mixed
+     */
+    public function validate(Request $request)
+    {
+        return $request->validate(
+            $this->getValidationRules()
+        );
+    }
+
+    /**
      * @param array $only
+     *
      * @return Collection|IField[]
      */
     public function getFields($only = [])
@@ -231,11 +325,16 @@ class Form implements IForm
         return $fields;
     }
 
+    /**
+     * @param array $fields
+     *
+     * @return IForm
+     */
     public function except(array $fields): IForm
     {
         foreach ($this->sections as $section) {
             $fieldsToRemove = $section->getFields()->filter(
-                fn (IField $field) => in_array($field->getName(), $fields)
+                fn(IField $field) => in_array($field->getName(), $fields)
             );
 
             $section->removeFields($fieldsToRemove->toArray());
@@ -244,11 +343,16 @@ class Form implements IForm
         return $this;
     }
 
+    /**
+     * @param array $fields
+     *
+     * @return IForm
+     */
     public function only(array $fields): IForm
     {
         foreach ($this->sections as $section) {
             $fieldsToRemove = $section->getFields()->filter(
-                fn (IField $field) => !in_array($field->getName(), $fields)
+                fn(IField $field) => !in_array($field->getName(), $fields)
             );
 
             $section->removeFields($fieldsToRemove->toArray());
@@ -258,6 +362,12 @@ class Form implements IForm
     }
 
 
+    /**
+     * @param bool $assoc
+     * @param null $prefix
+     *
+     * @return array
+     */
     public function getFieldNames($assoc = false, $prefix = null): array
     {
         if (!$assoc) {
@@ -276,6 +386,12 @@ class Form implements IForm
         return $fields;
     }
 
+    /**
+     * @param bool $assoc
+     * @param string|null $prefix
+     *
+     * @return array
+     */
     public function getFormValues(bool $assoc = false, ?string $prefix = null): array
     {
         if (!$assoc) {
@@ -297,6 +413,11 @@ class Form implements IForm
         return $fields;
     }
 
+    /**
+     * @param string $fieldName
+     *
+     * @return IField|null
+     */
     public function getField($fieldName): ?IField
     {
         return $this->getFields()->first(function (IField $field) use ($fieldName) {
@@ -313,6 +434,11 @@ class Form implements IForm
         return $this->sections;
     }
 
+    /**
+     * @param string|null $fieldName
+     *
+     * @return array
+     */
     public function getRules(?string $fieldName = null): array
     {
         $rules = [];
@@ -329,10 +455,15 @@ class Form implements IForm
         return $rules;
     }
 
+    /**
+     * @return bool
+     */
     public function hasErrors(): bool
     {
         if (Session::has('errors')) {
+
             $errors = Session::get('errors');
+
             if ($errors instanceof ViewErrorBag) {
                 foreach ($this->getFields() as $field) {
                     if ($errors->has($field->getName())) {
@@ -341,13 +472,17 @@ class Form implements IForm
                 }
             }
         }
+
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function errorMessage(): string
     {
         if ($this->getConfig()['errors']['global']['active']) {
-            $errorMessages = $this->getFieldsErrors();
+            $errorMessages = $this->getFormErrors();
             if ($errorMessages) {
                 $errorMessages = array_merge([$this->getConfig()['errors']['global']['message'], ''], $errorMessages);
             }
@@ -357,12 +492,17 @@ class Form implements IForm
         return '';
     }
 
-    private function getFieldsErrors(): array
+    /**
+     * @return array
+     */
+    private function getFormErrors(): array
     {
         $errorMessages = [];
 
         if (Session::has('errors')) {
+
             $errors = Session::get('errors');
+
             if ($errors instanceof ViewErrorBag) {
                 foreach ($this->getFields() as $field) {
                     if ($errors->has($field->getName())) {
@@ -389,6 +529,11 @@ class Form implements IForm
         return $errorMessages;
     }
 
+    /**
+     * @param string $prefix
+     *
+     * @return array
+     */
     public function getValidationRules(string $prefix = ''): array
     {
         return $this->getRules();
@@ -408,40 +553,58 @@ class Form implements IForm
         ];
     }
 
+    /**
+     * @return array|mixed
+     */
     public function jsonSerialize()
     {
         return $this->toArray();
     }
 
+    /**
+     *
+     */
     private function addErrorClasses()
     {
         if ($this->hasErrors()) {
-            $this->mergeAttributes([
+            $this->addAttributes([
                 'class' => Config::get('formz.themes.' . $this->getTheme() . '.error_class.form'),
             ]);
         }
-        if ($this->getFieldsErrors()) {
-            $this->mergeAttributes([
+        if ($this->getFormErrors()) {
+            $this->addAttributes([
                 'global_error_class' => Config::get('formz.themes.' . $this->getTheme() . '.error_class.global'),
             ]);
         }
     }
 
+    /**
+     * @throws FormzException
+     */
     public function resolve(): void
     {
-        if (!$this->resolved) {
-            $this->hydrate();
-            $this->addErrorClasses();
-            foreach ($this->getSections() as $section) {
-                $section->resolve();
-            }
-            $this->resolved = true;
+        if ($this->resolved) {
+            return;
         }
+
+        $this->fill();
+
+        $this->addErrorClasses();
+
+        foreach ($this->getSections() as $section) {
+            $section->resolve();
+        }
+
+        $this->resolved = true;
+
     }
 
-    protected function hydrateFromCollection()
+    /**
+     * @throws FormzException
+     */
+    protected function fillUsingCollection()
     {
-        if (! $this->formData instanceof Collection) {
+        if (!$this->formData instanceof Collection) {
             throw new FormzException('formData is not a Collection.');
         }
 
@@ -452,19 +615,24 @@ class Form implements IForm
         }
     }
 
-    protected function hydrateFromModel()
+    /**
+     * @throws FormzException
+     */
+    protected function fillUsingModel()
     {
-        if (! $this->formData instanceof Collection) {
-            throw new FormzException('formData is not a Collection.');
+        if (!$this->formData instanceof Model) {
+            throw new FormzException('formData must be an instance of ' . Model::class);
         }
 
+        // @todo - handle model relationships here and return the id or array of ids
         foreach ($this->getFields() as $field) {
-            if (isset($this->formData->{$field->getName()})) {
-                $field->setValue((string) $this->formData->{$field->getName()});
+            if (array_key_exists($field->getName(), $this->formData->getAttributes())) {
+                $field->setValue($this->formData->{$field->getName()});
                 continue;
             }
+
             if (method_exists($this->formData, $field->getName())) {
-                $field->setValue((string) $this->formData->{$field->getName}());
+                $field->setValue($this->formData->{$field->getName()}());
             }
         }
     }

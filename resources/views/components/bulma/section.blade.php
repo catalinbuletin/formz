@@ -3,11 +3,11 @@
 >
     @if($section->getLabel())
         <div class="column is-12">
-            <h4>
+            <h4 class="formz__section-name">
                 {{ $section->getLabel() }}
             </h4>
             @if ($section->getHelpText())
-                <p class="help">
+                <p class="formz__section-description help">
                     {!! $section->getHelpText() !!}
                 </p>
             @endif
